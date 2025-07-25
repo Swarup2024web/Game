@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Legends vs Shadows</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>⚔️ Legends vs Shadows ⚔️</h1>
+  </header>
+
+  <main>
+    <section class="character-selection">
+      <h2>Select Your Hero</h2>
+      <div class="heroes" id="hero-list">
+        <!-- Heroes will be loaded here from JS -->
+      </div>
+    </section>
+
+    <section class="battlefield hidden" id="battlefield">
+      <div class="player-side">
+        <h3 id="hero-name">Hero</h3>
+        <img id="hero-img" src="" alt="Hero" class="char-img">
+        <div class="health-bar">
+          <div class="health" id="hero-health"></div>
+        </div>
+      </div>
+
+      <div class="versus">VS</div>
+
+      <div class="enemy-side">
+        <h3 id="villain-name">Villain</h3>
+        <img id="villain-img" src="" alt="Villain" class="char-img">
+        <div class="health-bar">
+          <div class="health" id="villain-health"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="controls hidden" id="controls">
+      <button onclick="attack()">🗡️ Attack</button>
+      <button onclick="defend()">🛡️ Defend</button>
+    </section>
+
+    <section class="result hidden" id="result">
+      <h2 id="result-message">Victory!</h2>
+      <button onclick="restart()">Play Again</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Swarup’s Mythic Games</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
