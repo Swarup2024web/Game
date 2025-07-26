@@ -1,159 +1,136 @@
-// Heroes and Villains Data
+// Mythological Heroes and Villains Data
 const heroes = [
   {
-    name: "Lord Rama",
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Rama_with_arrows.jpg/220px-Rama_with_arrows.jpg",
-    power: 80,
-    speed: 70
+    name: "Arjuna",
+    img: "assets/arjuna.png",
+    maxHealth: 120,
+    attack: 25,
+    xp: 0,
+    level: 1,
+    loot: [],
   },
   {
     name: "Hanuman",
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Hanuman_Sankat_Mochan.jpg/220px-Hanuman_Sankat_Mochan.jpg",
-    power: 90,
-    speed: 60
+    img: "assets/hanuman.png",
+    maxHealth: 150,
+    attack: 20,
+    xp: 0,
+    level: 1,
+    loot: [],
   },
   {
-    name: "Arjuna",
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Arjuna_fighting.jpg/220px-Arjuna_fighting.jpg",
-    power: 75,
-    speed: 80
+    name: "Durga",
+    img: "assets/durga.png",
+    maxHealth: 130,
+    attack: 22,
+    xp: 0,
+    level: 1,
+    loot: [],
   },
-  {
-    name: "Spider-Man",
-    img: "https://upload.wikimedia.org/wikipedia/en/0/0c/Spiderman50.jpg",
-    power: 70,
-    speed: 90
-  },
-  {
-    name: "Iron Man",
-    img: "https://upload.wikimedia.org/wikipedia/en/e/e0/Iron_Man_bleeding_edge.jpg",
-    power: 85,
-    speed: 75
-  }
 ];
 
 const villains = [
-  {
-    name: "Ravana",
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Ravana_Museum_Sri_Lanka.jpg/220px-Ravana_Museum_Sri_Lanka.jpg",
-    power: 85,
-    speed: 65
-  },
-  {
-    name: "Mahishasura",
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Mahishasura_Mardini.jpg/220px-Mahishasura_Mardini.jpg",
-    power: 90,
-    speed: 50
-  },
-  {
-    name: "Joker",
-    img: "https://upload.wikimedia.org/wikipedia/en/9/98/Joker_%28DC_Comics_character%29.jpg",
-    power: 60,
-    speed: 80
-  },
-  {
-    name: "Thanos",
-    img: "https://upload.wikimedia.org/wikipedia/en/7/7e/Thanos_Infinity_4.png",
-    power: 95,
-    speed: 70
-  }
+  { name: "Ravana", img: "assets/ravana.png", health: 100, attack: 20 },
+  { name: "Mahishasura", img: "assets/mahishasura.png", health: 90, attack: 18 },
+  { name: "Bakasura", img: "assets/bakasura.png", health: 80, attack: 15 },
 ];
 
-// Variables
-let selectedHero, selectedVillain;
-let heroHealth = 100;
-let villainHealth = 100;
+let currentHero = null;
+let currentVillain = null;
+let heroHealth = 0;
+let villainHealth = 0;
 
-// DOM Elements
-const heroList = document.getElementById("hero-list");
-const battlefield = document.getElementById("battlefield");
-const controls = document.getElementById("controls");
-const result = document.getElementById("result");
-
-// Load hero cards
-heroes.forEach(hero => {
-  const div = document.createElement("div");
-  div.className = "hero-card";
-  div.innerHTML = `<img src="${hero.img}" alt="${hero.name}"><h4>${hero.name}</h4>`;
-  div.onclick = () => startBattle(hero);
-  heroList.appendChild(div);
-});
-
-// Start battle
-function startBattle(hero) {
-  selectedHero = hero;
-  selectedVillain = villains[Math.floor(Math.random() * villains.length)];
-  heroHealth = 100;
-  villainHealth = 100;
-
-  document.getElementById("hero-name").textContent = hero.name;
-  document.getElementById("hero-img").src = hero.img;
-  document.getElementById("villain-name").textContent = selectedVillain.name;
-  document.getElementById("villain-img").src = selectedVillain.img;
-
-  updateHealthBars();
-
-  document.querySelector(".character-selection").classList.add("hidden");
-  battlefield.classList.remove("hidden");
-  controls.classList.remove("hidden");
+// Hero Selection
+function selectHero(index) {
+  currentHero = JSON.parse(JSON.stringify(heroes[index]));
+  heroHealth = currentHero.maxHealth;
+  document.getElementById("hero-section").classList.add("hidden");
+  document.getElementById("battle-section").classList.remove("hidden");
+  nextVillain();
+  updateBattleUI();
 }
 
-// Attack
-function attack() {
-  const heroDamage = getRandomDamage(selectedHero.power);
-  const villainDamage = getRandomDamage(selectedVillain.power);
-
-  villainHealth -= heroDamage;
-  if (villainHealth <= 0) {
-    villainHealth = 0;
-    endGame("🎉 Victory! You defeated " + selectedVillain.name + "!");
+// Next Villain Loader
+function nextVillain() {
+  if (villains.length === 0) {
+    endGame("🏆 All demons defeated! You are victorious!");
     return;
   }
-
-  setTimeout(() => {
-    heroHealth -= villainDamage;
-    if (heroHealth <= 0) {
-      heroHealth = 0;
-      endGame("💀 Defeat! " + selectedVillain.name + " overpowered you.");
-    }
-    updateHealthBars();
-  }, 500);
-
-  updateHealthBars();
+  currentVillain = villains.shift();
+  villainHealth = currentVillain.health;
+  logMessage(`⚔️ ${currentVillain.name} appears! Prepare for battle!`);
+  updateBattleUI();
 }
 
-// Defend
-function defend() {
-  const reducedDamage = Math.floor(getRandomDamage(selectedVillain.power) / 2);
-  heroHealth -= reducedDamage;
-  if (heroHealth <= 0) {
-    heroHealth = 0;
-    endGame("💀 Defeat! " + selectedVillain.name + " crushed you.");
+// Battle Handler
+function attack() {
+  if (!currentHero || !currentVillain) return;
+
+  // Hero attacks villain
+  let damageToVillain = currentHero.attack + Math.floor(Math.random() * 10);
+  villainHealth -= damageToVillain;
+  logMessage(`🗡️ ${currentHero.name} strikes ${currentVillain.name} for ${damageToVillain} damage.`);
+
+  // Villain attacks hero
+  let damageToHero = currentVillain.attack + Math.floor(Math.random() * 5);
+  heroHealth -= damageToHero;
+  logMessage(`💥 ${currentVillain.name} hits back for ${damageToHero} damage.`);
+
+  if (villainHealth <= 0) {
+    logMessage(`✅ ${currentVillain.name} defeated!`);
+    gainXP(20);
+    collectLoot(currentVillain.name);
+    nextVillain();
+  } else if (heroHealth <= 0) {
+    endGame("💀 You have fallen in battle. Evil prevails.");
   }
-  updateHealthBars();
+
+  updateBattleUI();
 }
 
-// Damage calculator
-function getRandomDamage(power) {
-  return Math.floor(Math.random() * (power / 2)) + 10;
+// XP and Level System
+function gainXP(amount) {
+  currentHero.xp += amount;
+  logMessage(`🔰 Gained ${amount} XP!`);
+  if (currentHero.xp >= currentHero.level * 50) {
+    currentHero.level++;
+    currentHero.maxHealth += 20;
+    currentHero.attack += 5;
+    heroHealth = currentHero.maxHealth;
+    logMessage(`🆙 Level up! You are now Level ${currentHero.level}`);
+  }
 }
 
-// Update health bars
-function updateHealthBars() {
-  document.getElementById("hero-health").style.width = `${heroHealth}%`;
-  document.getElementById("villain-health").style.width = `${villainHealth}%`;
+// Loot System
+function collectLoot(villainName) {
+  const item = `Artifact of ${villainName}`;
+  currentHero.loot.push(item);
+  logMessage(`🎁 Loot found: ${item}`);
 }
 
-// End game
+// UI Update
+function updateBattleUI() {
+  document.getElementById("hero-name").textContent = currentHero.name + ` (Lvl ${currentHero.level})`;
+  document.getElementById("hero-img").src = currentHero.img;
+  document.getElementById("hero-health").textContent = `Health: ${heroHealth}/${currentHero.maxHealth}`;
+
+  document.getElementById("villain-name").textContent = currentVillain.name;
+  document.getElementById("villain-img").src = currentVillain.img;
+  document.getElementById("villain-health").textContent = `Health: ${villainHealth}/${currentVillain.health}`;
+
+  document.getElementById("loot-list").innerHTML = currentHero.loot.map(item => `<li>${item}</li>`).join('');
+}
+
+// End Game
 function endGame(message) {
-  document.getElementById("result-message").textContent = message;
-  controls.classList.add("hidden");
-  result.classList.remove("hidden");
+  logMessage(message);
+  document.getElementById("attack-btn").disabled = true;
+  document.getElementById("result").textContent = message;
 }
 
-// Restart
-function restart() {
-  result.classList.add("hidden");
-  battlefield.classList.add("hidden");
-  document.querySelector(".character-selection").classList.remove("hidden");
+// Log Events
+function logMessage(msg) {
+  const logBox = document.getElementById("battle-log");
+  logBox.innerHTML += `<p>${msg}</p>`;
+  logBox.scrollTop = logBox.scrollHeight;
 }
