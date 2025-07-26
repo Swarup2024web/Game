@@ -1,152 +1,122 @@
-/* Reset & Base */
+/* Base Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: sans-serif;
 }
 
 body {
-  background: linear-gradient(to bottom right, #0a0f1f, #051226);
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #a1c4fd, #c2e9fb); /* Sky blue gradient */
   color: #fff;
+  min-height: 100vh;
   padding: 20px;
 }
 
-/* Header Styles */
-.header {
+/* Header */
+header {
+  text-align: center;
   margin-bottom: 20px;
 }
 
-.header .row1,
-.header .row2,
-.header .row3 {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 15px;
-}
-
-.row1 h1 {
+header h1 {
   font-size: 2rem;
-  color: #61dafb;
-  text-shadow: 0 0 10px #61dafb;
-  text-decoration: none;
+  background: linear-gradient(90deg, #00b4db, #0083b0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* Row 2: Profile, Messages, Notifications */
-.top-links {
+/* Stat Row */
+.stats-row {
   display: flex;
-  gap: 20px;
   justify-content: space-between;
-  width: 100%;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  gap: 10px;
 }
 
-.top-links .card-link {
-  flex: 1;
-  background: linear-gradient(to right, #0083b0, #00b4db);
-  padding: 10px 15px;
-  border-radius: 12px;
+.stat-box {
+  flex: 1 1 30%;
+  background: linear-gradient(45deg, #00c6ff, #0072ff);
+  padding: 15px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  transition: transform 0.3s;
-  box-shadow: 0 0 10px #00b4db;
+  box-shadow: 0 0 15px #00c6ff;
+  transition: transform 0.3s ease;
 }
 
-.card-link:hover {
+.stat-box:hover {
   transform: scale(1.03);
-  box-shadow: 0 0 15px #00b4db;
 }
 
-.card-link i {
-  margin-right: 10px;
+.stat-box i {
+  font-size: 1.5rem;
+  margin-right: 12px;
   color: #fff;
+  text-shadow: 0 0 5px #fff;
 }
 
-/* Row 3: Stats */
-.stats {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
+.stat-text {
+  font-size: 1.2rem;
 }
 
-.stat-item {
-  flex: 1;
-  background: linear-gradient(to right, #0f2027, #203a43);
-  padding: 10px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: inset 0 0 10px #61dafb, 0 0 10px #61dafb;
-  animation: glow 2s infinite ease-in-out alternate;
-}
-
-@keyframes glow {
-  0% {
-    box-shadow: inset 0 0 5px #61dafb, 0 0 5px #61dafb;
-  }
-  100% {
-    box-shadow: inset 0 0 20px #61dafb, 0 0 20px #61dafb;
-  }
-}
-
-.stat-item i {
-  margin-right: 8px;
-  color: #61dafb;
-}
-
-/* Main Cards (Menu) */
-.menu {
-  margin-top: 20px;
+/* Card Container */
+.card-container {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-.menu .card {
-  background: linear-gradient(to right, #1e3c72, #2a5298);
-  padding: 15px;
+/* Card */
+.card {
+  background: #0a3d62;
+  background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+  color: white;
+  padding: 12px 18px;
   border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 170, 255, 0.6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(0, 170, 255, 0.8);
+}
+
+.card-left {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  transition: transform 0.3s ease;
-  box-shadow: 0 0 10px #2a5298;
+  gap: 15px;
 }
 
-.menu .card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 15px #2a5298;
+.card-left i {
+  font-size: 1.4rem;
+  color: #fff;
+  text-shadow: 0 0 6px #fff;
 }
 
-.menu .card i {
-  margin-right: 12px;
+.card-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.card-right i {
+  color: #fff;
   font-size: 1.2rem;
-  color: #fff;
+  opacity: 0.8;
 }
 
-.menu .card span {
-  flex: 1;
-  color: #fff;
-  font-size: 1rem;
-  margin-left: 10px;
-}
-
-/* Responsive */
+/* Responsive Design */
 @media (max-width: 768px) {
-  .top-links, .stats {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
+  .stats-row {
+    flex-direction: column;
   }
 
-  .card-link, .stat-item {
-    flex: 1 1 45%;
+  .stat-box {
+    flex: 1 1 100%;
   }
 }
