@@ -1,134 +1,132 @@
-/* General Styles */
-body {
+/* Reset & Font */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+body {
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
   color: white;
+  padding: 10px;
 }
 
 /* Header Styles */
 header {
   background: linear-gradient(to right, #00c6ff, #0072ff);
-  padding: 1rem;
-  text-align: center;
-  font-size: 2rem;
-  font-weight: bold;
-  color: white;
-  text-shadow: 0 0 8px #fff;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 15px #00f0ff;
 }
 
-/* Sub Header Styles */
-.sub-header, .stats-bar {
+/* Row 1: Site Name */
+.site-name {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 0 10px #00f0ff;
+}
+
+/* Row 2: Profile + Notifications */
+.top-icons {
   display: flex;
   justify-content: space-around;
-  align-items: center;
-  padding: 0.8rem;
-  background: #111;
-  border-bottom: 1px solid #444;
-  flex-wrap: wrap;
+  margin: 10px 0;
 }
-
-.sub-header div, .stats-bar div {
+.top-icons .icon-box {
   display: flex;
   align-items: center;
-  font-size: 1rem;
-  gap: 8px;
-  color: #fff;
+  background: #222;
+  padding: 8px 12px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #00e1ff;
+  transition: 0.3s ease;
+}
+.top-icons .icon-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #00ffff;
+}
+.icon-box i {
+  margin-right: 8px;
+  color: #00ffff;
+}
+.count {
+  background: crimson;
+  border-radius: 50%;
+  padding: 2px 8px;
+  font-size: 12px;
+  margin-left: 6px;
 }
 
-.sub-header i, .stats-bar i {
-  font-size: 1.3rem;
-  color: #ffd700;
-  text-shadow: 0 0 5px yellow;
-}
-
-.sub-header span.count, .stats-bar span.count {
-  font-weight: bold;
-  font-size: 1.1rem;
-  color: #00ffea;
-}
-
-/* Stats Bar Animation */
-.stats-bar i {
-  animation: glow-pulse 1.8s infinite ease-in-out;
-}
-
-/* Card Container */
-.card-container {
+/* Row 3: Stats */
+.stats {
   display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  padding: 1.5rem;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+.stats .stat-box {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #0fffc1, #3bff3b);
+  box-shadow: 0 0 10px #00ffb3, 0 0 5px #00ffaa inset;
+  animation: flicker 1.5s infinite alternate;
+}
+.stats i {
+  margin-right: 6px;
+}
+@keyframes flicker {
+  0% {
+    box-shadow: 0 0 10px #00ffb3, 0 0 5px #00ffaa inset;
+  }
+  100% {
+    box-shadow: 0 0 20px #00ffb3, 0 0 10px #00ffaa inset;
+  }
 }
 
-/* Individual Card */
+/* Cards Section */
+.dashboard {
+  margin-top: 20px;
+}
 .card {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, #00c6ff, #ff6a00);
-  border-radius: 12px;
-  padding: 1rem 1.5rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d);
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 14px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
 }
-
 .card:hover {
   transform: scale(1.03);
-  box-shadow: 0 0 15px #ffe600;
+  box-shadow: 0 0 25px #fff600;
 }
-
-/* Card Content */
 .card i {
-  font-size: 1.8rem;
-  color: #fff;
-  text-shadow: 0 0 10px #fff000;
-  animation: icon-flare 2s infinite ease-in-out;
+  font-size: 24px;
+  color: #ffffff;
+  text-shadow: 0 0 8px #ffffff;
 }
-
 .card span {
-  flex-grow: 1;
-  margin-left: 1rem;
-  font-size: 1.2rem;
-  color: #fff;
+  flex: 1;
+  margin-left: 15px;
+  font-size: 18px;
+  font-weight: bold;
+}
+.card a {
+  font-size: 20px;
+  color: #ffffff;
+  text-decoration: none;
+  margin-left: auto;
 }
 
-.card .arrow {
-  font-size: 1.4rem;
-  color: #fff;
-  text-shadow: 0 0 8px #00ffe5;
-}
-
-/* Animations */
-@keyframes glow-pulse {
-  0%, 100% {
-    text-shadow: 0 0 8px #ff0, 0 0 12px #f00;
-  }
-  50% {
-    text-shadow: 0 0 16px #0ff, 0 0 24px #0f0;
-  }
-}
-
-@keyframes icon-flare {
-  0%, 100% {
-    text-shadow: 0 0 6px #ff0;
-  }
-  50% {
-    text-shadow: 0 0 16px #f00;
-  }
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .sub-header, .stats-bar {
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-
+/* Responsive: No collapse on mobile */
+@media screen and (max-width: 768px) {
   .card {
     flex-direction: row;
-    justify-content: space-between;
   }
-}
+  }
