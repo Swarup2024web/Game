@@ -1,108 +1,122 @@
-/* Reset and base styling */
+/* Reset and Base */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom right, #c2f0ff, #e0f7ff);
-  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+  color: white;
   padding: 20px;
 }
 
-/* Website Title */
-header {
+/* Site Title */
+.site-title {
+  font-size: 2.5rem;
   text-align: center;
   margin-bottom: 30px;
-}
-header h1 {
-  font-size: 3rem;
-  background: linear-gradient(to right, #00aaff, #33ccff);
+  background: linear-gradient(to right, crimson, skyblue, limegreen);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(255,255,255,0.2);
 }
 
-/* Stats Section */
-.stats {
+/* Player Stats Row */
+.stats-row {
   display: flex;
-  justify-content: space-between;
-  background: #ffffffd9;
-  padding: 15px 20px;
-  margin-bottom: 25px;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  justify-content: space-around;
   flex-wrap: nowrap;
-  overflow-x: auto;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  gap: 10px;
 }
+
 .stat-item {
   display: flex;
-  align-items: center;
-  font-size: 1rem;
-  color: #d62222;
-  margin-right: 20px;
-  white-space: nowrap;
-}
-.stat-item i {
-  margin-right: 8px;
-}
-
-/* Card Container */
-.card-container {
-  display: flex;
   flex-direction: column;
-  gap: 15px;
+  align-items: center;
+  font-size: 0.9rem;
+  flex: 1;
+  min-width: 60px;
 }
 
-/* Individual Card */
+.stat-item i {
+  font-size: 1.8rem;
+  color: crimson;
+  margin-bottom: 5px;
+  text-shadow: 0 0 8px crimson;
+}
+
+/* Cards */
 .card {
+  background: linear-gradient(to right, #001f3f, #005f7f);
+  border-radius: 15px;
+  padding: 15px 20px;
+  margin: 10px 0;
   display: flex;
   align-items: center;
-  padding: 15px 20px;
-  background: linear-gradient(to right, #e6f7ff, #ccf2ff);
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 128, 255, 0.2);
+  justify-content: space-between;
   text-decoration: none;
-  color: #000;
+  color: white;
+  box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
   transition: transform 0.2s ease;
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
 }
+
 .card:hover {
   transform: scale(1.02);
 }
-.card i {
-  font-size: 1.4rem;
-  margin-right: 12px;
-}
-.card span {
-  font-size: 1.1rem;
-  font-weight: 500;
+
+/* Icon and Label on Left */
+.card-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
-/* Badges */
+.card-left i {
+  font-size: 1.5rem;
+}
+
+/* Chevron on Right */
+.card-right i {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+/* Notification & Message Badges */
 .badge {
-  background-color: red;
+  background: crimson;
   color: white;
-  padding: 2px 7px;
+  border-radius: 50%;
+  padding: 4px 8px;
   font-size: 0.75rem;
-  border-radius: 12px;
-  margin-left: auto;
+  margin-left: 5px;
 }
 
-/* Link Cleanup */
+/* Link Styling */
 a {
   text-decoration: none;
-  color: inherit;
 }
 
-/* Responsive Tweaks */
-@media (max-width: 600px) {
-  .stat-item {
-    font-size: 0.9rem;
+/* Responsiveness */
+@media (max-width: 768px) {
+  .stats-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: start;
   }
-  .card span {
-    font-size: 1rem;
+
+  .card {
+    width: 100%;
+    margin: 12px 0;
+  }
+
+  .site-title {
+    font-size: 2rem;
   }
 }
