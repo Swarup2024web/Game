@@ -1,4 +1,3 @@
-/* Reset and Base */
 * {
   margin: 0;
   padding: 0;
@@ -7,63 +6,65 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-  color: white;
-  padding: 20px;
+  background: linear-gradient(to bottom, #cceeff, #e6f7ff);
+  padding: 1rem;
+  color: #000;
 }
 
-/* Site Title */
-.site-title {
+header .game-title {
   font-size: 2.5rem;
   text-align: center;
-  margin-bottom: 30px;
-  background: linear-gradient(to right, crimson, skyblue, limegreen);
+  background: linear-gradient(to right, #00c6ff, #0072ff, #ff00cc);
+  background-clip: text;
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: bold;
-  text-shadow: 0 0 10px rgba(255,255,255,0.2);
+  color: transparent;
+  margin-bottom: 1.5rem;
 }
 
-/* Player Stats Row */
-.stats-row {
+.player-stats {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 1rem;
   flex-wrap: nowrap;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 15px;
-  border-radius: 15px;
-  margin-bottom: 30px;
-  gap: 10px;
+  background: #f2fbff;
+  padding: 10px;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 10px rgba(0, 170, 255, 0.3);
 }
 
-.stat-item {
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem;
+  font-weight: bold;
+  background: #e6faff;
+  border-radius: 8px;
+}
+
+.stat i {
+  color: #e60000;
+  font-size: 1.1rem;
+}
+
+.card-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  font-size: 0.9rem;
-  flex: 1;
-  min-width: 60px;
+  gap: 1rem;
 }
 
-.stat-item i {
-  font-size: 1.8rem;
-  color: crimson;
-  margin-bottom: 5px;
-  text-shadow: 0 0 8px crimson;
-}
-
-/* Cards */
 .card {
-  background: linear-gradient(to right, #001f3f, #005f7f);
-  border-radius: 15px;
-  padding: 15px 20px;
-  margin: 10px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: linear-gradient(to right, #b3e0ff, #e6f7ff);
+  padding: 1rem;
+  border-radius: 12px;
   text-decoration: none;
-  color: white;
-  box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
+  color: #000;
+  box-shadow: 0 5px 10px rgba(0, 119, 190, 0.2);
+  position: relative;
   transition: transform 0.2s ease;
 }
 
@@ -71,41 +72,35 @@ body {
   transform: scale(1.02);
 }
 
-/* Icon and Label on Left */
-.card-left {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.card-left i {
-  font-size: 1.5rem;
-}
-
-/* Chevron on Right */
-.card-right i {
+.card i {
+  margin-right: 1rem;
   font-size: 1.2rem;
-  color: #ccc;
 }
 
-/* Notification & Message Badges */
+.card span {
+  flex: 1;
+  text-align: left;
+  font-weight: 500;
+}
+
+.arrow {
+  margin-left: auto;
+  color: #333;
+}
+
 .badge {
-  background: crimson;
+  background: red;
   color: white;
+  padding: 2px 6px;
   border-radius: 50%;
-  padding: 4px 8px;
-  font-size: 0.75rem;
-  margin-left: 5px;
+  font-size: 0.8rem;
+  position: absolute;
+  top: 10px;
+  right: 35px;
 }
 
-/* Link Styling */
-a {
-  text-decoration: none;
-}
-
-/* Responsiveness */
 @media (max-width: 768px) {
-  .stats-row {
+  .player-stats {
     flex-wrap: nowrap;
     overflow-x: auto;
     justify-content: start;
@@ -113,10 +108,6 @@ a {
 
   .card {
     width: 100%;
-    margin: 12px 0;
-  }
-
-  .site-title {
-    font-size: 2rem;
+    margin: 0 auto;
   }
 }
