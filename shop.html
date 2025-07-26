@@ -3,61 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Shop - Gods in War</title>
+  <title>Gods in War - Shop</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/a2e0e6adcf.js" crossorigin="anonymous"></script>
   <style>
+    /* Shop Container */
     .shop-container {
-      padding: 20px;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    .shop-title {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 20px;
-      color: #0072ff;
-    }
-
-    .items-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 20px;
+      padding: 20px;
     }
 
-    .item-card {
-      background: #fff;
+    .shop-item {
+      background: #ffffff;
       border-radius: 12px;
-      box-shadow: 0 0 10px rgba(173, 216, 230, 0.4);
       padding: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       text-align: center;
+      transition: transform 0.3s ease;
     }
 
-    .item-card img {
-      width: 100%;
-      max-height: 150px;
+    .shop-item:hover {
+      transform: scale(1.02);
+    }
+
+    .shop-item img {
+      width: 100px;
+      height: 100px;
       object-fit: cover;
-      border-radius: 8px;
+      border-radius: 50%;
+      margin-bottom: 10px;
     }
 
     .item-name {
-      margin: 10px 0;
       font-weight: bold;
-      font-size: 1.2rem;
-      color: #333;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
     }
 
     .item-info {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 10px;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 10px;
       font-size: 1rem;
     }
 
     .item-info i {
       margin-right: 5px;
+    }
+
+    .buy-btn {
+      background: #0072ff;
+      color: white;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .buy-btn:hover {
+      background: #005ed3;
+    }
+
+    .message {
+      margin-top: 10px;
+      color: red;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .shop-container {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
   </style>
 </head>
@@ -81,108 +102,78 @@
 
     <!-- Player Stats -->
     <div class="stats-row">
-      <div class="stat"><i class="fas fa-bolt"></i><span>9540</span></div>
+      <div class="stat"><i class="fas fa-bolt"></i><span id="power">9540</span></div>
       <div class="stat"><i class="fas fa-fire"></i><span>12300</span></div>
-      <div class="stat"><i class="fas fa-coins"></i><span>212K</span></div>
+      <div class="stat"><i class="fas fa-coins"></i><span id="coins">500</span></div>
     </div>
   </header>
 
-  <!-- Shop Section -->
-  <section class="shop-container">
-    <h2 class="shop-title">Shop</h2>
-    <div class="items-grid">
-      <!-- Item 1 -->
-      <div class="item-card">
-        <img src="https://via.placeholder.com/250x150" alt="Sword">
-        <div class="item-name">Flame Sword</div>
-        <div class="item-info">
-          <span><i class="fas fa-bolt"></i>+250</span>
-          <span><i class="fas fa-coins"></i> 1500</span>
-        </div>
-      </div>
-      <!-- Item 2 -->
-      <div class="item-card">
-        <img src="https://via.placeholder.com/250x150" alt="Helmet">
-        <div class="item-name">Warrior Helmet</div>
-        <div class="item-info">
-          <span><i class="fas fa-fire"></i>+100</span>
-          <span><i class="fas fa-coins"></i> 900</span>
-        </div>
-      </div>
-      <!-- Item 3 -->
-      <div class="item-card">
-        <img src="https://via.placeholder.com/250x150" alt="Shield">
-        <div class="item-name">Iron Shield</div>
-        <div class="item-info">
-          <span><i class="fas fa-fire"></i>+120</span>
-          <span><i class="fas fa-coins"></i> 1200</span>
-        </div>
-      </div>
-      <!-- Item 4 -->
-      <div class="item-card">
-        <img src="https://via.placeholder.com/250x150" alt="Potion">
-        <div class="item-name">Health Potion</div>
-        <div class="item-info">
-          <span><i class="fas fa-fire"></i>+300</span>
-          <span><i class="fas fa-coins"></i> 700</span>
-        </div>
-      </div>
-      <!-- Item 5 -->
-      <div class="item-card">
-        <img src="https://via.placeholder.com/250x150" alt="Bow">
-        <div class="item-name">Shadow Bow</div>
-        <div class="item-info">
-          <span><i class="fas fa-bolt"></i>+180</span>
-          <span><i class="fas fa-coins"></i> 1100</span>
-        </div>
-      </div>
-      <!-- Item 6 -->
-      <div class="item-card">
-        <img src="https://via.placeholder.com/250x150" alt="Boots">
-        <div class="item-name">Speed Boots</div>
-        <div class="item-info">
-          <span><i class="fas fa-bolt"></i>+100</span>
-          <span><i class="fas fa-coins"></i> 800</span>
-        </div>
-      </div>
-      <!-- Item 7 -->
-      <div class="item-card">
-        <img src="https://via.placeholder.com/250x150" alt="Ring">
-        <div class="item-name">Mystic Ring</div>
-        <div class="item-info">
-          <span><i class="fas fa-bolt"></i>+200</span>
-          <span><i class="fas fa-coins"></i> 1600</span>
-        </div>
-      </div>
-      <!-- Item 8 (real money) -->
-      <div class="item-card">
-        <img src="https://via.placeholder.com/250x150" alt="Dragon Pack">
-        <div class="item-name">Dragon Pack</div>
-        <div class="item-info">
-          <span><i class="fas fa-bolt"></i>+500</span>
-          <span><i class="fas fa-dollar-sign"></i> 2.99</span>
-        </div>
-      </div>
-      <!-- Item 9 (real money) -->
-      <div class="item-card">
-        <img src="https://via.placeholder.com/250x150" alt="Elite Pack">
-        <div class="item-name">Elite Warrior</div>
-        <div class="item-info">
-          <span><i class="fas fa-fire"></i>+600</span>
-          <span><i class="fas fa-dollar-sign"></i> 4.99</span>
-        </div>
-      </div>
-      <!-- Item 10 (real money) -->
-      <div class="item-card">
-        <img src="https://via.placeholder.com/250x150" alt="Chest">
-        <div class="item-name">Treasure Chest</div>
-        <div class="item-info">
-          <span><i class="fas fa-coins"></i>+10000</span>
-          <span><i class="fas fa-dollar-sign"></i> 1.99</span>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Shop Items -->
+  <div class="shop-container" id="shop-items"></div>
 
+  <script>
+    const player = {
+      power: 9540,
+      coins: 500
+    };
+
+    const items = [
+      { name: "Sword of Flames", power: 250, cost: 100, img: "https://via.placeholder.com/100", currency: "coins" },
+      { name: "Shadow Cloak", power: 180, cost: 3.99, img: "https://via.placeholder.com/100", currency: "cash" },
+      { name: "Titan Armor", power: 300, cost: 200, img: "https://via.placeholder.com/100", currency: "coins" },
+      { name: "Phoenix Feather", power: 220, cost: 1.99, img: "https://via.placeholder.com/100", currency: "cash" },
+      { name: "Healing Potion", power: 50, cost: 50, img: "https://via.placeholder.com/100", currency: "coins" },
+      { name: "Silver Dagger", power: 100, cost: 70, img: "https://via.placeholder.com/100", currency: "coins" },
+      { name: "Magic Orb", power: 190, cost: 4.99, img: "https://via.placeholder.com/100", currency: "cash" },
+      { name: "Thunder Ring", power: 210, cost: 120, img: "https://via.placeholder.com/100", currency: "coins" },
+      { name: "Warrior Boots", power: 130, cost: 90, img: "https://via.placeholder.com/100", currency: "coins" },
+      { name: "Iron Shield", power: 160, cost: 100, img: "https://via.placeholder.com/100", currency: "coins" },
+    ];
+
+    // Sort by power descending
+    items.sort((a, b) => b.power - a.power);
+
+    const shopContainer = document.getElementById('shop-items');
+
+    items.forEach((item, index) => {
+      const card = document.createElement('div');
+      card.className = 'shop-item';
+
+      card.innerHTML = `
+        <img src="${item.img}" alt="${item.name}" />
+        <div class="item-name">${item.name}</div>
+        <div class="item-info">
+          <div><i class="fas fa-bolt"></i>${item.power}</div>
+          <div>
+            ${item.currency === 'coins' 
+              ? `<i class="fas fa-coins"></i>${item.cost}` 
+              : `<i class="fas fa-dollar-sign"></i>${item.cost}`}
+          </div>
+        </div>
+        ${item.currency === 'coins' 
+          ? `<button class="buy-btn" onclick="buyItem(${index})">Buy</button>
+             <div class="message" id="msg-${index}"></div>`
+          : `<button class="buy-btn">Buy</button>`}
+      `;
+
+      shopContainer.appendChild(card);
+    });
+
+    function buyItem(index) {
+      const item = items[index];
+      const msg = document.getElementById(`msg-${index}`);
+      msg.textContent = '';
+
+      if (player.coins >= item.cost) {
+        player.coins -= item.cost;
+        document.getElementById('coins').textContent = player.coins;
+        msg.style.color = 'green';
+        msg.textContent = 'Purchased!';
+      } else {
+        msg.style.color = 'red';
+        msg.textContent = 'Not enough coins';
+      }
+    }
+  </script>
 </body>
-            </html>
+</html>
