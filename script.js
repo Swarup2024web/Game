@@ -1,40 +1,19 @@
-// Set initial counts for messages and notifications
-const data = {
-  messages: 3,
-  notifications: 5
-};
+// Sample script to update notification and message badge counts
+document.addEventListener('DOMContentLoaded', () => {
+  // Simulate fetching data
+  const messageCount = 3;
+  const notificationCount = 5;
 
-// Function to update badges
-function updateBadges() {
-  const msgBadge = document.getElementById("message-badge");
-  const notifBadge = document.getElementById("notification-badge");
+  const messageBadge = document.querySelector('#message-badge');
+  const notificationBadge = document.querySelector('#notification-badge');
 
-  if (msgBadge) {
-    msgBadge.textContent = data.messages > 0 ? data.messages : '';
-    msgBadge.style.display = data.messages > 0 ? 'inline-block' : 'none';
+  if (messageBadge) {
+    messageBadge.textContent = messageCount;
+    messageBadge.style.display = messageCount > 0 ? 'inline-block' : 'none';
   }
 
-  if (notifBadge) {
-    notifBadge.textContent = data.notifications > 0 ? data.notifications : '';
-    notifBadge.style.display = data.notifications > 0 ? 'inline-block' : 'none';
+  if (notificationBadge) {
+    notificationBadge.textContent = notificationCount;
+    notificationBadge.style.display = notificationCount > 0 ? 'inline-block' : 'none';
   }
-}
-
-// Function to handle card clicks
-function setupCardClicks() {
-  const cards = document.querySelectorAll(".card");
-  cards.forEach(card => {
-    card.addEventListener("click", () => {
-      const label = card.querySelector(".card-label");
-      if (label) {
-        alert(`Opening ${label.textContent.trim()}...`);
-      }
-    });
-  });
-}
-
-// Initialize everything on DOM load
-document.addEventListener("DOMContentLoaded", () => {
-  updateBadges();
-  setupCardClicks();
 });
