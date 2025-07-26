@@ -81,7 +81,7 @@ a {
 .stat {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
   background: #fff;
   padding: 10px 15px;
   border-radius: 12px;
