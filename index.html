@@ -3,56 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Legends vs Shadows</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Myth Battles</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
 
   <header>
-    <h1>⚔️ Legends vs Shadows ⚔️</h1>
+    <h1>⚔️ MYTH BATTLES ⚔️</h1>
+    <p>Mythological Heroes vs Evil Forces</p>
   </header>
 
-  <main>
-    <section class="character-selection">
-      <h2>Select Your Hero</h2>
-      <div class="heroes" id="hero-list">
-        <!-- Heroes will be loaded here from JS -->
+  <section class="stats">
+    <div>🧠 EXP: <span id="exp">0</span></div>
+    <div>💰 Gold: <span id="gold">0</span></div>
+    <div>🏆 Wins: <span id="wins">0</span></div>
+  </section>
+
+  <section class="battle-area">
+    <div class="hero-section">
+      <h2>🧙‍♂️ Your Hero</h2>
+      <select id="heroSelect">
+        <option value="rama">Rama</option>
+        <option value="krishna">Krishna</option>
+        <option value="durga">Durga</option>
+        <option value="hanuman">Hanuman</option>
+      </select>
+      <img id="hero-img" src="" alt="Hero" />
+      <div class="health-bar">
+        <div class="bar" id="hero-health-bar"></div>
       </div>
-    </section>
+    </div>
 
-    <section class="battlefield hidden" id="battlefield">
-      <div class="player-side">
-        <h3 id="hero-name">Hero</h3>
-        <img id="hero-img" src="" alt="Hero" class="char-img">
-        <div class="health-bar">
-          <div class="health" id="hero-health"></div>
-        </div>
+    <div class="vs">VS</div>
+
+    <div class="villain-section">
+      <h2>👹 Villain</h2>
+      <p id="villain-name">?</p>
+      <img id="villain-img" src="" alt="Villain" />
+      <div class="health-bar">
+        <div class="bar" id="villain-health-bar"></div>
       </div>
+    </div>
+  </section>
 
-      <div class="versus">VS</div>
-
-      <div class="enemy-side">
-        <h3 id="villain-name">Villain</h3>
-        <img id="villain-img" src="" alt="Villain" class="char-img">
-        <div class="health-bar">
-          <div class="health" id="villain-health"></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="controls hidden" id="controls">
-      <button onclick="attack()">🗡️ Attack</button>
-      <button onclick="defend()">🛡️ Defend</button>
-    </section>
-
-    <section class="result hidden" id="result">
-      <h2 id="result-message">Victory!</h2>
-      <button onclick="restart()">Play Again</button>
-    </section>
-  </main>
+  <section class="controls">
+    <button id="attackBtn">⚔️ Attack</button>
+    <button id="specialBtn">🔥 Special Power</button>
+    <p id="message"></p>
+  </section>
 
   <footer>
-    <p>© 2025 Swarup’s Mythic Games</p>
+    <p>© 2025 Myth Battles. All rights reserved.</p>
   </footer>
 
   <script src="script.js"></script>
