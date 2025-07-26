@@ -1,168 +1,167 @@
-/* Reset and base */
+/* General Reset and Body */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-  background: linear-gradient(135deg, #d0f0ff, #f8fcff);
-  color: #222;
-  padding: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom right, #0a1e3a, #1e3c72);
+  color: #fff;
+  padding: 20px;
 }
 
-/* Header Styles */
-.header {
-  margin-bottom: 20px;
-}
-
-.header-title {
-  font-size: 28px;
-  font-weight: bold;
+/* Website Title */
+.website-title {
   text-align: center;
-  background: linear-gradient(to right, #00bfff, #1e90ff);
+  font-size: 2.5rem;
+  background: linear-gradient(to right, #00d2ff, #3a47d5);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 10px rgba(30, 144, 255, 0.5);
-  margin-bottom: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 213, 255, 0.3);
 }
 
-/* XP Progress Bar */
-.level-progress {
+/* Level Progress Bar */
+.level-bar {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 15px;
+  justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 8px rgba(0, 213, 255, 0.4);
 }
 
 .level-label {
   font-weight: bold;
-  color: #004466;
+  color: #00d2ff;
+  margin: 0 10px;
+  font-size: 1rem;
 }
 
 .progress-container {
   flex: 1;
-  height: 16px;
-  background-color: #cceeff;
-  border-radius: 12px;
+  margin: 0 10px;
+  background-color: #1f1f1f;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: inset 0 0 5px #66ccff;
+  height: 12px;
+  box-shadow: inset 0 0 5px rgba(255,255,255,0.1);
 }
 
 .progress-bar {
   height: 100%;
   width: 0%;
-  background: linear-gradient(to right, #00ccff, #0077ff);
-  transition: width 1.2s ease-in-out;
-  border-radius: 12px;
-  box-shadow: 0 0 8px #00ccff;
+  background: linear-gradient(90deg, #00d2ff, #3a47d5);
+  animation: fillProgress 2s ease forwards;
 }
 
-/* Stats Row */
-.stats-row {
+@keyframes fillProgress {
+  from { width: 0%; }
+  to { width: 80%; } /* Change this as needed */
+}
+
+/* Player Stats Row */
+.player-stats {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-top: 10px;
   margin-bottom: 20px;
+  flex-wrap: nowrap;
+  gap: 10px;
 }
 
-.stat-item {
+.stat {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 10px 15px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.stat i {
+  font-size: 1.4rem;
+  color: #ff4d4d;
+  animation: glow 2s infinite ease-in-out;
+}
+
+@keyframes glow {
+  0% { text-shadow: 0 0 5px #ff4d4d; }
+  50% { text-shadow: 0 0 15px #ff4d4d; }
+  100% { text-shadow: 0 0 5px #ff4d4d; }
+}
+
+/* Cards Layout */
+.card-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  color: #004466;
-  text-shadow: 0 0 3px rgba(0, 128, 255, 0.3);
+  gap: 20px;
 }
 
-.stat-item i {
-  font-size: 22px;
-  margin-bottom: 4px;
-  animation: pulse 2s infinite ease-in-out;
-}
-
-.stat-item.power i { color: red; }
-.stat-item.xp i { color: orange; }
-.stat-item.coins i { color: goldenrod; }
-.stat-item.gems i { color: mediumorchid; }
-
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.15); opacity: 0.8; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-/* Cards */
 .card {
-  background: #ffffff;
-  padding: 14px 18px;
-  margin-bottom: 12px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  border-radius: 14px;
-  box-shadow: 0 4px 8px rgba(0, 180, 255, 0.1);
+  align-items: center;
+  background: linear-gradient(to right, #1a2a6c, #00d2ff);
+  color: #fff;
+  padding: 15px 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 213, 255, 0.3);
+  text-decoration: none;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
-  transform: scale(1.01);
-  box-shadow: 0 6px 12px rgba(0, 180, 255, 0.2);
+  transform: scale(1.02);
+  box-shadow: 0 0 25px rgba(0, 213, 255, 0.4);
 }
 
 .card-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 15px;
 }
 
-.card-left i {
-  font-size: 20px;
-  color: #1e90ff;
+.card i {
+  font-size: 1.5rem;
+  color: #fff;
 }
 
-.card a {
+.card-label {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.card-chevron {
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+/* Remove underline from links */
+a {
   text-decoration: none;
-  color: #1e90ff;
-}
-
-.card-right i {
-  font-size: 16px;
-  color: #aaa;
-}
-
-/* Badges for Message/Notification */
-.badge {
-  background: crimson;
-  color: white;
-  padding: 2px 6px;
-  border-radius: 8px;
-  font-size: 10px;
-  margin-left: 4px;
-  display: none;
-  vertical-align: top;
 }
 
 /* Responsive */
-@media (max-width: 600px) {
-  .stats-row {
-    flex-direction: column;
-    gap: 10px;
+@media screen and (max-width: 600px) {
+  .player-stats {
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
   }
 
   .card {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+    padding: 12px 15px;
   }
-
-  .level-progress {
-    flex-direction: column;
-  }
-
-  .progress-container {
-    width: 100%;
-  }
-    }
+                              }
