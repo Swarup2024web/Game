@@ -1,128 +1,133 @@
-/* Global styles */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
+/* Reset and global styles */
 body {
+  margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom right, skyblue, black);
+  background: linear-gradient(to bottom right, #001f3f, #003366);
   color: #fff;
-  padding: 1rem;
 }
 
-/* Site name */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Website header */
 .header {
   text-align: center;
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  padding: 20px 10px;
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  color: white;
+  text-shadow: 0 0 10px #00e6ff;
 }
 
-.header a {
-  text-decoration: none;
-  color: #fff;
-}
-
-/* Player Stats */
+/* Player stats bar */
 .stats-row {
   display: flex;
-  justify-content: space-around;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 1rem;
-  margin-bottom: 2rem;
-  gap: 10px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  background: rgba(0, 51, 102, 0.5);
+  padding: 15px 10px;
+  border-bottom: 2px solid #00c6ff;
 }
 
 .stat-item {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 1rem;
-  background: rgba(255, 255, 255, 0.08);
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-  backdrop-filter: blur(8px);
-  animation: glow 3s infinite ease-in-out;
+  gap: 10px;
+  font-size: 1.1rem;
+  margin: 8px;
+  padding: 10px 15px;
+  background: rgba(0, 204, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 0 10px #00c6ff66;
+  transition: transform 0.3s;
 }
 
 .stat-item i {
-  color: gold;
-  filter: drop-shadow(0 0 4px yellow);
+  color: #00e6ff;
+  text-shadow: 0 0 5px #00ffff;
 }
 
-@keyframes glow {
-  0% { box-shadow: 0 0 5px cyan; }
-  50% { box-shadow: 0 0 15px lime; }
-  100% { box-shadow: 0 0 5px cyan; }
+.stat-item:hover {
+  transform: scale(1.05);
 }
 
-/* Card layout */
-.card-grid {
+/* Cards container */
+.cards-container {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  padding: 20px;
 }
 
+/* Individual card */
 .card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(to right, crimson, darkgreen);
-  border-radius: 12px;
-  padding: 1rem;
-  transition: transform 0.2s ease;
-  box-shadow: 0 0 10px #00000055;
-  text-decoration: none;
-  color: #fff;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #00c6ff, #0072ff);
+  color: white;
+  font-size: 1.1rem;
+  box-shadow: 0 0 12px #00e6ffaa;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 
 .card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 15px #00ffffaa;
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px #00e6ff;
 }
 
 .card .left {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 14px;
 }
 
 .card i {
-  font-size: 1.5rem;
-}
-
-/* Badge styling */
-.badge {
-  background: red;
+  font-size: 1.4rem;
   color: #fff;
-  padding: 2px 6px;
+  text-shadow: 0 0 6px #00e6ff;
+}
+
+/* Notification badge */
+.badge {
+  background-color: red;
+  color: white;
   font-size: 0.75rem;
-  border-radius: 10px;
-  margin-left: 6px;
-  animation: pulse 1.5s infinite;
+  border-radius: 50%;
+  padding: 4px 8px;
+  margin-left: 4px;
+  font-weight: bold;
 }
 
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-  }
+/* Chevron icon */
+.card .chevron {
+  font-size: 1.2rem;
+  color: #fff;
 }
 
-/* Responsive layout */
-@media (min-width: 600px) {
-  .card-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
+/* Responsive enhancements */
+@media screen and (max-width: 480px) {
   .header {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
+  }
+
+  .stat-item {
+    font-size: 1rem;
+    padding: 8px 12px;
+  }
+
+  .card {
+    font-size: 1rem;
+    padding: 12px 14px;
+  }
+
+  .card i {
+    font-size: 1.2rem;
   }
 }
