@@ -1,136 +1,53 @@
-// Mythological Heroes and Villains Data
-const heroes = [
-  {
-    name: "Arjuna",
-    img: "assets/arjuna.png",
-    maxHealth: 120,
-    attack: 25,
-    xp: 0,
-    level: 1,
-    loot: [],
-  },
-  {
-    name: "Hanuman",
-    img: "assets/hanuman.png",
-    maxHealth: 150,
-    attack: 20,
-    xp: 0,
-    level: 1,
-    loot: [],
-  },
-  {
-    name: "Durga",
-    img: "assets/durga.png",
-    maxHealth: 130,
-    attack: 22,
-    xp: 0,
-    level: 1,
-    loot: [],
-  },
-];
+// script.js
 
-const villains = [
-  { name: "Ravana", img: "assets/ravana.png", health: 100, attack: 20 },
-  { name: "Mahishasura", img: "assets/mahishasura.png", health: 90, attack: 18 },
-  { name: "Bakasura", img: "assets/bakasura.png", health: 80, attack: 15 },
-];
+document.addEventListener("DOMContentLoaded", () => {
+  // Navigation handling
+  const navLinks = document.querySelectorAll(".nav-link");
 
-let currentHero = null;
-let currentVillain = null;
-let heroHealth = 0;
-let villainHealth = 0;
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const sectionId = link.getAttribute("data-section");
+      loadSection(sectionId);
+    });
+  });
 
-// Hero Selection
-function selectHero(index) {
-  currentHero = JSON.parse(JSON.stringify(heroes[index]));
-  heroHealth = currentHero.maxHealth;
-  document.getElementById("hero-section").classList.add("hidden");
-  document.getElementById("battle-section").classList.remove("hidden");
-  nextVillain();
-  updateBattleUI();
-}
+  function loadSection(sectionId) {
+    const sections = document.querySelectorAll(".section");
+    sections.forEach((sec) => sec.classList.add("hidden"));
 
-// Next Villain Loader
-function nextVillain() {
-  if (villains.length === 0) {
-    endGame("🏆 All demons defeated! You are victorious!");
-    return;
-  }
-  currentVillain = villains.shift();
-  villainHealth = currentVillain.health;
-  logMessage(`⚔️ ${currentVillain.name} appears! Prepare for battle!`);
-  updateBattleUI();
-}
-
-// Battle Handler
-function attack() {
-  if (!currentHero || !currentVillain) return;
-
-  // Hero attacks villain
-  let damageToVillain = currentHero.attack + Math.floor(Math.random() * 10);
-  villainHealth -= damageToVillain;
-  logMessage(`🗡️ ${currentHero.name} strikes ${currentVillain.name} for ${damageToVillain} damage.`);
-
-  // Villain attacks hero
-  let damageToHero = currentVillain.attack + Math.floor(Math.random() * 5);
-  heroHealth -= damageToHero;
-  logMessage(`💥 ${currentVillain.name} hits back for ${damageToHero} damage.`);
-
-  if (villainHealth <= 0) {
-    logMessage(`✅ ${currentVillain.name} defeated!`);
-    gainXP(20);
-    collectLoot(currentVillain.name);
-    nextVillain();
-  } else if (heroHealth <= 0) {
-    endGame("💀 You have fallen in battle. Evil prevails.");
+    const target = document.getElementById(sectionId);
+    if (target) target.classList.remove("hidden");
   }
 
-  updateBattleUI();
-}
-
-// XP and Level System
-function gainXP(amount) {
-  currentHero.xp += amount;
-  logMessage(`🔰 Gained ${amount} XP!`);
-  if (currentHero.xp >= currentHero.level * 50) {
-    currentHero.level++;
-    currentHero.maxHealth += 20;
-    currentHero.attack += 5;
-    heroHealth = currentHero.maxHealth;
-    logMessage(`🆙 Level up! You are now Level ${currentHero.level}`);
+  // Sample notifications
+  const notifyBtn = document.getElementById("notifyBtn");
+  if (notifyBtn) {
+    notifyBtn.addEventListener("click", () => {
+      alert("🔔 You have 3 new rewards and 1 message!");
+    });
   }
-}
 
-// Loot System
-function collectLoot(villainName) {
-  const item = `Artifact of ${villainName}`;
-  currentHero.loot.push(item);
-  logMessage(`🎁 Loot found: ${item}`);
-}
+  // Daily reward logic
+  const rewardBtn = document.getElementById("dailyRewardBtn");
+  if (rewardBtn) {
+    rewardBtn.addEventListener("click", () => {
+      rewardBtn.disabled = true;
+      rewardBtn.innerText = "Reward Claimed!";
+      alert("You received +100 gold and +10 power!");
+    });
+  }
 
-// UI Update
-function updateBattleUI() {
-  document.getElementById("hero-name").textContent = currentHero.name + ` (Lvl ${currentHero.level})`;
-  document.getElementById("hero-img").src = currentHero.img;
-  document.getElementById("hero-health").textContent = `Health: ${heroHealth}/${currentHero.maxHealth}`;
-
-  document.getElementById("villain-name").textContent = currentVillain.name;
-  document.getElementById("villain-img").src = currentVillain.img;
-  document.getElementById("villain-health").textContent = `Health: ${villainHealth}/${currentVillain.health}`;
-
-  document.getElementById("loot-list").innerHTML = currentHero.loot.map(item => `<li>${item}</li>`).join('');
-}
-
-// End Game
-function endGame(message) {
-  logMessage(message);
-  document.getElementById("attack-btn").disabled = true;
-  document.getElementById("result").textContent = message;
-}
-
-// Log Events
-function logMessage(msg) {
-  const logBox = document.getElementById("battle-log");
-  logBox.innerHTML += `<p>${msg}</p>`;
-  logBox.scrollTop = logBox.scrollHeight;
-}
+  // Simulate battle (simple)
+  const battleBtn = document.getElementById("battleBtn");
+  if (battleBtn) {
+    battleBtn.addEventListener("click", () => {
+      const win = Math.random() > 0.4;
+      if (win) {
+        alert("🎉 You defeated the boss! +1 Trophy");
+      } else {
+        alert("💀 You lost the battle. Train more to win!");
+      }
+    });
+  }
+});
