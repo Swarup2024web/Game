@@ -1,165 +1,159 @@
-/* Global Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Body */
+/* Global styles */
 body {
+  margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
-  color: #fff;
-  min-height: 100vh;
-  padding: 20px;
+  background: linear-gradient(to bottom right, #e0f7fa, #b2ebf2);
+  color: #0a3d62;
 }
 
-/* Website Title */
-header .site-title {
-  font-size: 2.5rem;
-  text-align: center;
-  background: linear-gradient(to right, #00c6ff, #0072ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-family: 'Bangers', cursive;
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-  margin-bottom: 20px;
-}
-
-/* Level Bar Container */
-.level-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.level-label {
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-
-.progress-bar {
-  flex: 1;
-  height: 20px;
-  background: #444;
-  border-radius: 10px;
-  overflow: hidden;
-  position: relative;
-}
-
-.progress-bar-fill {
-  height: 100%;
-  width: 0;
-  background: linear-gradient(90deg, #00c6ff, #0072ff);
-  animation: fillBar 2s ease forwards;
-  box-shadow: 0 0 10px #00c6ff;
-}
-
-@keyframes fillBar {
-  from { width: 0; }
-  to { width: 70%; }
-}
-
-/* Player Stats Row */
-.stats-row {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  padding: 10px 0;
-  margin-bottom: 25px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  gap: 10px;
-}
-
-.stat-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 1.1rem;
-  white-space: nowrap;
-}
-
-.stat-item i {
-  font-size: 1.5rem;
-  animation: glowPulse 2s infinite ease-in-out;
-}
-
-@keyframes glowPulse {
-  0%, 100% { text-shadow: 0 0 5px #00f0ff; }
-  50% { text-shadow: 0 0 15px #00f0ff; }
-}
-
-/* Cards */
-.cards-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding-bottom: 40px;
-}
-
-.card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.08);
-  padding: 15px 20px;
-  border-radius: 15px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  text-decoration: none;
-  color: white;
-  box-shadow: 0 2px 8px rgba(0, 255, 255, 0.1);
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 20px rgba(0, 255, 255, 0.3);
-}
-
-.card-content {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.card-content i {
-  font-size: 1.5rem;
-  color: #00d4ff;
-  text-shadow: 0 0 5px #00d4ff;
-}
-
-.card-chevron i {
-  font-size: 1.3rem;
-  color: #ccc;
-}
-
-/* Remove underline */
 a {
   text-decoration: none;
   color: inherit;
 }
 
-/* Responsive Tweaks */
-@media (max-width: 600px) {
-  .site-title {
-    font-size: 2rem;
-  }
-
-  .stats-row {
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
-  }
-
-  .card {
-    padding: 12px 16px;
-  }
-
-  .card-content i {
-    font-size: 1.3rem;
-  }
+/* Header Section */
+.header {
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+  letter-spacing: 2px;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }
+
+/* Level Bar Section */
+.level-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 0;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+}
+
+.level-label {
+  font-weight: bold;
+  color: #0072ff;
+  font-size: 1rem;
+}
+
+.progress-container {
+  flex-grow: 1;
+  height: 20px;
+  background: #d0f0ff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: inset 0 0 5px #aaa;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  transition: width 2s ease-in-out;
+  border-radius: 20px;
+}
+
+/* Player Stats */
+.stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 25px;
+  margin: 15px 10px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  border-radius: 15px;
+  padding: 8px 14px;
+  box-shadow: 0 0 10px rgba(0, 183, 255, 0.4);
+}
+
+.stat i {
+  font-size: 24px;
+  color: #00bcd4;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.stat span {
+  margin-top: 4px;
+  font-weight: bold;
+  color: #0277bd;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* Cards Section */
+.card-list {
+  padding: 1rem;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 12px 18px;
+  box-shadow: 0 4px 10px rgba(0, 172, 193, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.card-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.card-left i {
+  font-size: 20px;
+  color: #0097a7;
+}
+
+.card-label {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #007c91;
+}
+
+.card i.chevron {
+  font-size: 20px;
+  color: #888;
+}
+
+/* Responsive Fix */
+@media (max-width: 600px) {
+  .stats {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .level-bar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .progress-container {
+    width: 90%;
+  }
+  }
