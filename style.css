@@ -1,166 +1,165 @@
-/* Reset and base */
+/* Global Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
 }
 
+/* Body */
 body {
-  background: linear-gradient(to bottom right, #a1d8ff, #d1f3ff);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
   color: #fff;
   min-height: 100vh;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  animation: fadeIn 1s ease-in-out;
 }
 
-/* Fade-in effect */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Title */
-h1 {
+/* Website Title */
+header .site-title {
   font-size: 2.5rem;
-  margin-bottom: 30px;
   text-align: center;
-  color: #ffffff;
-  text-shadow: 0 0 5px #66ccff, 0 0 10px #33aaff;
-  cursor: pointer;
-}
-
-/* Player card */
-.player-card {
-  background: linear-gradient(135deg, rgba(0, 153, 255, 0.6), rgba(0, 255, 255, 0.3));
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 0 15px rgba(0, 200, 255, 0.4);
-  width: 100%;
-  max-width: 600px;
-  transition: transform 0.3s ease;
-}
-
-.player-card:hover {
-  transform: translateY(-5px);
-}
-
-/* Player name */
-.player-name {
-  font-size: 1.8rem;
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Bangers', cursive;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
   margin-bottom: 20px;
-  text-align: center;
-  color: #ffffff;
-  text-shadow: 0 0 5px #00eaff;
 }
 
-/* Level container fix */
+/* Level Bar Container */
 .level-container {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  padding: 8px 12px;
   margin-bottom: 20px;
-  box-shadow: 0 0 8px rgba(0, 255, 255, 0.2);
 }
 
-/* Level number */
-.level {
-  font-weight: bold;
+.level-label {
   font-size: 1.1rem;
+  font-weight: bold;
 }
 
-/* Progress bar */
-.progress-bar-container {
-  width: 100%;
-  height: 18px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 9px;
+.progress-bar {
+  flex: 1;
+  height: 20px;
+  background: #444;
+  border-radius: 10px;
   overflow: hidden;
   position: relative;
-  box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.2);
 }
 
 .progress-bar-fill {
   height: 100%;
   width: 0;
-  background: linear-gradient(to right, #00d4ff, #00ffcc);
-  box-shadow: 0 0 8px #00ffcc;
-  border-radius: 9px;
-  transition: width 1s ease;
-  animation: pulseGlow 2s infinite alternate;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  animation: fillBar 2s ease forwards;
+  box-shadow: 0 0 10px #00c6ff;
 }
 
-/* Progress glow animation */
-@keyframes pulseGlow {
-  from { box-shadow: 0 0 8px #00ffcc; }
-  to { box-shadow: 0 0 14px #00ffcc; }
+@keyframes fillBar {
+  from { width: 0; }
+  to { width: 70%; }
 }
 
-/* Stats section */
-.stats {
+/* Player Stats Row */
+.stats-row {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 10px 0;
+  margin-bottom: 25px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 10px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
+
+.stat-item i {
+  font-size: 1.5rem;
+  animation: glowPulse 2s infinite ease-in-out;
+}
+
+@keyframes glowPulse {
+  0%, 100% { text-shadow: 0 0 5px #00f0ff; }
+  50% { text-shadow: 0 0 15px #00f0ff; }
+}
+
+/* Cards */
+.cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 40px;
+}
+
+.card {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 15px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
   background: rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  padding: 10px 12px;
-  margin-bottom: 20px;
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.15);
+  padding: 15px 20px;
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 255, 255, 0.1);
 }
 
-/* Individual stat */
-.stat-item {
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 20px rgba(0, 255, 255, 0.3);
+}
+
+.card-content {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  min-width: 60px;
-  flex: 1 1 auto;
+  gap: 15px;
 }
 
-.stat-title {
-  font-size: 0.9rem;
-  margin-bottom: 5px;
-  color: #e0f7ff;
-  text-shadow: 0 0 3px #00cfff;
+.card-content i {
+  font-size: 1.5rem;
+  color: #00d4ff;
+  text-shadow: 0 0 5px #00d4ff;
 }
 
-.stat-value {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #ffffff;
-  text-shadow: 0 0 5px #00eaff;
+.card-chevron i {
+  font-size: 1.3rem;
+  color: #ccc;
 }
 
-/* Responsive design */
-@media (max-width: 480px) {
-  .player-card {
-    padding: 15px;
-  }
+/* Remove underline */
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
-  .level-container {
-    gap: 6px;
-    padding: 6px 10px;
-  }
-
-  .stats {
-    gap: 10px;
-  }
-
-  .stat-item {
-    min-width: 50px;
-  }
-
-  h1 {
+/* Responsive Tweaks */
+@media (max-width: 600px) {
+  .site-title {
     font-size: 2rem;
+  }
+
+  .stats-row {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .card {
+    padding: 12px 16px;
+  }
+
+  .card-content i {
+    font-size: 1.3rem;
   }
 }
