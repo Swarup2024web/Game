@@ -3,66 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Warrior's Realm</title>
+  <title>Game Dashboard</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://kit.fontawesome.com/a2d9d5c6a0.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/a2d04a4b2b.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="game-header">
-    <h1 class="title-glow">🔥 Warrior's Realm 🔥</h1>
-
-    <!-- Row 2: User, Notifications, Messages -->
-    <div class="header-icons">
-      <a href="profile.html"><i class="fas fa-user-astronaut"></i> Profile</a>
-      <a href="notifications.html"><i class="fas fa-bell"></i> Notifications <span class="badge">3</span></a>
-      <a href="messages.html"><i class="fas fa-envelope"></i> Messages <span class="badge">5</span></a>
-    </div>
-
-    <!-- Row 3: Stats -->
-    <div class="stat-icons">
-      <div class="stat-card glow-red">
-        <i class="fas fa-bolt"></i>
-        <span>Power: <strong>1720</strong></span>
-      </div>
-      <div class="stat-card glow-blue">
-        <i class="fas fa-level-up-alt"></i>
-        <span>Level: <strong>12</strong></span>
-      </div>
-      <div class="stat-card glow-yellow">
-        <i class="fas fa-star"></i>
-        <span>Skill: <strong>8</strong></span>
-      </div>
-    </div>
+  <!-- Header Row 1: Game Title -->
+  <header class="header-row1">
+    <h1>🔥 Ultimate Battle RPG 🔥</h1>
   </header>
 
-  <!-- Main Navigation Cards -->
-  <main class="card-container">
-    <a href="rewards.html" class="nav-card">
-      <i class="fas fa-gift"></i><span>Daily Rewards</span><i class="fas fa-angle-right"></i>
+  <!-- Header Row 2: Profile, Notifications, Messages -->
+  <div class="header-row2">
+    <div class="nav-item"><i class="fas fa-user-circle"></i> Profile</div>
+    <div class="nav-item"><i class="fas fa-bell"></i> Notifications <span class="count">3</span></div>
+    <div class="nav-item"><i class="fas fa-envelope"></i> Messages <span class="count">5</span></div>
+  </div>
+
+  <!-- Header Row 3: Stats (Power, Level, Skill Points) -->
+  <div class="header-row3">
+    <div class="stat">
+      <i class="fas fa-bolt fire"></i>
+      <span>Power: 890</span>
+    </div>
+    <div class="stat">
+      <i class="fas fa-layer-group fire"></i>
+      <span>Level: 21</span>
+    </div>
+    <div class="stat">
+      <i class="fas fa-magic fire"></i>
+      <span>Skill: 7</span>
+    </div>
+  </div>
+
+  <!-- Main Game Options -->
+  <main class="main-dashboard">
+
+    <a href="rewards.html" class="card">
+      <i class="fas fa-gift"></i>
+      <span>Rewards</span>
+      <i class="fas fa-chevron-right"></i>
     </a>
-    <a href="boss.html" class="nav-card">
-      <i class="fas fa-skull-crossbones"></i><span>Boss Fight</span><i class="fas fa-angle-right"></i>
+
+    <a href="boss.html" class="card">
+      <i class="fas fa-dragon"></i>
+      <span>Boss Fight</span>
+      <i class="fas fa-chevron-right"></i>
     </a>
-    <a href="pvp.html" class="nav-card">
-      <i class="fas fa-crosshairs"></i><span>PvP Arena</span><i class="fas fa-angle-right"></i>
+
+    <a href="pvp.html" class="card">
+      <i class="fas fa-crosshairs"></i>
+      <span>PvP Arena</span>
+      <i class="fas fa-chevron-right"></i>
     </a>
-    <a href="shop.html" class="nav-card">
-      <i class="fas fa-store"></i><span>Item Shop</span><i class="fas fa-angle-right"></i>
+
+    <a href="shop.html" class="card">
+      <i class="fas fa-store"></i>
+      <span>Shop</span>
+      <i class="fas fa-chevron-right"></i>
     </a>
-    <a href="inventory.html" class="nav-card">
-      <i class="fas fa-box-open"></i><span>Inventory</span><i class="fas fa-angle-right"></i>
+
+    <a href="inventory.html" class="card">
+      <i class="fas fa-box-open"></i>
+      <span>Inventory</span>
+      <i class="fas fa-chevron-right"></i>
     </a>
-    <a href="leaderboard.html" class="nav-card">
-      <i class="fas fa-crown"></i><span>Leaderboard</span><i class="fas fa-angle-right"></i>
+
+    <a href="leaderboard.html" class="card">
+      <i class="fas fa-trophy"></i>
+      <span>Leaderboard</span>
+      <i class="fas fa-chevron-right"></i>
     </a>
-    <a href="guild.html" class="nav-card">
-      <i class="fas fa-users"></i><span>Guild</span><i class="fas fa-angle-right"></i>
+
+    <a href="guild.html" class="card">
+      <i class="fas fa-users"></i>
+      <span>Guild</span>
+      <i class="fas fa-chevron-right"></i>
     </a>
-    <a href="guildwar.html" class="nav-card">
-      <i class="fas fa-fire"></i><span>Guild War</span><i class="fas fa-angle-right"></i>
+
+    <a href="guildwar.html" class="card">
+      <i class="fas fa-fire"></i>
+      <span>Guild War</span>
+      <i class="fas fa-chevron-right"></i>
     </a>
+
   </main>
 
   <script src="script.js"></script>
