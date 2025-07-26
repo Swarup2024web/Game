@@ -2,52 +2,111 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Game Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HeroQuest Dashboard</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
-  <header class="header">
-    <div class="header-row1">🔥 Epic BattleZone 🔥</div>
-
-    <div class="header-row2">
-      <div class="header-icon">
-        <i class="fas fa-user-circle"></i> Profile
-      </div>
-      <div class="header-icon">
-        <i class="fas fa-envelope"></i> Messages <span class="count">4</span>
-      </div>
-      <div class="header-icon">
-        <i class="fas fa-bell"></i> Notifications <span class="count">7</span>
-      </div>
+  <header>
+    <div class="row site-name">
+      <a href="index.html">🔥 HeroQuest Dashboard</a>
     </div>
-
-    <div class="header-row3">
-      <div class="stat-icon">
-        <i class="fas fa-bolt"></i>
-        <span>1850</span>
-      </div>
-      <div class="stat-icon">
-        <i class="fas fa-star"></i>
-        <span>Level 32</span>
-      </div>
-      <div class="stat-icon">
-        <i class="fas fa-coins"></i>
-        <span>SP: 120</span>
-      </div>
+    <div class="row stats">
+      <div class="stat"><i class="fas fa-bolt glow"></i><span>Power: 9999</span></div>
+      <div class="stat"><i class="fas fa-star glow"></i><span>Level: 45</span></div>
+      <div class="stat"><i class="fas fa-coins glow"></i><span>Skill: 120</span></div>
     </div>
   </header>
 
-  <main class="main-content">
-    <a href="rewards.html" class="card"><i class="fas fa-gift"></i> Rewards <i class="fas fa-chevron-right"></i></a>
-    <a href="boss.html" class="card"><i class="fas fa-skull-crossbones"></i> Boss Fight <i class="fas fa-chevron-right"></i></a>
-    <a href="pvp.html" class="card"><i class="fas fa-fist-raised"></i> PvP Arena <i class="fas fa-chevron-right"></i></a>
-    <a href="shop.html" class="card"><i class="fas fa-store"></i> Shop <i class="fas fa-chevron-right"></i></a>
-    <a href="inventory.html" class="card"><i class="fas fa-boxes"></i> Inventory <i class="fas fa-chevron-right"></i></a>
-    <a href="leaderboard.html" class="card"><i class="fas fa-trophy"></i> Leaderboard <i class="fas fa-chevron-right"></i></a>
-    <a href="guild.html" class="card"><i class="fas fa-users"></i> Guild <i class="fas fa-chevron-right"></i></a>
-    <a href="guildwar.html" class="card"><i class="fas fa-fire"></i> Guild War <i class="fas fa-chevron-right"></i></a>
+  <main class="dashboard">
+    <a class="card" href="profile.html">
+      <div class="left">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
+    </a>
+
+    <a class="card" href="messages.html">
+      <div class="left">
+        <i class="fas fa-envelope"></i>
+        <span>Messages</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
+    </a>
+
+    <a class="card" href="notifications.html">
+      <div class="left">
+        <i class="fas fa-bell"></i>
+        <span>Notifications</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
+    </a>
+
+    <a class="card" href="rewards.html">
+      <div class="left">
+        <i class="fas fa-gift"></i>
+        <span>Rewards</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
+    </a>
+
+    <a class="card" href="boss.html">
+      <div class="left">
+        <i class="fas fa-skull-crossbones"></i>
+        <span>Boss Fight</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
+    </a>
+
+    <a class="card" href="pvp.html">
+      <div class="left">
+        <i class="fas fa-crosshairs"></i>
+        <span>PvP Arena</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
+    </a>
+
+    <a class="card" href="shop.html">
+      <div class="left">
+        <i class="fas fa-shopping-cart"></i>
+        <span>Shop</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
+    </a>
+
+    <a class="card" href="inventory.html">
+      <div class="left">
+        <i class="fas fa-box-open"></i>
+        <span>Inventory</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
+    </a>
+
+    <a class="card" href="leaderboard.html">
+      <div class="left">
+        <i class="fas fa-trophy"></i>
+        <span>Leaderboard</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
+    </a>
+
+    <a class="card" href="guild.html">
+      <div class="left">
+        <i class="fas fa-users"></i>
+        <span>Guild</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
+    </a>
+
+    <a class="card" href="guildwar.html">
+      <div class="left">
+        <i class="fas fa-fire"></i>
+        <span>Guild War</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
+    </a>
   </main>
 </body>
-</html>
+          </html>
