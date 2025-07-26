@@ -1,130 +1,108 @@
-/* Reset and base styles */
+/* Reset and base styling */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
 }
-
 body {
-  background: linear-gradient(to bottom right, #cceeff, #e6f7ff);
-  min-height: 100vh;
-  color: #fff;
-}
-
-/* Header */
-header {
-  background: linear-gradient(to right, #00bfff, #1e90ff);
-  text-align: center;
-  padding: 20px 10px;
-  font-size: 2em;
-  font-weight: bold;
-  color: white;
-  box-shadow: 0 4px 10px rgba(0, 191, 255, 0.3);
-}
-
-/* Player Stats */
-.player-stats {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  background: #003f5c;
-  padding: 15px 10px;
-  flex-wrap: nowrap;
-}
-
-.stat {
-  text-align: center;
-  color: #ff4c4c;
-  font-weight: bold;
-  font-size: 1rem;
-}
-
-.stat i {
-  display: block;
-  font-size: 1.6rem;
-  margin-bottom: 5px;
-  color: #ff4c4c;
-}
-
-/* Dashboard Grid */
-.dashboard {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 16px;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom right, #c2f0ff, #e0f7ff);
+  color: #333;
   padding: 20px;
-  max-width: 1200px;
+}
+
+/* Website Title */
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+header h1 {
+  font-size: 3rem;
+  background: linear-gradient(to right, #00aaff, #33ccff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Stats Section */
+.stats {
+  display: flex;
+  justify-content: space-between;
+  background: #ffffffd9;
+  padding: 15px 20px;
+  margin-bottom: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+.stat-item {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: #d62222;
+  margin-right: 20px;
+  white-space: nowrap;
+}
+.stat-item i {
+  margin-right: 8px;
+}
+
+/* Card Container */
+.card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Individual Card */
+.card {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  background: linear-gradient(to right, #e6f7ff, #ccf2ff);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 128, 255, 0.2);
+  text-decoration: none;
+  color: #000;
+  transition: transform 0.2s ease;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
 }
-
-/* Card Styles */
-.card {
-  background: linear-gradient(to bottom right, #87cefa, #00bfff);
-  border-radius: 12px;
-  padding: 20px 15px;
-  text-align: left;
-  color: white;
-  box-shadow: 0 8px 20px rgba(0, 191, 255, 0.4);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  position: relative;
-  cursor: pointer;
-}
-
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(0, 191, 255, 0.6);
+  transform: scale(1.02);
 }
-
 .card i {
-  font-size: 2rem;
-  display: inline-block;
-  margin-right: 10px;
-  vertical-align: middle;
+  font-size: 1.4rem;
+  margin-right: 12px;
+}
+.card span {
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
-.card-label {
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-/* Badge Style */
+/* Badges */
 .badge {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  background: red;
+  background-color: red;
   color: white;
+  padding: 2px 7px;
   font-size: 0.75rem;
-  font-weight: bold;
-  padding: 4px 8px;
   border-radius: 12px;
-  box-shadow: 0 0 8px red;
+  margin-left: auto;
 }
 
-/* Responsive tweaks */
-@media (max-width: 768px) {
-  .dashboard {
-    padding: 15px 10px;
-    gap: 14px;
-  }
+/* Link Cleanup */
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
-  .card {
-    padding: 18px 14px;
-  }
-
-  .player-stats {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-around;
-  }
-
-  .stat {
+/* Responsive Tweaks */
+@media (max-width: 600px) {
+  .stat-item {
     font-size: 0.9rem;
   }
-
-  .stat i {
-    font-size: 1.4rem;
+  .card span {
+    font-size: 1rem;
   }
 }
