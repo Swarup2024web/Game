@@ -3,16 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Game Shop</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Shop - Gods in War</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f5faff;
-    }
-
     .shop-container {
       padding: 20px;
       max-width: 1200px;
@@ -20,151 +14,175 @@
     }
 
     .shop-title {
-      font-size: 2rem;
       text-align: center;
-      margin-bottom: 30px;
+      font-size: 2rem;
+      margin-bottom: 20px;
       color: #0072ff;
     }
 
-    .shop-grid {
+    .items-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
     }
 
-    .shop-card {
-      background: #ffffff;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0, 114, 255, 0.2);
+    .item-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(173, 216, 230, 0.4);
       padding: 15px;
       text-align: center;
-      transition: transform 0.2s;
     }
 
-    .shop-card:hover {
-      transform: scale(1.03);
-    }
-
-    .shop-card img {
-      max-width: 100%;
-      height: 120px;
-      object-fit: contain;
-      margin-bottom: 10px;
+    .item-card img {
+      width: 100%;
+      max-height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
     }
 
     .item-name {
+      margin: 10px 0;
       font-weight: bold;
       font-size: 1.2rem;
-      margin-bottom: 10px;
+      color: #333;
     }
 
-    .item-power {
-      color: #28a745;
-      margin-bottom: 10px;
+    .item-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      font-size: 1rem;
     }
 
-    .item-cost {
-      font-weight: bold;
-      color: #ff8c00;
-    }
-
-    .item-cost .fa-coins {
-      color: #ffc107;
-    }
-
-    .item-cost .fa-money-bill {
-      color: #28a745;
+    .item-info i {
+      margin-right: 5px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Shared Header -->
-  <header>
-    <div class="header-container">
-      <h1 class="game-title">Game Shop</h1>
+  <!-- Header -->
+  <header class="header">
+    <!-- Website Title -->
+    <h1 class="title"><a href="index.html">Gods in War</a></h1>
+
+    <!-- XP Progress Bar -->
+    <div class="xp-row">
+      <span class="level-text">LV 25</span>
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div id="xp-fill" class="progress-fill" data-xp="60"></div>
+        </div>
+      </div>
+      <span class="level-text">LV 26</span>
+    </div>
+
+    <!-- Player Stats -->
+    <div class="stats-row">
+      <div class="stat"><i class="fas fa-bolt"></i><span>9540</span></div>
+      <div class="stat"><i class="fas fa-fire"></i><span>12300</span></div>
+      <div class="stat"><i class="fas fa-coins"></i><span>212K</span></div>
     </div>
   </header>
 
-  <!-- Shop Content -->
-  <div class="shop-container">
-    <h2 class="shop-title">Shop Items</h2>
-    <div class="shop-grid">
-      
-      <!-- Coin Items -->
-      <div class="shop-card">
-        <img src="https://via.placeholder.com/150" alt="Sword">
-        <div class="item-name">Iron Sword</div>
-        <div class="item-power"><i class="fas fa-bolt"></i> Power: 25</div>
-        <div class="item-cost"><i class="fas fa-coins"></i> 300</div>
+  <!-- Shop Section -->
+  <section class="shop-container">
+    <h2 class="shop-title">Shop</h2>
+    <div class="items-grid">
+      <!-- Item 1 -->
+      <div class="item-card">
+        <img src="https://via.placeholder.com/250x150" alt="Sword">
+        <div class="item-name">Flame Sword</div>
+        <div class="item-info">
+          <span><i class="fas fa-bolt"></i>+250</span>
+          <span><i class="fas fa-coins"></i> 1500</span>
+        </div>
       </div>
-
-      <div class="shop-card">
-        <img src="https://via.placeholder.com/150" alt="Shield">
-        <div class="item-name">Steel Shield</div>
-        <div class="item-power"><i class="fas fa-bolt"></i> Power: 20</div>
-        <div class="item-cost"><i class="fas fa-coins"></i> 250</div>
-      </div>
-
-      <div class="shop-card">
-        <img src="https://via.placeholder.com/150" alt="Boots">
-        <div class="item-name">Speed Boots</div>
-        <div class="item-power"><i class="fas fa-bolt"></i> Power: 15</div>
-        <div class="item-cost"><i class="fas fa-coins"></i> 180</div>
-      </div>
-
-      <div class="shop-card">
-        <img src="https://via.placeholder.com/150" alt="Helmet">
+      <!-- Item 2 -->
+      <div class="item-card">
+        <img src="https://via.placeholder.com/250x150" alt="Helmet">
         <div class="item-name">Warrior Helmet</div>
-        <div class="item-power"><i class="fas fa-bolt"></i> Power: 18</div>
-        <div class="item-cost"><i class="fas fa-coins"></i> 220</div>
+        <div class="item-info">
+          <span><i class="fas fa-fire"></i>+100</span>
+          <span><i class="fas fa-coins"></i> 900</span>
+        </div>
       </div>
-
-      <div class="shop-card">
-        <img src="https://via.placeholder.com/150" alt="Gloves">
-        <div class="item-name">Battle Gloves</div>
-        <div class="item-power"><i class="fas fa-bolt"></i> Power: 12</div>
-        <div class="item-cost"><i class="fas fa-coins"></i> 150</div>
+      <!-- Item 3 -->
+      <div class="item-card">
+        <img src="https://via.placeholder.com/250x150" alt="Shield">
+        <div class="item-name">Iron Shield</div>
+        <div class="item-info">
+          <span><i class="fas fa-fire"></i>+120</span>
+          <span><i class="fas fa-coins"></i> 1200</span>
+        </div>
       </div>
-
-      <div class="shop-card">
-        <img src="https://via.placeholder.com/150" alt="Armor">
-        <div class="item-name">Light Armor</div>
-        <div class="item-power"><i class="fas fa-bolt"></i> Power: 30</div>
-        <div class="item-cost"><i class="fas fa-coins"></i> 400</div>
+      <!-- Item 4 -->
+      <div class="item-card">
+        <img src="https://via.placeholder.com/250x150" alt="Potion">
+        <div class="item-name">Health Potion</div>
+        <div class="item-info">
+          <span><i class="fas fa-fire"></i>+300</span>
+          <span><i class="fas fa-coins"></i> 700</span>
+        </div>
       </div>
-
-      <div class="shop-card">
-        <img src="https://via.placeholder.com/150" alt="Ring">
-        <div class="item-name">Power Ring</div>
-        <div class="item-power"><i class="fas fa-bolt"></i> Power: 22</div>
-        <div class="item-cost"><i class="fas fa-coins"></i> 280</div>
+      <!-- Item 5 -->
+      <div class="item-card">
+        <img src="https://via.placeholder.com/250x150" alt="Bow">
+        <div class="item-name">Shadow Bow</div>
+        <div class="item-info">
+          <span><i class="fas fa-bolt"></i>+180</span>
+          <span><i class="fas fa-coins"></i> 1100</span>
+        </div>
       </div>
-
-      <!-- Real Money Items -->
-      <div class="shop-card">
-        <img src="https://via.placeholder.com/150" alt="Dragon Blade">
-        <div class="item-name">Dragon Blade</div>
-        <div class="item-power"><i class="fas fa-bolt"></i> Power: 70</div>
-        <div class="item-cost"><i class="fas fa-money-bill"></i> ₹199</div>
+      <!-- Item 6 -->
+      <div class="item-card">
+        <img src="https://via.placeholder.com/250x150" alt="Boots">
+        <div class="item-name">Speed Boots</div>
+        <div class="item-info">
+          <span><i class="fas fa-bolt"></i>+100</span>
+          <span><i class="fas fa-coins"></i> 800</span>
+        </div>
       </div>
-
-      <div class="shop-card">
-        <img src="https://via.placeholder.com/150" alt="Phoenix Armor">
-        <div class="item-name">Phoenix Armor</div>
-        <div class="item-power"><i class="fas fa-bolt"></i> Power: 65</div>
-        <div class="item-cost"><i class="fas fa-money-bill"></i> ₹149</div>
+      <!-- Item 7 -->
+      <div class="item-card">
+        <img src="https://via.placeholder.com/250x150" alt="Ring">
+        <div class="item-name">Mystic Ring</div>
+        <div class="item-info">
+          <span><i class="fas fa-bolt"></i>+200</span>
+          <span><i class="fas fa-coins"></i> 1600</span>
+        </div>
       </div>
-
-      <div class="shop-card">
-        <img src="https://via.placeholder.com/150" alt="Legend Pack">
-        <div class="item-name">Legend Pack</div>
-        <div class="item-power"><i class="fas fa-bolt"></i> Power: 90</div>
-        <div class="item-cost"><i class="fas fa-money-bill"></i> ₹299</div>
+      <!-- Item 8 (real money) -->
+      <div class="item-card">
+        <img src="https://via.placeholder.com/250x150" alt="Dragon Pack">
+        <div class="item-name">Dragon Pack</div>
+        <div class="item-info">
+          <span><i class="fas fa-bolt"></i>+500</span>
+          <span><i class="fas fa-dollar-sign"></i> 2.99</span>
+        </div>
       </div>
-
+      <!-- Item 9 (real money) -->
+      <div class="item-card">
+        <img src="https://via.placeholder.com/250x150" alt="Elite Pack">
+        <div class="item-name">Elite Warrior</div>
+        <div class="item-info">
+          <span><i class="fas fa-fire"></i>+600</span>
+          <span><i class="fas fa-dollar-sign"></i> 4.99</span>
+        </div>
+      </div>
+      <!-- Item 10 (real money) -->
+      <div class="item-card">
+        <img src="https://via.placeholder.com/250x150" alt="Chest">
+        <div class="item-name">Treasure Chest</div>
+        <div class="item-info">
+          <span><i class="fas fa-coins"></i>+10000</span>
+          <span><i class="fas fa-dollar-sign"></i> 1.99</span>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
 </body>
-</html>
+            </html>
