@@ -3,65 +3,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Myth Battles</title>
+  <title>My RPG Game</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://kit.fontawesome.com/a2e0e6b15a.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
-
-  <!-- Header -->
-  <header class="header">
-    <div class="header-row1">
-      <h1>⚔️ MYTH BATTLES</h1>
+  <header>
+    <!-- Row 1: Website name -->
+    <div class="header-row site-title">
+      <h1><i class="fas fa-dragon"></i> RPG QUEST</h1>
     </div>
 
-    <div class="header-row2">
-      <a href="profile.html" title="Profile"><i class="fas fa-user-circle"></i></a>
-      <a href="notifications.html" title="Notifications">
-        <i class="fas fa-bell"></i><span class="badge">3</span>
-      </a>
-      <a href="messages.html" title="Messages">
-        <i class="fas fa-envelope"></i><span class="badge">5</span>
-      </a>
+    <!-- Row 2: Profile, Notifications, Messages -->
+    <div class="header-row nav-icons">
+      <div class="icon-group">
+        <i class="fas fa-user-circle"></i>
+      </div>
+      <div class="icon-group" id="notif-icon">
+        <i class="fas fa-bell"></i>
+        <span class="count">2</span>
+      </div>
+      <div class="icon-group" id="msg-icon">
+        <i class="fas fa-envelope"></i>
+        <span class="count">5</span>
+      </div>
     </div>
 
-    <div class="header-row3">
-      <span><i class="fas fa-bolt"></i> Power: 150</span>
-      <span><i class="fas fa-star"></i> Level: 8</span>
-      <span><i class="fas fa-brain"></i> Skill Points: 12</span>
+    <!-- Row 3: Stats -->
+    <div class="header-row stats">
+      <div><i class="fas fa-bolt"></i> Power: <span>2100</span></div>
+      <div><i class="fas fa-star"></i> Level: <span>18</span></div>
+      <div><i class="fas fa-brain"></i> Skill Pts: <span>12</span></div>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="main-content">
-    <div class="card" onclick="location.href='rewards.html'">
-      <i class="fas fa-gift fa-2x"></i>
-      <h3>Daily Rewards</h3>
-    </div>
-
-    <div class="card" onclick="location.href='boss.html'">
-      <i class="fas fa-dragon fa-2x"></i>
-      <h3>Boss Fight</h3>
-    </div>
-
-    <div class="card" onclick="location.href='pvp.html'">
-      <i class="fas fa-crosshairs fa-2x"></i>
-      <h3>PvP Arena</h3>
-    </div>
-
-    <div class="card" onclick="location.href='shop.html'">
-      <i class="fas fa-store fa-2x"></i>
-      <h3>Shop</h3>
-    </div>
-
-    <div class="card" onclick="location.href='inventory.html'">
-      <i class="fas fa-box-open fa-2x"></i>
-      <h3>Inventory</h3>
-    </div>
-
-    <div class="card" onclick="location.href='leaderboard.html'">
-      <i class="fas fa-trophy fa-2x"></i>
-      <h3>Leaderboard</h3>
+  <main>
+    <div class="card-container">
+      <div class="card" id="rewards">
+        <i class="fas fa-gift card-icon"></i>
+        <h2>Rewards</h2>
+      </div>
+      <div class="card" id="boss">
+        <i class="fas fa-skull-crossbones card-icon"></i>
+        <h2>Boss Fight</h2>
+      </div>
+      <div class="card" id="pvp">
+        <i class="fas fa-swords card-icon"></i>
+        <h2>PvP Arena</h2>
+      </div>
+      <div class="card" id="shop">
+        <i class="fas fa-store card-icon"></i>
+        <h2>Shop</h2>
+      </div>
+      <div class="card" id="inventory">
+        <i class="fas fa-boxes-stacked card-icon"></i>
+        <h2>Inventory</h2>
+      </div>
+      <div class="card" id="leaderboard">
+        <i class="fas fa-ranking-star card-icon"></i>
+        <h2>Leaderboard</h2>
+      </div>
     </div>
   </main>
 
