@@ -2,46 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mytho Wars</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Myth Battles</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://kit.fontawesome.com/a2e0e6b15a.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <header>
-    <h1><i class="fas fa-dragon"></i> Mytho Wars</h1>
-    <nav>
-      <a href="profile.html"><i class="fas fa-user"></i></a>
-      <a href="notifications.html"><i class="fas fa-bell"></i></a>
-      <a href="messages.html"><i class="fas fa-envelope"></i></a>
-    </nav>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-row1">
+      <h1>⚔️ MYTH BATTLES</h1>
+    </div>
+
+    <div class="header-row2">
+      <a href="profile.html" title="Profile"><i class="fas fa-user-circle"></i></a>
+      <a href="notifications.html" title="Notifications">
+        <i class="fas fa-bell"></i><span class="badge">3</span>
+      </a>
+      <a href="messages.html" title="Messages">
+        <i class="fas fa-envelope"></i><span class="badge">5</span>
+      </a>
+    </div>
+
+    <div class="header-row3">
+      <span><i class="fas fa-bolt"></i> Power: 150</span>
+      <span><i class="fas fa-star"></i> Level: 8</span>
+      <span><i class="fas fa-brain"></i> Skill Points: 12</span>
+    </div>
   </header>
 
-  <div class="container">
-    <div class="card" onclick="location.href='boss.html'">
-      <i class="fas fa-skull-crossbones"></i>
-      <h3>Boss Fight</h3>
-    </div>
-    <div class="card" onclick="location.href='pvp.html'">
-      <i class="fas fa-crosshairs"></i>
-      <h3>PvP Arena</h3>
-    </div>
-    <div class="card" onclick="location.href='shop.html'">
-      <i class="fas fa-store"></i>
-      <h3>Shop</h3>
-    </div>
-    <div class="card" onclick="location.href='inventory.html'">
-      <i class="fas fa-box-open"></i>
-      <h3>Inventory</h3>
-    </div>
-    <div class="card" onclick="location.href='leaderboard.html'">
-      <i class="fas fa-trophy"></i>
-      <h3>Leaderboard</h3>
-    </div>
+  <!-- Main Content -->
+  <main class="main-content">
     <div class="card" onclick="location.href='rewards.html'">
-      <i class="fas fa-gift"></i>
+      <i class="fas fa-gift fa-2x"></i>
       <h3>Daily Rewards</h3>
     </div>
-  </div>
+
+    <div class="card" onclick="location.href='boss.html'">
+      <i class="fas fa-dragon fa-2x"></i>
+      <h3>Boss Fight</h3>
+    </div>
+
+    <div class="card" onclick="location.href='pvp.html'">
+      <i class="fas fa-crosshairs fa-2x"></i>
+      <h3>PvP Arena</h3>
+    </div>
+
+    <div class="card" onclick="location.href='shop.html'">
+      <i class="fas fa-store fa-2x"></i>
+      <h3>Shop</h3>
+    </div>
+
+    <div class="card" onclick="location.href='inventory.html'">
+      <i class="fas fa-box-open fa-2x"></i>
+      <h3>Inventory</h3>
+    </div>
+
+    <div class="card" onclick="location.href='leaderboard.html'">
+      <i class="fas fa-trophy fa-2x"></i>
+      <h3>Leaderboard</h3>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
