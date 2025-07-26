@@ -10,17 +10,14 @@
 <body>
   <!-- Header -->
   <header class="header">
-    <!-- Website Title -->
-    <h1 class="title">
-      <a href="index.html">Gods in War</a>
-    </h1>
+    <h1 class="title"><a href="index.html">Gods in War</a></h1>
 
     <!-- XP Progress Bar -->
     <div class="xp-row">
       <span class="level-text">LV 25</span>
       <div class="progress-container">
         <div class="progress-bar">
-          <div class="progress-fill" style="width: 60%;"></div>
+          <div id="xp-fill" class="progress-fill" data-xp="60"></div>
         </div>
       </div>
       <span class="level-text">LV 26</span>
@@ -47,7 +44,7 @@
     <a href="messages.html" class="card">
       <div class="card-left">
         <i class="fas fa-envelope"></i><span>Messages</span>
-        <span class="badge">5</span>
+        <span class="badge" id="messages-badge">0</span>
       </div>
       <i class="fas fa-chevron-right card-chevron"></i>
     </a>
@@ -55,7 +52,7 @@
     <a href="notifications.html" class="card">
       <div class="card-left">
         <i class="fas fa-bell"></i><span>Notifications</span>
-        <span class="badge">3</span>
+        <span class="badge" id="notifications-badge">0</span>
       </div>
       <i class="fas fa-chevron-right card-chevron"></i>
     </a>
@@ -98,4 +95,4 @@
 
   <script src="script.js"></script>
 </body>
-        </html>
+                                     </html>
