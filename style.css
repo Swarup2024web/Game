@@ -1,3 +1,4 @@
+/* Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
@@ -16,6 +17,7 @@ a {
   color: inherit;
 }
 
+/* Header */
 .header {
   text-align: center;
   padding: 20px;
@@ -30,12 +32,15 @@ a {
   text-shadow: 2px 2px 5px rgba(0, 204, 255, 0.3);
 }
 
+/* XP Progress Bar */
 .xp-row {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   margin: 20px 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 
 .level-text {
@@ -64,12 +69,13 @@ a {
   border-radius: 20px;
 }
 
+/* Player Stats */
 .stats-row {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
+  gap: 30px;
   margin-bottom: 20px;
+  flex-wrap: nowrap;
 }
 
 .stat {
@@ -82,12 +88,14 @@ a {
   box-shadow: 0 0 10px rgba(173, 216, 230, 0.4);
   font-weight: bold;
   font-size: 1.1rem;
+  white-space: nowrap;
 }
 
 .stat i {
   color: #0072ff;
 }
 
+/* Cards Section */
 .card-container {
   display: flex;
   flex-direction: column;
@@ -104,6 +112,7 @@ a {
   padding: 15px 20px;
   box-shadow: 0 2px 15px rgba(135, 206, 250, 0.3);
   transition: transform 0.3s ease;
+  flex-wrap: nowrap;
 }
 
 .card:hover {
@@ -116,6 +125,7 @@ a {
   gap: 15px;
   font-size: 1.2rem;
   font-weight: 500;
+  flex-shrink: 1;
 }
 
 .card-left i {
@@ -137,28 +147,46 @@ a {
 .card-chevron {
   color: #aaa;
   font-size: 1.2rem;
+  flex-shrink: 0;
 }
 
+/* Animations */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+/* Responsive Fixes */
 @media (max-width: 768px) {
   .xp-row {
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .progress-container {
-    width: 80%;
+    flex-direction: row;
   }
 
   .stats-row {
-    flex-direction: column;
+    flex-wrap: nowrap;
+    overflow-x: auto;
   }
 
   .card {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .card-left {
+    flex-grow: 1;
   }
 
   .card-chevron {
-    align-self: flex-end;
+    align-self: center;
   }
 }
