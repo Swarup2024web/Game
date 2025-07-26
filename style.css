@@ -73,7 +73,7 @@ a {
 .stats-row {
   display: flex;
   justify-content: center;
-  gap: 30px;
+  gap: 25px;
   margin-bottom: 20px;
   flex-wrap: nowrap;
 }
@@ -81,7 +81,7 @@ a {
 .stat {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
   background: #fff;
   padding: 10px 15px;
   border-radius: 12px;
