@@ -14,12 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
   requestAnimationFrame(fill);
 });
 
-// Badge update example (you can fetch real data if needed)
+// Badge update
 document.addEventListener("DOMContentLoaded", () => {
   const messagesBadge = document.getElementById("messages-badge");
   const notificationsBadge = document.getElementById("notifications-badge");
 
-  // Sample values (replace with actual logic or fetched values)
   const messageCount = 4;
   const notificationCount = 3;
 
