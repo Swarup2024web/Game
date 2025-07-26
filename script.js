@@ -1,53 +1,54 @@
-// script.js
+// Wait for DOM to load
+document.addEventListener("DOMContentLoaded", function () {
+  // Handle card clicks
+  document.querySelectorAll(".card").forEach((card) => {
+    card.addEventListener("click", () => {
+      const cardId = card.id;
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Navigation handling
-  const navLinks = document.querySelectorAll(".nav-link");
-
-  navLinks.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const sectionId = link.getAttribute("data-section");
-      loadSection(sectionId);
+      switch (cardId) {
+        case "boss":
+          alert("Entering Boss Fight Arena...");
+          break;
+        case "pvp":
+          alert("Searching for PvP Opponent...");
+          break;
+        case "shop":
+          alert("Opening Game Shop...");
+          break;
+        case "rewards":
+          alert("Claim your Daily Rewards!");
+          break;
+        default:
+          alert("Coming soon...");
+      }
     });
   });
 
-  function loadSection(sectionId) {
-    const sections = document.querySelectorAll(".section");
-    sections.forEach((sec) => sec.classList.add("hidden"));
-
-    const target = document.getElementById(sectionId);
-    if (target) target.classList.remove("hidden");
+  // Sample function to update coins/gems dynamically
+  function updateStats(coins, gems) {
+    document.getElementById("coins-count").textContent = coins;
+    document.getElementById("gems-count").textContent = gems;
   }
 
-  // Sample notifications
-  const notifyBtn = document.getElementById("notifyBtn");
-  if (notifyBtn) {
-    notifyBtn.addEventListener("click", () => {
-      alert("🔔 You have 3 new rewards and 1 message!");
-    });
+  // Simulate stat update
+  setTimeout(() => {
+    updateStats(5300, 250);
+  }, 1000);
+
+  // Example of updating notification count (for rewards)
+  const rewardsIcon = document.getElementById("rewards-icon");
+  const rewardsCount = rewardsIcon.querySelector(".count");
+
+  function updateRewardNotification(newCount) {
+    rewardsCount.textContent = newCount;
+    rewardsIcon.classList.add("notify");
+    setTimeout(() => {
+      rewardsIcon.classList.remove("notify");
+    }, 1500);
   }
 
-  // Daily reward logic
-  const rewardBtn = document.getElementById("dailyRewardBtn");
-  if (rewardBtn) {
-    rewardBtn.addEventListener("click", () => {
-      rewardBtn.disabled = true;
-      rewardBtn.innerText = "Reward Claimed!";
-      alert("You received +100 gold and +10 power!");
-    });
-  }
-
-  // Simulate battle (simple)
-  const battleBtn = document.getElementById("battleBtn");
-  if (battleBtn) {
-    battleBtn.addEventListener("click", () => {
-      const win = Math.random() > 0.4;
-      if (win) {
-        alert("🎉 You defeated the boss! +1 Trophy");
-      } else {
-        alert("💀 You lost the battle. Train more to win!");
-      }
-    });
-  }
+  // Simulate new reward after 3 sec
+  setTimeout(() => {
+    updateRewardNotification(3);
+  }, 3000);
 });
