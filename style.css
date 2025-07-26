@@ -3,172 +3,164 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 body {
-  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-  color: #ffffff;
-  padding: 10px;
-}
-
-/* Website Title */
-.header-title {
-  text-align: center;
-  font-size: 2.5rem;
-  background: linear-gradient(to right, #00c6ff, #0072ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 8px #00c6ff;
-  margin-bottom: 15px;
-}
-
-/* Level progress */
-.level-container {
+  background: linear-gradient(to bottom right, #a1d8ff, #d1f3ff);
+  color: #fff;
+  min-height: 100vh;
+  padding: 20px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Fade-in effect */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Title */
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0 0 5px #66ccff, 0 0 10px #33aaff;
+  cursor: pointer;
+}
+
+/* Player card */
+.player-card {
+  background: linear-gradient(135deg, rgba(0, 153, 255, 0.6), rgba(0, 255, 255, 0.3));
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(0, 200, 255, 0.4);
+  width: 100%;
+  max-width: 600px;
+  transition: transform 0.3s ease;
+}
+
+.player-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Player name */
+.player-name {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0 0 5px #00eaff;
+}
+
+/* Level container fix */
+.level-container {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   padding: 8px 12px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   box-shadow: 0 0 8px rgba(0, 255, 255, 0.2);
 }
 
-.level-label {
-  font-size: 0.9rem;
-  min-width: 50px;
-  text-align: center;
+/* Level number */
+.level {
+  font-weight: bold;
+  font-size: 1.1rem;
 }
 
-.progress-bar {
-  flex: 1;
-  height: 14px;
-  margin: 0 10px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
+/* Progress bar */
+.progress-bar-container {
+  width: 100%;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9px;
   overflow: hidden;
   position: relative;
+  box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.2);
 }
 
-.progress-fill {
+.progress-bar-fill {
   height: 100%;
-  width: 0%;
-  background: linear-gradient(to right, #00c6ff, #0072ff);
-  animation: fillBar 2s forwards;
-  border-radius: 8px;
-  box-shadow: 0 0 6px #00c6ff;
+  width: 0;
+  background: linear-gradient(to right, #00d4ff, #00ffcc);
+  box-shadow: 0 0 8px #00ffcc;
+  border-radius: 9px;
+  transition: width 1s ease;
+  animation: pulseGlow 2s infinite alternate;
 }
 
-@keyframes fillBar {
-  from {
-    width: 0%;
-  }
-  to {
-    width: 75%;
-  }
+/* Progress glow animation */
+@keyframes pulseGlow {
+  from { box-shadow: 0 0 8px #00ffcc; }
+  to { box-shadow: 0 0 14px #00ffcc; }
 }
 
-/* Player Stats */
+/* Stats section */
 .stats {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   gap: 15px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 12px;
-  padding: 10px;
+  padding: 10px 12px;
   margin-bottom: 20px;
-  flex-wrap: nowrap;
   box-shadow: 0 0 10px rgba(0, 255, 255, 0.15);
 }
 
+/* Individual stat */
 .stat-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1;
+  min-width: 60px;
+  flex: 1 1 auto;
 }
 
-.stat-item i {
-  font-size: 1.8rem;
-  color: #00e0ff;
-  animation: glowPulse 2s infinite;
-  margin-bottom: 4px;
-}
-
-.stat-item span {
+.stat-title {
   font-size: 0.9rem;
+  margin-bottom: 5px;
+  color: #e0f7ff;
+  text-shadow: 0 0 3px #00cfff;
 }
 
-@keyframes glowPulse {
-  0%, 100% {
-    text-shadow: 0 0 5px #00f0ff, 0 0 10px #00f0ff;
-  }
-  50% {
-    text-shadow: 0 0 15px #00f0ff, 0 0 25px #00f0ff;
-  }
-}
-
-/* Cards Layout */
-.cards {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(145deg, #1a2a3a, #223a4d);
-  padding: 14px 18px;
-  border-radius: 15px;
-  box-shadow: 0 0 12px rgba(0, 200, 255, 0.2);
-  transition: transform 0.2s ease-in-out, box-shadow 0.3s;
-  text-decoration: none;
-  color: #ffffff;
-}
-
-.card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 20px rgba(0, 200, 255, 0.3);
-}
-
-.card-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.card-left i {
-  font-size: 1.3rem;
-  color: #00d8ff;
-}
-
-.card span {
-  font-size: 1.1rem;
-}
-
-.card-chevron i {
+.stat-value {
   font-size: 1.2rem;
-  color: #00bfff;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 0 0 5px #00eaff;
 }
 
-/* Responsiveness */
-@media (max-width: 600px) {
+/* Responsive design */
+@media (max-width: 480px) {
+  .player-card {
+    padding: 15px;
+  }
+
+  .level-container {
+    gap: 6px;
+    padding: 6px 10px;
+  }
+
   .stats {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    justify-content: flex-start;
+    gap: 10px;
   }
 
   .stat-item {
-    flex: 0 0 auto;
-    margin-right: 15px;
+    min-width: 50px;
   }
 
-  .card {
-    padding: 12px 14px;
+  h1 {
+    font-size: 2rem;
   }
 }
