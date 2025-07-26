@@ -1,151 +1,64 @@
-/* Reset & Base */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  background: linear-gradient(to bottom right, #1b1b2f, #3a3a52);
-  color: #f5f5f5;
-  font-family: 'Segoe UI', sans-serif;
-  min-height: 100vh;
-  padding: 10px;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #fff;
 }
 
 header {
-  text-align: center;
+  background-color: #111;
   padding: 20px;
-  background: rgba(0, 0, 0, 0.4);
-  border-bottom: 2px solid #555;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 header h1 {
-  font-size: 2.2rem;
-  color: #ffd700;
+  margin: 0;
+  font-size: 1.8rem;
+  color: #00ffe1;
 }
 
-header p {
-  font-size: 1rem;
-  color: #ccc;
-}
-
-.stats {
-  display: flex;
-  justify-content: space-around;
-  padding: 10px;
-  background: #222;
-  border-radius: 8px;
-  margin: 10px 0;
-  font-size: 1rem;
-}
-
-.battle-area {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 15px;
-}
-
-.hero-section, .villain-section {
-  flex: 1 1 40%;
-  text-align: center;
-}
-
-.hero-section h2, .villain-section h2 {
-  margin-bottom: 10px;
-  font-size: 1.4rem;
-}
-
-#heroSelect {
-  padding: 5px;
-  border-radius: 5px;
-  background-color: #333;
+nav a {
   color: #fff;
-  margin-bottom: 10px;
-  font-size: 1rem;
+  margin-left: 20px;
+  text-decoration: none;
+  font-size: 1.2rem;
 }
 
-#hero-img, #villain-img {
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
-  margin: 10px 0;
-  border-radius: 10px;
+nav a:hover {
+  color: #00ffe1;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 30px;
+}
+
+.card {
+  background-color: #1e1e1e;
   border: 2px solid #444;
-  background: #111;
-}
-
-.vs {
-  font-size: 2rem;
-  padding: 10px;
-  color: #ff4081;
-}
-
-.health-bar {
-  width: 100%;
-  background: #333;
-  border-radius: 10px;
-  height: 15px;
-  margin-top: 5px;
-  overflow: hidden;
-}
-
-.bar {
-  height: 100%;
-  background: linear-gradient(to right, #0f0, #4caf50);
-  width: 100%;
-  transition: width 0.5s;
-}
-
-.controls {
+  border-radius: 12px;
+  padding: 30px;
   text-align: center;
-  margin-top: 20px;
-}
-
-button {
-  padding: 10px 20px;
-  margin: 10px;
-  background: #2196f3;
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-weight: bold;
-  font-size: 1rem;
-  box-shadow: 0 0 10px #0af;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: transform 0.3s, background-color 0.3s;
 }
 
-button:hover {
-  background: #1976d2;
-  box-shadow: 0 0 15px #0ff;
+.card:hover {
+  transform: translateY(-5px);
+  background-color: #292929;
 }
 
-#specialBtn {
-  background: #e91e63;
+.card i {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #00ffe1;
 }
 
-#specialBtn:hover {
-  background: #c2185b;
-  box-shadow: 0 0 15px #f06292;
-}
-
-#message {
-  margin-top: 15px;
-  font-size: 1.1rem;
-  color: #ffd700;
-}
-
-footer {
-  text-align: center;
-  padding: 15px;
-  font-size: 0.9rem;
-  color: #aaa;
-  border-top: 1px solid #444;
-  margin-top: 30px;
+.card h3 {
+  margin: 10px 0 0;
+  font-size: 1.2rem;
 }
