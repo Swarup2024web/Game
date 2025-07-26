@@ -5,80 +5,90 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gods in War</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
+  <header class="header">
+    <h1 class="title">Gods in War</h1>
+    
+    <!-- XP Progress Bar -->
+    <div class="xp-bar">
+      <span class="level-text">LV 25</span>
+      <div class="progress-container">
+        <div class="progress-bar" style="width: 60%;"></div>
+      </div>
+      <span class="level-text">LV 26</span>
+    </div>
 
-  <!-- Website Title -->
-  <header>
-    <h1 class="game-title">Gods in War</h1>
+    <!-- Player Stats Row -->
+    <div class="stats">
+      <div class="stat"><i class="fas fa-bolt"></i> 9540</div>
+      <div class="stat"><i class="fas fa-fire"></i> 12300</div>
+      <div class="stat"><i class="fas fa-coins"></i> 212K</div>
+      <div class="stat"><i class="fas fa-gem"></i> 110</div>
+    </div>
   </header>
 
-  <!-- Player Stats -->
-  <section class="player-stats">
-    <div class="stat">
-      <i class="fas fa-heart"></i>
-      <span>Health: 90</span>
-    </div>
-    <div class="stat">
-      <i class="fas fa-bolt"></i>
-      <span>Energy: 60</span>
-    </div>
-    <div class="stat">
-      <i class="fas fa-coins"></i>
-      <span>Coins: 200</span>
-    </div>
-    <div class="stat">
-      <i class="fas fa-star"></i>
-      <span>XP: 1200</span>
-    </div>
-  </section>
-
-  <!-- Cards -->
-  <section class="card-container">
-    <a href="#" class="card">
-      <i class="fas fa-user"></i>
-      <span>Profile</span>
-      <i class="fas fa-chevron-right arrow"></i>
+  <!-- Card Section -->
+  <main class="card-container">
+    <a href="profile.html" class="card">
+      <div class="card-left">
+        <i class="fas fa-user"></i><span>Profile</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
     </a>
-    <a href="#" class="card">
-      <i class="fas fa-envelope"></i>
-      <span>Messages</span>
-      <span class="badge">2</span>
-      <i class="fas fa-chevron-right arrow"></i>
+    
+    <a href="messages.html" class="card">
+      <div class="card-left">
+        <i class="fas fa-envelope"></i><span>Messages</span>
+        <span class="badge">5</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
     </a>
-    <a href="#" class="card">
-      <i class="fas fa-bell"></i>
-      <span>Notifications</span>
-      <span class="badge">4</span>
-      <i class="fas fa-chevron-right arrow"></i>
+    
+    <a href="notifications.html" class="card">
+      <div class="card-left">
+        <i class="fas fa-bell"></i><span>Notifications</span>
+        <span class="badge">3</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
     </a>
-    <a href="#" class="card">
-      <i class="fas fa-gift"></i>
-      <span>Rewards</span>
-      <i class="fas fa-chevron-right arrow"></i>
+    
+    <a href="rewards.html" class="card">
+      <div class="card-left">
+        <i class="fas fa-gift"></i><span>Rewards</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
     </a>
-    <a href="#" class="card">
-      <i class="fas fa-users"></i>
-      <span>Guild</span>
-      <i class="fas fa-chevron-right arrow"></i>
+    
+    <a href="guild.html" class="card">
+      <div class="card-left">
+        <i class="fas fa-users"></i><span>Guild</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
     </a>
-    <a href="#" class="card">
-      <i class="fas fa-skull-crossbones"></i>
-      <span>Boss Fight</span>
-      <i class="fas fa-chevron-right arrow"></i>
+    
+    <a href="bossfight.html" class="card">
+      <div class="card-left">
+        <i class="fas fa-dragon"></i><span>Boss Fight</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
     </a>
-    <a href="#" class="card">
-      <i class="fas fa-fist-raised"></i>
-      <span>PvP Arena</span>
-      <i class="fas fa-chevron-right arrow"></i>
+    
+    <a href="pvparena.html" class="card">
+      <div class="card-left">
+        <i class="fas fa-crosshairs"></i><span>PvP Arena</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
     </a>
-    <a href="#" class="card">
-      <i class="fas fa-shield-alt"></i>
-      <span>Guild War</span>
-      <i class="fas fa-chevron-right arrow"></i>
+    
+    <a href="guildwar.html" class="card">
+      <div class="card-left">
+        <i class="fas fa-shield-halved"></i><span>Guild War</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
     </a>
-  </section>
+  </main>
 
   <script src="script.js"></script>
 </body>
