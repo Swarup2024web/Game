@@ -3,69 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My RPG Game</title>
+  <title>Battle Quest</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
+
+  <!-- Header: Website name -->
   <header>
-    <!-- Row 1: Website name -->
-    <div class="header-row site-title">
-      <h1><i class="fas fa-dragon"></i> RPG QUEST</h1>
+    <h1 class="site-title">⚔️ Battle Quest</h1>
+
+    <!-- Row 2: Icons with labels and counts -->
+    <div class="top-icons">
+      <a href="profile.html" class="icon-link"><i class="fas fa-user"></i> Profile</a>
+      <a href="notifications.html" class="icon-link"><i class="fas fa-bell"></i> Notifications <span class="count">3</span></a>
+      <a href="messages.html" class="icon-link"><i class="fas fa-envelope"></i> Messages <span class="count">5</span></a>
     </div>
 
-    <!-- Row 2: Profile, Notifications, Messages -->
-    <div class="header-row nav-icons">
-      <div class="icon-group">
-        <i class="fas fa-user-circle"></i>
-      </div>
-      <div class="icon-group" id="notif-icon">
-        <i class="fas fa-bell"></i>
-        <span class="count">2</span>
-      </div>
-      <div class="icon-group" id="msg-icon">
-        <i class="fas fa-envelope"></i>
-        <span class="count">5</span>
-      </div>
-    </div>
-
-    <!-- Row 3: Stats -->
-    <div class="header-row stats">
-      <div><i class="fas fa-bolt"></i> Power: <span>2100</span></div>
-      <div><i class="fas fa-star"></i> Level: <span>18</span></div>
-      <div><i class="fas fa-brain"></i> Skill Pts: <span>12</span></div>
+    <!-- Row 3: Stats with glowing effects -->
+    <div class="stats-row">
+      <div class="stat fire-glow"><i class="fas fa-bolt"></i> 1234</div>
+      <div class="stat green-glow"><i class="fas fa-star"></i> Level 25</div>
+      <div class="stat blue-glow"><i class="fas fa-magic"></i> 10 SP</div>
     </div>
   </header>
 
-  <main>
-    <div class="card-container">
-      <div class="card" id="rewards">
-        <i class="fas fa-gift card-icon"></i>
-        <h2>Rewards</h2>
-      </div>
-      <div class="card" id="boss">
-        <i class="fas fa-skull-crossbones card-icon"></i>
-        <h2>Boss Fight</h2>
-      </div>
-      <div class="card" id="pvp">
-        <i class="fas fa-swords card-icon"></i>
-        <h2>PvP Arena</h2>
-      </div>
-      <div class="card" id="shop">
-        <i class="fas fa-store card-icon"></i>
-        <h2>Shop</h2>
-      </div>
-      <div class="card" id="inventory">
-        <i class="fas fa-boxes-stacked card-icon"></i>
-        <h2>Inventory</h2>
-      </div>
-      <div class="card" id="leaderboard">
-        <i class="fas fa-ranking-star card-icon"></i>
-        <h2>Leaderboard</h2>
-      </div>
-    </div>
+  <!-- Main Cards -->
+  <main class="card-container">
+    <a href="rewards.html" class="card"><i class="fas fa-gift"></i> <span>Daily Rewards</span> <i class="fas fa-chevron-right right"></i></a>
+    <a href="boss.html" class="card"><i class="fas fa-skull-crossbones"></i> <span>Boss Fight</span> <i class="fas fa-chevron-right right"></i></a>
+    <a href="pvp.html" class="card"><i class="fas fa-crosshairs"></i> <span>PvP Arena</span> <i class="fas fa-chevron-right right"></i></a>
+    <a href="shop.html" class="card"><i class="fas fa-store"></i> <span>Shop</span> <i class="fas fa-chevron-right right"></i></a>
+    <a href="inventory.html" class="card"><i class="fas fa-boxes"></i> <span>Inventory</span> <i class="fas fa-chevron-right right"></i></a>
+    <a href="leaderboard.html" class="card"><i class="fas fa-crown"></i> <span>Leaderboard</span> <i class="fas fa-chevron-right right"></i></a>
+    <a href="guild.html" class="card"><i class="fas fa-users"></i> <span>Guild</span> <i class="fas fa-chevron-right right"></i></a>
+    <a href="guildwar.html" class="card"><i class="fas fa-fire"></i> <span>Guild War</span> <i class="fas fa-chevron-right right"></i></a>
   </main>
 
   <script src="script.js"></script>
 </body>
-</html>
+  </html>
