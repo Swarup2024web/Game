@@ -1,19 +1,35 @@
-// Sample script to update notification and message badge counts
-document.addEventListener('DOMContentLoaded', () => {
-  // Simulate fetching data
-  const messageCount = 3;
-  const notificationCount = 5;
+// XP progress animation
+document.addEventListener("DOMContentLoaded", () => {
+  const xpBar = document.getElementById("xp-fill");
+  const xpPercent = parseInt(xpBar.getAttribute("data-xp"));
+  let width = 0;
 
-  const messageBadge = document.querySelector('#message-badge');
-  const notificationBadge = document.querySelector('#notification-badge');
+  const fill = () => {
+    if (width >= xpPercent) return;
+    width++;
+    xpBar.style.width = width + "%";
+    requestAnimationFrame(fill);
+  };
 
-  if (messageBadge) {
-    messageBadge.textContent = messageCount;
-    messageBadge.style.display = messageCount > 0 ? 'inline-block' : 'none';
+  requestAnimationFrame(fill);
+});
+
+// Badge update example (you can fetch real data if needed)
+document.addEventListener("DOMContentLoaded", () => {
+  const messagesBadge = document.getElementById("messages-badge");
+  const notificationsBadge = document.getElementById("notifications-badge");
+
+  // Sample values (replace with actual logic or fetched values)
+  const messageCount = 4;
+  const notificationCount = 3;
+
+  if (messageCount > 0) {
+    messagesBadge.textContent = messageCount;
+    messagesBadge.style.display = "inline-block";
   }
 
-  if (notificationBadge) {
-    notificationBadge.textContent = notificationCount;
-    notificationBadge.style.display = notificationCount > 0 ? 'inline-block' : 'none';
+  if (notificationCount > 0) {
+    notificationsBadge.textContent = notificationCount;
+    notificationsBadge.style.display = "inline-block";
   }
 });
