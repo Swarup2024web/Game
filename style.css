@@ -1,125 +1,116 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
-
+/* Global Styles */
 body {
   margin: 0;
-  padding: 0;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
   color: #fff;
 }
 
-/* Navigation Bar */
-nav {
-  background: #111;
-  padding: 1rem;
+/* Header Styles */
+header {
+  background-color: #111;
+  padding: 10px;
+  border-bottom: 2px solid #444;
+}
+
+.header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  border-bottom: 2px solid #0ff;
+  padding: 5px 20px;
 }
 
-nav .logo {
-  font-size: 1.5rem;
+.header-title {
+  font-size: 2em;
+  color: #00ffe1;
+  text-shadow: 0 0 10px #00ffe1;
   font-weight: bold;
+}
+
+.icon-group {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.icon-box {
+  position: relative;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: #ffea00;
+}
+
+.icon-box .count {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: red;
+  color: white;
+  font-size: 0.7em;
+  padding: 2px 5px;
+  border-radius: 50%;
+}
+
+/* Stats row */
+.stats-row {
+  background-color: #1e1e1e;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  border-bottom: 2px solid #333;
+}
+
+.stat {
+  text-align: center;
   color: #0ff;
+  font-size: 1em;
 }
 
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 1rem;
-  padding: 0;
-  margin: 0;
+.stat i {
+  margin-right: 5px;
+  color: #00ff99;
 }
 
-nav ul li a {
-  color: #fff;
-  text-decoration: none;
-  padding: 0.5rem;
-  border-radius: 6px;
-  transition: background 0.3s;
-}
-
-nav ul li a:hover {
-  background: #0ff;
-  color: #000;
-}
-
-/* Main Content */
+/* Main Container */
 main {
-  padding: 2rem;
+  padding: 20px;
 }
 
-/* Cards Layout */
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
 
 .card {
-  background: linear-gradient(135deg, #1e1e2f, #2b2b4b);
-  color: white;
-  padding: 1rem;
-  width: 48%;
+  background: #222;
+  border: 2px solid #444;
+  padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+  box-shadow: 0 0 10px #0ff;
   transition: transform 0.2s ease;
-  position: relative;
+  cursor: pointer;
 }
 
 .card:hover {
   transform: scale(1.03);
+  box-shadow: 0 0 20px #00ffd5;
 }
 
-.card h3 {
-  margin-top: 0;
-  color: #0ff;
+.card i {
+  font-size: 2em;
+  margin-bottom: 10px;
+  color: #00ffd5;
 }
 
-.card p {
-  margin: 0.5rem 0;
+.card-title {
+  font-size: 1.2em;
+  color: #fff;
 }
 
-/* Font Awesome Icons */
-.fa {
-  margin-right: 0.5rem;
-  color: #0ff;
-}
-
-/* Button Styles */
-.button {
-  background: #0ff;
-  color: #000;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.button:hover {
-  background: #00ffffcc;
-}
-
-/* Responsive: No collapse on mobile */
-@media screen and (max-width: 480px) {
-  .card {
-    width: 48%; /* Maintain two per row */
+/* Prevent card collapse on mobile */
+@media screen and (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
-
-/* Notification & Message badges */
-.badge {
-  background: red;
-  color: white;
-  font-size: 0.7rem;
-  border-radius: 50%;
-  padding: 0.2rem 0.5rem;
-  position: absolute;
-  top: 0;
-  right: 0;
-  }
