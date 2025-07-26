@@ -1,89 +1,14 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gods in War - Shop</title>
+  <title>Gods in War</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://kit.fontawesome.com/a2e0e6adcf.js" crossorigin="anonymous"></script>
-  <style>
-    /* Shop Container */
-    .shop-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
-
-    .shop-item {
-      background: #ffffff;
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      text-align: center;
-      transition: transform 0.3s ease;
-    }
-
-    .shop-item:hover {
-      transform: scale(1.02);
-    }
-
-    .shop-item img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-bottom: 10px;
-    }
-
-    .item-name {
-      font-weight: bold;
-      font-size: 1.1rem;
-      margin-bottom: 10px;
-    }
-
-    .item-info {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 10px;
-      font-size: 1rem;
-    }
-
-    .item-info i {
-      margin-right: 5px;
-    }
-
-    .buy-btn {
-      background: #0072ff;
-      color: white;
-      padding: 8px 14px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s ease;
-    }
-
-    .buy-btn:hover {
-      background: #005ed3;
-    }
-
-    .message {
-      margin-top: 10px;
-      color: red;
-      font-size: 0.9rem;
-    }
-
-    @media (max-width: 768px) {
-      .shop-container {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
-
   <!-- Header -->
   <header class="header">
     <!-- Website Title -->
@@ -91,89 +16,91 @@
 
     <!-- XP Progress Bar -->
     <div class="xp-row">
-      <span class="level-text">LV 25</span>
+      <span class="level-text">LV 1</span>
       <div class="progress-container">
         <div class="progress-bar">
           <div id="xp-fill" class="progress-fill" data-xp="60"></div>
         </div>
       </div>
-      <span class="level-text">LV 26</span>
+      <span class="level-text">LV 2</span>
     </div>
 
     <!-- Player Stats -->
     <div class="stats-row">
-      <div class="stat"><i class="fas fa-bolt"></i><span id="power">9540</span></div>
-      <div class="stat"><i class="fas fa-fire"></i><span>12300</span></div>
-      <div class="stat"><i class="fas fa-coins"></i><span id="coins">500</span></div>
+      <div class="stat"><i class="fas fa-bolt"></i><span>9540</span></div>      <!-- Power -->
+      <div class="stat"><i class="fas fa-fire"></i><span>12300</span></div>     <!-- Health -->
+      <div class="stat"><i class="fas fa-coins"></i><span>212K</span></div>     <!-- Coins -->
     </div>
   </header>
 
-  <!-- Shop Items -->
-  <div class="shop-container" id="shop-items"></div>
+  <!-- Navigation Cards -->
+  <main class="card-container">
+    <a href="profile.html" class="card">
+      <div class="card-left">
+        <i class="fas fa-user"></i><span>Profile</span>
+      </div>
+      <i class="fas fa-chevron-right card-chevron"></i>
+    </a>
 
-  <script>
-    const player = {
-      power: 9540,
-      coins: 500
-    };
+    <a href="messages.html" class="card">
+      <div class="card-left">
+        <i class="fas fa-envelope"></i><span>Messages</span>
+        <span class="badge" id="messages-badge">0</span>
+      </div>
+      <i class="fas fa-chevron-right card-chevron"></i>
+    </a>
 
-    const items = [
-      { name: "Sword of Flames", power: 250, cost: 100, img: "https://via.placeholder.com/100", currency: "coins" },
-      { name: "Shadow Cloak", power: 180, cost: 3.99, img: "https://via.placeholder.com/100", currency: "cash" },
-      { name: "Titan Armor", power: 300, cost: 200, img: "https://via.placeholder.com/100", currency: "coins" },
-      { name: "Phoenix Feather", power: 220, cost: 1.99, img: "https://via.placeholder.com/100", currency: "cash" },
-      { name: "Healing Potion", power: 50, cost: 50, img: "https://via.placeholder.com/100", currency: "coins" },
-      { name: "Silver Dagger", power: 100, cost: 70, img: "https://via.placeholder.com/100", currency: "coins" },
-      { name: "Magic Orb", power: 190, cost: 4.99, img: "https://via.placeholder.com/100", currency: "cash" },
-      { name: "Thunder Ring", power: 210, cost: 120, img: "https://via.placeholder.com/100", currency: "coins" },
-      { name: "Warrior Boots", power: 130, cost: 90, img: "https://via.placeholder.com/100", currency: "coins" },
-      { name: "Iron Shield", power: 160, cost: 100, img: "https://via.placeholder.com/100", currency: "coins" },
-    ];
+    <a href="notifications.html" class="card">
+      <div class="card-left">
+        <i class="fas fa-bell"></i><span>Notifications</span>
+        <span class="badge" id="notifications-badge">0</span>
+      </div>
+      <i class="fas fa-chevron-right card-chevron"></i>
+    </a>
 
-    // Sort by power descending
-    items.sort((a, b) => b.power - a.power);
+    <a href="rewards.html" class="card">
+      <div class="card-left">
+        <i class="fas fa-gift"></i><span>Rewards</span>
+      </div>
+      <i class="fas fa-chevron-right card-chevron"></i>
+    </a>
 
-    const shopContainer = document.getElementById('shop-items');
+    <a href="shop.html" class="card">
+      <div class="card-left">
+        <i class="fas fa-gift"></i><span>Shop</span>
+      </div>
+      <i class="fas fa-chevron-right card-chevron"></i>
+    </a>
 
-    items.forEach((item, index) => {
-      const card = document.createElement('div');
-      card.className = 'shop-item';
+    <a href="guild.html" class="card">
+      <div class="card-left">
+        <i class="fas fa-users"></i><span>Guild</span>
+      </div>
+      <i class="fas fa-chevron-right card-chevron"></i>
+    </a>
 
-      card.innerHTML = `
-        <img src="${item.img}" alt="${item.name}" />
-        <div class="item-name">${item.name}</div>
-        <div class="item-info">
-          <div><i class="fas fa-bolt"></i>${item.power}</div>
-          <div>
-            ${item.currency === 'coins' 
-              ? `<i class="fas fa-coins"></i>${item.cost}` 
-              : `<i class="fas fa-dollar-sign"></i>${item.cost}`}
-          </div>
-        </div>
-        ${item.currency === 'coins' 
-          ? `<button class="buy-btn" onclick="buyItem(${index})">Buy</button>
-             <div class="message" id="msg-${index}"></div>`
-          : `<button class="buy-btn">Buy</button>`}
-      `;
+    <a href="bossfight.html" class="card">
+      <div class="card-left">
+        <i class="fas fa-dragon"></i><span>Boss Fight</span>
+      </div>
+      <i class="fas fa-chevron-right card-chevron"></i>
+    </a>
 
-      shopContainer.appendChild(card);
-    });
+    <a href="pvparena.html" class="card">
+      <div class="card-left">
+        <i class="fas fa-crosshairs"></i><span>PvP Arena</span>
+      </div>
+      <i class="fas fa-chevron-right card-chevron"></i>
+    </a>
 
-    function buyItem(index) {
-      const item = items[index];
-      const msg = document.getElementById(`msg-${index}`);
-      msg.textContent = '';
+    <a href="guildwar.html" class="card">
+      <div class="card-left">
+        <i class="fas fa-shield-halved"></i><span>Guild War</span>
+      </div>
+      <i class="fas fa-chevron-right card-chevron"></i>
+    </a>
+  </main>
 
-      if (player.coins >= item.cost) {
-        player.coins -= item.cost;
-        document.getElementById('coins').textContent = player.coins;
-        msg.style.color = 'green';
-        msg.textContent = 'Purchased!';
-      } else {
-        msg.style.color = 'red';
-        msg.textContent = 'Not enough coins';
-      }
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
