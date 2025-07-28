@@ -1,0 +1,118 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #1a001a;
+  color: #fff;
+}
+
+.top-bar {
+  background-color: #2a002a;
+  padding: 10px;
+  text-align: center;
+}
+
+.stats span, .info-bar span {
+  margin: 5px;
+  display: inline-block;
+  font-size: 14px;
+}
+
+.stats i {
+  color: #f00;
+  margin-right: 4px;
+}
+
+.badge {
+  background-color: red;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.progress-bar {
+  height: 8px;
+  background-color: #555;
+  margin: 10px 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar div {
+  height: 100%;
+  width: 40%;
+  background-color: lime;
+}
+
+.char-lock {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.buttons button {
+  margin: 5px;
+  padding: 8px 15px;
+  font-size: 14px;
+  background-color: #b30000;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.msg {
+  background-color: #d35400;
+}
+
+.vip-tag {
+  background-color: gold;
+  color: black;
+  padding: 2px 6px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+h2 {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.grid-menu {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 20px;
+}
+
+.grid-menu button {
+  background-color: #330033;
+  border: 1px solid #555;
+  padding: 12px;
+  font-size: 16px;
+  color: white;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.grid-menu button:hover {
+  background-color: #4d004d;
+}
+
+.free-gold {
+  display: block;
+  margin: 20px auto;
+  padding: 12px 20px;
+  background-color: orange;
+  color: black;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
