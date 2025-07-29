@@ -1,107 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Profile</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Material Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!-- Firebase Auth and Config -->
+  <meta charset="UTF-8" />
+  <title>Profile - NeuroBot Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js"></script>
+</head>
+<body style="font-family: 'Roboto', sans-serif; background: linear-gradient(to bottom right, #e0f7fa, #b2ebf2); margin: 0;">
+
+  <!-- Header from index.html -->
+  <header class="site-header">
+    <div class="header-row1">NeuroBot Academy</div>
+    <div class="header-row2">
+      <a href="index.html"><span class="material-icons-outlined">home</span></a>
+      <a href="robot.html"><span class="material-icons-outlined">smart_toy</span></a>
+      <a href="profile.html"><span class="material-icons-outlined">person</span></a>
+    </div>
+  </header>
+
+  <!-- Profile Section -->
+  <section style="padding: 2rem; display: flex; flex-direction: column; align-items: center;">
+    <h2 style="font-size: 1.8rem; color: #00796b;">Your Profile</h2>
+
+    <div style="margin-top: 1rem; background: white; border-radius: 12px; padding: 1.5rem 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 400px;">
+      <p><strong>Username:</strong> <span id="username">Loading...</span></p>
+      <p><strong>AI Coins:</strong> <span id="coins">Loading...</span></p>
+    </div>
+  </section>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
       authDomain: "mybot-e3dbc.firebaseapp.com",
       projectId: "mybot-e3dbc",
-      storageBucket: "mybot-e3dbc.appspot.com",
+      storageBucket: "mybot-e3dbc.firebasestorage.app",
       messagingSenderId: "576870586364",
       appId: "1:576870586364:web:739707e4ad4cb115d6c479"
     };
 
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    const auth = getAuth();
+    const db = getFirestore();
 
-    window.onload = () => {
-      const userName = document.getElementById("user-name");
-      const userEmail = document.getElementById("user-email");
-
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          userName.textContent = user.displayName || "No name set";
-          userEmail.textContent = user.email;
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userDoc = doc(db, "users", user.uid);
+        const docSnap = await getDoc(userDoc);
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          document.getElementById("username").textContent = data.username || "N/A";
+          document.getElementById("coins").textContent = data.coins || 0;
         } else {
-          window.location.href = "login.html"; // redirect if not logged in
+          document.getElementById("username").textContent = "User data not found.";
         }
-      });
-    };
+      } else {
+        window.location.href = "login.html";
+      }
+    });
   </script>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f5f7fa;
-      color: #333;
-    }
-    header {
-      background-color: #6200ee;
-      color: white;
-      padding: 10px 20px;
-    }
-    .header-row1 {
-      font-size: 1.5em;
-      font-weight: bold;
-    }
-    .header-row2 {
-      display: flex;
-      justify-content: space-around;
-      padding-top: 8px;
-    }
-    .header-row2 i {
-      font-size: 24px;
-      cursor: pointer;
-    }
-    main {
-      padding: 20px;
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      max-width: 500px;
-      margin: 30px auto;
-    }
-    .card h2 {
-      margin-top: 0;
-      color: #6200ee;
-    }
-    .info {
-      font-size: 1.1em;
-      margin-bottom: 10px;
-    }
-  </style>
-</head>
-<body>
-
-  <header>
-    <div class="header-row1">MyBot Academy</div>
-    <div class="header-row2">
-      <span onclick="location.href='index.html'"><i class="material-icons">home</i></span>
-      <span onclick="location.href='robot.html'"><i class="material-icons">smart_toy</i></span>
-      <span onclick="location.href='profile.html'"><i class="material-icons">person</i></span>
-    </div>
-  </header>
-
-  <main>
-    <div class="card">
-      <h2>User Profile</h2>
-      <div class="info"><strong>Name:</strong> <span id="user-name">Loading...</span></div>
-      <div class="info"><strong>Email:</strong> <span id="user-email">Loading...</span></div>
-    </div>
-  </main>
-
 </body>
 </html>
