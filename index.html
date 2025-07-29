@@ -2,41 +2,49 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>NeuroCore Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student AI Game</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 </head>
 <body>
-  <header>
-    <h1><i class="fas fa-microchip"></i> NeuroCore Command</h1>
-    <p>Welcome, Commander Zero-One</p>
+  <header class="game-header">
+    <h1><i class="fas fa-robot"></i> AI QUEST</h1>
+    <div class="xp-bar">
+      <div class="xp-fill" style="width: 45%;"></div>
+      <span>XP: 450 / 1000</span>
+    </div>
   </header>
 
-  <section class="stats">
-    <div class="stat-box"><i class="fas fa-bolt"></i> Power: 12890</div>
-    <div class="stat-box"><i class="fas fa-shield-alt"></i> Shield: 8300</div>
-    <div class="stat-box"><i class="fas fa-coins"></i> Crypto: 4050</div>
-    <div class="stat-box"><i class="fas fa-brain"></i> Neural XP: 1520</div>
-  </section>
+  <main class="dashboard">
+    <div class="card" onclick="location.href='ai.html'">
+      <i class="fas fa-brain"></i>
+      <h2>Your AI</h2>
+    </div>
 
-  <div class="grid">
-    <a href="profile.html" class="card"><i class="fas fa-user-cog"></i><span>Profile</span></a>
-    <a href="botsquad.html" class="card"><i class="fas fa-robot"></i><span>BotSquad</span></a>
-    <a href="corenode.html" class="card"><i class="fas fa-network-wired"></i><span>Core Node</span></a>
-    <a href="hacknet.html" class="card"><i class="fas fa-terminal"></i><span>HackNet</span></a>
-    <a href="upgrades.html" class="card"><i class="fas fa-arrow-up"></i><span>Upgrades</span></a>
-    <a href="arena.html" class="card"><i class="fas fa-crosshairs"></i><span>Arena</span></a>
-    <a href="missions.html" class="card"><i class="fas fa-tasks"></i><span>Missions</span></a>
-    <a href="inventory.html" class="card"><i class="fas fa-boxes-stacked"></i><span>Inventory</span></a>
-    <a href="logout.html" class="card"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
-  </div>
+    <div class="card" onclick="location.href='questions.html'">
+      <i class="fas fa-question-circle"></i>
+      <h2>Questions</h2>
+    </div>
+
+    <div class="card" onclick="location.href='leaderboard.html'">
+      <i class="fas fa-trophy"></i>
+      <h2>Leaderboard</h2>
+    </div>
+
+    <div class="card" onclick="location.href='pvp.html'">
+      <i class="fas fa-crosshairs"></i>
+      <h2>PvP Arena</h2>
+    </div>
+
+    <div class="card" onclick="location.href='profile.html'">
+      <i class="fas fa-user-circle"></i>
+      <h2>Profile</h2>
+    </div>
+  </main>
 
   <footer>
-    <p>&copy; 2125 NeuroCore AI Systems</p>
+    <p>© 2025 AI Quest. Learn. Evolve. Win.</p>
   </footer>
 </body>
 </html>
