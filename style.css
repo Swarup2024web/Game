@@ -1,107 +1,149 @@
+/* Google Material Design 3.0 Inspired Theme */
+
+/* Root Variables */
+:root {
+  --primary: #0077cc;
+  --primary-light: #e3f2fd;
+  --on-primary: #ffffff;
+  --surface: #ffffff;
+  --on-surface: #212121;
+  --border-radius: 16px;
+  --elevation: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --font: 'Segoe UI', sans-serif;
+}
+
+/* Reset and Body */
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
 }
 
 body {
-  background: linear-gradient(135deg, #cceeff, #e6f7ff);
-  color: #333;
+  font-family: var(--font);
+  background: linear-gradient(to bottom, #b3e5fc, #e1f5fe);
+  color: var(--on-surface);
   min-height: 100vh;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
+/* Header */
 header {
-  margin-bottom: 20px;
-}
-
-.header-row1 {
-  font-size: 2rem;
-  font-weight: bold;
+  background: var(--primary);
+  color: var(--on-primary);
+  padding: 16px;
   text-align: center;
-  padding: 10px 0;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 12px;
-  backdrop-filter: blur(5px);
+  font-size: 1.6rem;
+  font-weight: bold;
+  box-shadow: var(--elevation);
 }
 
-.header-row2 {
+/* Navigation Bar */
+.navbar {
   display: flex;
   justify-content: center;
-  gap: 30px;
-  margin-top: 10px;
+  gap: 24px;
+  background: var(--primary-light);
+  padding: 12px 0;
+  box-shadow: var(--elevation);
 }
 
-.header-row2 a {
-  font-size: 1.8rem;
-  color: #0077cc;
-  transition: transform 0.2s;
+.navbar a {
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 1.4rem;
+  transition: color 0.3s;
 }
 
-.header-row2 a:hover {
-  transform: scale(1.2);
+.navbar a:hover {
+  color: #01579b;
 }
 
-.welcome {
+/* Welcome Section */
+.welcome-section {
   text-align: center;
-  margin: 30px 0;
+  padding: 40px 20px 20px;
 }
 
-.welcome h2 {
-  font-size: 1.8rem;
-  color: #004466;
-}
-
-.welcome p {
-  font-size: 1rem;
-  color: #006699;
-  margin-top: 8px;
-}
-
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 20px;
-}
-
-.info-card {
-  background: white;
-  border-radius: 20px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 6px 12px rgba(0, 0, 50, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
-  cursor: pointer;
-}
-
-.info-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 80, 0.15);
-}
-
-.info-card i {
-  font-size: 2.2rem;
-  color: #3399ff;
+.welcome-section h2 {
+  font-size: 2rem;
   margin-bottom: 10px;
 }
 
-.info-card h3 {
+.welcome-section p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* Cards Section */
+.card-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.card {
+  background: var(--surface);
+  border-radius: var(--border-radius);
+  box-shadow: var(--elevation);
+  padding: 24px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.card i {
+  font-size: 2.2rem;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.card h3 {
   font-size: 1.2rem;
   margin-bottom: 8px;
 }
 
-.info-card p {
+.card p {
   font-size: 0.95rem;
   color: #666;
 }
 
-.logout-card i {
-  color: red;
+/* Button (if needed) */
+.button {
+  background-color: var(--primary);
+  color: var(--on-primary);
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
 }
 
-@media (max-width: 480px) {
-  .header-row2 {
-    gap: 20px;
+.button:hover {
+  background-color: #005ea6;
+}
+
+/* Responsive Spacing */
+@media screen and (max-width: 480px) {
+  .card-section {
+    padding: 10px;
+    gap: 12px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .navbar {
+    gap: 16px;
+    font-size: 1.2rem;
   }
 }
