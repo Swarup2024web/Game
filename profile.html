@@ -3,78 +3,73 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Profile - AI Arena</title>
+  <title>User Profile</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #003973, #E5E5BE);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      background: linear-gradient(to right, #74ebd5, #ACB6E5);
+      color: #fff;
     }
-    h1 {
-      margin-bottom: 20px;
-    }
-    .card {
-      background: linear-gradient(135deg, #00c6ff, #0072ff);
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 0 20px rgba(0, 200, 255, 0.5);
-      width: 320px;
+    header {
+      padding: 20px;
       text-align: center;
+      background-color: rgba(0, 0, 50, 0.7);
+      font-size: 28px;
+      font-weight: bold;
     }
-    .input-group {
-      margin: 15px 0;
+    .profile-container {
+      max-width: 400px;
+      margin: 40px auto;
+      background: rgba(0, 0, 60, 0.6);
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
     }
-    input {
-      padding: 10px;
-      border: none;
-      border-radius: 10px;
-      width: 100%;
+    .profile-container img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+      border: 3px solid #fff;
     }
-    button {
+    .profile-container h2 {
+      margin: 10px 0 5px;
+    }
+    .info {
+      font-size: 16px;
+      margin: 5px 0;
+    }
+    .logout {
+      margin-top: 20px;
       padding: 10px 20px;
+      background: #f00;
       border: none;
-      background-color: #003973;
-      color: white;
       border-radius: 10px;
       cursor: pointer;
-    }
-    #userProfile {
-      display: none;
-      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
     }
   </style>
 </head>
 <body>
+  <header>👤 Profile</header>
 
-  <h1>Welcome to Your Profile</h1>
-
-  <div class="card" id="loginCard">
-    <div class="input-group">
-      <input type="text" id="username" placeholder="Username"/>
-    </div>
-    <div class="input-group">
-      <input type="password" id="password" placeholder="Password"/>
-    </div>
-    <button onclick="login()">Login</button>
-    <p id="error" style="color: #ffdddd;"></p>
+  <div class="profile-container" id="profileBox">
+    <img src="default.jpg" id="profilePhoto" alt="Profile Photo" />
+    <h2 id="name">Name</h2>
+    <div class="info" id="username">@username</div>
+    <div class="info">Brain Points: <span id="points">0</span></div>
+    <button class="logout" onclick="logout()">Logout</button>
   </div>
 
-  <div class="card" id="userProfile">
-    <h2 id="name">Loading...</h2>
-    <p><strong>Username:</strong> <span id="uname"></span></p>
-    <p><strong>Brain Points:</strong> <span id="brainPoints">0</span></p>
-    <button onclick="logout()">Logout</button>
-  </div>
-
+  <!-- Firebase SDKs -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -90,46 +85,36 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    async function login() {
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const email = username + "@mybot.com"; // virtual email
+    const nameEl = document.getElementById('name');
+    const usernameEl = document.getElementById('username');
+    const pointsEl = document.getElementById('points');
+    const profilePhoto = document.getElementById('profilePhoto');
 
-      try {
-        const userCred = await signInWithEmailAndPassword(auth, email, password);
-        loadUserData(userCred.user.uid);
-      } catch (e) {
-        document.getElementById("error").innerText = "Login failed. Try again.";
-      }
-    }
-
-    function logout() {
-      signOut(auth).then(() => {
-        document.getElementById("loginCard").style.display = "block";
-        document.getElementById("userProfile").style.display = "none";
-      });
-    }
-
-    async function loadUserData(uid) {
-      const userRef = doc(db, "users", uid);
-      const userSnap = await getDoc(userRef);
-
-      if (userSnap.exists()) {
-        const data = userSnap.data();
-        document.getElementById("name").innerText = data.name || "Unknown";
-        document.getElementById("uname").innerText = data.username || "Unknown";
-        document.getElementById("brainPoints").innerText = data.brainPoints || "0";
-        document.getElementById("loginCard").style.display = "none";
-        document.getElementById("userProfile").style.display = "block";
-      }
-    }
-
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
-        loadUserData(user.uid);
+        const uid = user.uid;
+        const docRef = doc(db, "users", uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          nameEl.textContent = data.name;
+          usernameEl.textContent = '@' + data.username;
+          pointsEl.textContent = data.brainPoints || 0;
+          profilePhoto.src = data.image || 'default.jpg';
+        } else {
+          alert('User data not found!');
+        }
+      } else {
+        window.location.href = 'login.html';
       }
     });
-  </script>
 
+    window.logout = function () {
+      signOut(auth).then(() => {
+        window.location.href = 'login.html';
+      });
+    };
+  </script>
 </body>
 </html>
