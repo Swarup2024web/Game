@@ -1,108 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Profile</title>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
-      authDomain: "mybot-e3dbc.firebaseapp.com",
-      projectId: "mybot-e3dbc",
-      storageBucket: "mybot-e3dbc.firebasestorage.app",
-      messagingSenderId: "576870586364",
-      appId: "1:576870586364:web:739707e4ad4cb115d6c479"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    window.onload = async () => {
-      const loggedInUsername = localStorage.getItem("loggedInUsername");
-
-      if (!loggedInUsername) {
-        window.location.href = "login.html";
-        return;
-      }
-
-      const userDoc = await getDoc(doc(db, "users", loggedInUsername));
-      if (userDoc.exists()) {
-        const data = userDoc.data();
-        document.getElementById("username").textContent = data.username;
-        document.getElementById("brainPoints").textContent = data.brainPoints || 0;
-        document.getElementById("photo").src = data.photo || "https://via.placeholder.com/100";
-      } else {
-        alert("User not found.");
-        localStorage.removeItem("loggedInUsername");
-        window.location.href = "login.html";
-      }
-    }
-
-    function logout() {
-      localStorage.removeItem("loggedInUsername");
-      window.location.href = "login.html";
-    }
-  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
   <style>
     body {
-      margin: 0;
-      padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+      background: linear-gradient(to right, #fc466b, #3f5efb);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      color: #fff;
     }
-    .profile-card {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 20px;
-      padding: 40px;
+    .profile-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      width: 350px;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      backdrop-filter: blur(10px);
-      max-width: 350px;
     }
-    .profile-card img {
+    .profile-box img {
       width: 100px;
       height: 100px;
       border-radius: 50%;
-      border: 3px solid #fff;
-      object-fit: cover;
+      border: 3px solid #3f5efb;
     }
-    .profile-card h2 {
-      margin-top: 15px;
-      font-size: 26px;
-    }
-    .profile-card p {
-      font-size: 18px;
+    .profile-box h2 {
+      margin-top: 10px;
     }
     .logout-btn {
       margin-top: 20px;
+      background-color: #fc466b;
+      color: #fff;
       padding: 10px 20px;
       border: none;
-      background: #00c9ff;
-      border-radius: 25px;
-      color: white;
-      font-weight: bold;
+      border-radius: 8px;
       cursor: pointer;
-      transition: 0.3s ease;
     }
     .logout-btn:hover {
-      background: #0077ff;
+      background-color: #e03d61;
     }
   </style>
 </head>
 <body>
-  <div class="profile-card">
-    <img id="photo" src="https://via.placeholder.com/100" alt="Profile Photo" />
-    <h2 id="username">Loading...</h2>
-    <p><strong>Brain Points:</strong> <span id="brainPoints">0</span></p>
-    <button class="logout-btn" onclick="logout()">Logout</button>
-  </div>
+
+<div class="profile-box">
+  <img id="profileImg" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile Image" />
+  <h2 id="profileName">Loading...</h2>
+  <p>Username: <span id="profileUsername"></span></p>
+  <button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
+    authDomain: "mybot-e3dbc.firebaseapp.com",
+    projectId: "mybot-e3dbc",
+    storageBucket: "mybot-e3dbc.appspot.com",
+    messagingSenderId: "576870586364",
+    appId: "1:576870586364:web:739707e4ad4cb115d6c479"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const username = localStorage.getItem("username");
+  if (!username) {
+    window.location.href = "login.html";
+  }
+
+  async function loadProfile() {
+    const q = query(collection(db, "users"), where("username", "==", username));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      const userData = querySnapshot.docs[0].data();
+      document.getElementById("profileName").innerText = userData.name || "No Name";
+      document.getElementById("profileUsername").innerText = userData.username;
+      document.getElementById("profileImg").src = userData.image || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+    } else {
+      document.body.innerHTML = "<h2>User not found.</h2>";
+    }
+  }
+
+  loadProfile();
+</script>
+
+<script>
+  function logout() {
+    localStorage.removeItem("username");
+    window.location.href = "login.html";
+  }
+</script>
+
 </body>
 </html>
