@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Student AI Game</title>
+  <title>AI Quest Dashboard</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 </head>
@@ -17,9 +17,14 @@
   </header>
 
   <main class="dashboard">
+    <div class="card" onclick="location.href='profile.html'">
+      <i class="fas fa-user"></i>
+      <h2>Profile</h2>
+    </div>
+
     <div class="card" onclick="location.href='ai.html'">
       <i class="fas fa-brain"></i>
-      <h2>Your AI</h2>
+      <h2>My AI</h2>
     </div>
 
     <div class="card" onclick="location.href='questions.html'">
@@ -27,24 +32,58 @@
       <h2>Questions</h2>
     </div>
 
-    <div class="card" onclick="location.href='leaderboard.html'">
-      <i class="fas fa-trophy"></i>
-      <h2>Leaderboard</h2>
-    </div>
-
-    <div class="card" onclick="location.href='pvp.html'">
+    <div class="card" onclick="showComingSoon('PvP Arena')">
       <i class="fas fa-crosshairs"></i>
       <h2>PvP Arena</h2>
     </div>
 
-    <div class="card" onclick="location.href='profile.html'">
-      <i class="fas fa-user-circle"></i>
-      <h2>Profile</h2>
+    <div class="card" onclick="showComingSoon('Leaderboard')">
+      <i class="fas fa-trophy"></i>
+      <h2>Leaderboard</h2>
+    </div>
+
+    <div class="card" onclick="logout()">
+      <i class="fas fa-sign-out-alt"></i>
+      <h2>Logout</h2>
     </div>
   </main>
+
+  <!-- Modal -->
+  <div id="comingSoonModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h3 id="modalTitle"></h3>
+      <p>This feature is coming soon! Stay tuned.</p>
+    </div>
+  </div>
 
   <footer>
     <p>© 2025 AI Quest. Learn. Evolve. Win.</p>
   </footer>
+
+  <script>
+    function showComingSoon(title) {
+      document.getElementById("modalTitle").innerText = title;
+      document.getElementById("comingSoonModal").style.display = "block";
+    }
+
+    function closeModal() {
+      document.getElementById("comingSoonModal").style.display = "none";
+    }
+
+    function logout() {
+      // Fake logout logic — use Firebase auth signOut() in real app
+      alert("Logged out successfully!");
+      location.href = "login.html";
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById("comingSoonModal");
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
+  </script>
 </body>
 </html>
