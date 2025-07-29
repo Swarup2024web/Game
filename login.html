@@ -2,113 +2,117 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login - BrainBot</title>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
-      authDomain: "mybot-e3dbc.firebaseapp.com",
-      projectId: "mybot-e3dbc",
-      storageBucket: "mybot-e3dbc.firebasestorage.app",
-      messagingSenderId: "576870586364",
-      appId: "1:576870586364:web:739707e4ad4cb115d6c479"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    window.loginUser = () => {
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value;
-
-      if (!username || !password) {
-        alert("Please fill both username and password!");
-        return;
-      }
-
-      const email = `${username}@mybot.com`;
-
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          localStorage.setItem("username", username);
-          window.location.href = "profile.html";
-        })
-        .catch((error) => {
-          alert("Login failed! Please check your credentials.");
-          console.error(error);
-        });
-    };
-  </script>
+  <title>Login | BrainBot Academy</title>
   <style>
     body {
       margin: 0;
+      padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      height: 100vh;
-      background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+      background: linear-gradient(to bottom right, #92fe9d, #00c9ff);
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
 
-    .login-container {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(12px);
-      padding: 40px;
+    .login-box {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
       border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
-      width: 300px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+      width: 320px;
       text-align: center;
-      color: #004466;
     }
 
-    .login-container h2 {
+    .login-box h2 {
+      color: #fff;
       margin-bottom: 20px;
-      font-size: 24px;
-      color: #003355;
     }
 
-    input {
-      width: 100%;
+    input[type="text"], input[type="password"] {
+      width: 90%;
       padding: 10px;
       margin: 10px 0;
       border: none;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.5);
+      border-radius: 10px;
+      font-size: 16px;
     }
 
     button {
       width: 100%;
-      padding: 12px;
-      background: #007acc;
+      padding: 10px;
+      background: #007cf0;
+      color: #fff;
       border: none;
       border-radius: 10px;
-      color: white;
-      font-weight: bold;
       font-size: 16px;
       cursor: pointer;
-      transition: 0.3s ease;
+      margin-top: 10px;
     }
 
-    button:hover {
-      background: #005fa3;
-    }
-
-    .note {
-      font-size: 12px;
-      margin-top: 15px;
-      color: #222;
+    .error {
+      color: #ff4b4b;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="login-container">
-    <h2>Login to BrainBot</h2>
-    <input type="text" id="username" placeholder="Username" />
-    <input type="password" id="password" placeholder="Password" />
-    <button onclick="loginUser()">Login</button>
-    <div class="note">Only registered users can log in</div>
-  </div>
+
+<div class="login-box">
+  <h2>🔐 Login</h2>
+  <input type="text" id="username" placeholder="Username" required><br>
+  <input type="password" id="password" placeholder="Password" required><br>
+  <button onclick="login()">Login</button>
+  <p class="error" id="error"></p>
+</div>
+
+<!-- Firebase SDKs -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
+    authDomain: "mybot-e3dbc.firebaseapp.com",
+    projectId: "mybot-e3dbc",
+    storageBucket: "mybot-e3dbc.firebasestorage.app",
+    messagingSenderId: "576870586364",
+    appId: "1:576870586364:web:739707e4ad4cb115d6c479"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  async function login() {
+    const uname = document.getElementById("username").value.trim();
+    const pass = document.getElementById("password").value.trim();
+    const error = document.getElementById("error");
+
+    if (!uname || !pass) {
+      error.textContent = "Please enter both fields.";
+      return;
+    }
+
+    try {
+      const q = query(collection(db, "users"), where("username", "==", uname), where("password", "==", pass));
+      const snapshot = await getDocs(q);
+
+      if (!snapshot.empty) {
+        const user = snapshot.docs[0].data();
+        // Save session to localStorage
+        localStorage.setItem("username", user.username);
+        localStorage.setItem("profilePic", user.image || "");
+        window.location.href = "profile.html";
+      } else {
+        error.textContent = "Invalid credentials. Try again.";
+      }
+    } catch (err) {
+      console.error(err);
+      error.textContent = "Login failed. Try later.";
+    }
+  }
+</script>
+
 </body>
 </html>
