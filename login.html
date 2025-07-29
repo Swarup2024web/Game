@@ -1,75 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Login | AI Arena</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - AI Arena</title>
   <style>
     body {
       margin: 0;
-      height: 100vh;
-      background: linear-gradient(135deg, #a8edea, #fed6e3); /* light chilli-blue */
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #a8c0ff, #3f2b96);
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      color: white;
     }
+
     .login-box {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 30px;
-      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(10px);
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      text-align: center;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
       width: 300px;
+      text-align: center;
     }
-    h2 {
-      color: #fff;
+
+    .login-box h2 {
       margin-bottom: 20px;
+      font-size: 24px;
     }
-    input {
-      width: 100%;
+
+    .login-box input {
+      width: 90%;
       padding: 12px;
       margin: 10px 0;
       border: none;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
       font-size: 16px;
+      outline: none;
     }
-    button {
-      width: 100%;
-      padding: 12px;
-      border: none;
+
+    .login-box button {
       background: #00c9ff;
-      color: #fff;
-      font-weight: bold;
-      border-radius: 8px;
+      background: linear-gradient(to right, #00c9ff, #92fe9d);
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      color: black;
+      border-radius: 10px;
       cursor: pointer;
-      transition: 0.3s;
+      transition: transform 0.2s ease;
     }
-    button:hover {
-      background: #007ea7;
+
+    .login-box button:hover {
+      transform: scale(1.05);
     }
+
     .error {
-      color: red;
+      color: #ffbaba;
       font-size: 14px;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
+
   <div class="login-box">
-    <h2>Login</h2>
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
+    <h2>Login to AI Arena</h2>
+    <input type="text" id="username" placeholder="Username" required />
+    <input type="password" id="password" placeholder="Password" required />
     <button onclick="login()">Login</button>
-    <p id="error" class="error"></p>
+    <div id="error" class="error"></div>
   </div>
 
   <script type="module">
+    // Import Firebase SDK
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
       authDomain: "mybot-e3dbc.firebaseapp.com",
@@ -79,35 +90,36 @@
       appId: "1:576870586364:web:739707e4ad4cb115d6c479"
     };
 
+    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
     async function login() {
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const errorEl = document.getElementById('error');
-      errorEl.textContent = "";
+      const uname = document.getElementById('username').value.trim();
+      const pwd = document.getElementById('password').value.trim();
+      const errorBox = document.getElementById('error');
+      errorBox.textContent = "";
 
-      if (!username || !password) {
-        errorEl.textContent = "Please fill all fields.";
+      if (!uname || !pwd) {
+        errorBox.textContent = "Please fill all fields.";
         return;
       }
 
-      const querySnapshot = await getDocs(collection(db, "users"));
-      let found = false;
+      try {
+        const q = query(collection(db, "users"), where("username", "==", uname), where("password", "==", pwd));
+        const querySnapshot = await getDocs(q);
 
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        if (data.username === username && data.password === password) {
-          found = true;
-          sessionStorage.setItem("userId", doc.id);
-          sessionStorage.setItem("username", data.username);
+        if (!querySnapshot.empty) {
+          const user = querySnapshot.docs[0].data();
+          // Save user info in localStorage
+          localStorage.setItem("user", JSON.stringify(user));
           window.location.href = "profile.html";
+        } else {
+          errorBox.textContent = "Invalid username or password.";
         }
-      });
-
-      if (!found) {
-        errorEl.textContent = "Invalid username or password.";
+      } catch (err) {
+        console.error(err);
+        errorBox.textContent = "Login failed. Please try again.";
       }
     }
   </script>
