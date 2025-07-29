@@ -3,101 +3,146 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Profile</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <title>NeuroBot Academy - Profile</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #fc466b, #3f5efb);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
     }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    header {
+      width: 100%;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 24px;
+      letter-spacing: 1px;
+    }
+
+    header a {
+      text-decoration: none;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
     .profile-box {
-      background: #fff;
+      background: rgba(0, 0, 0, 0.2);
       padding: 30px;
       border-radius: 15px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
-      width: 350px;
+      width: 100%;
+      max-width: 400px;
       text-align: center;
     }
-    .profile-box img {
+
+    .profile-img {
       width: 100px;
       height: 100px;
       border-radius: 50%;
-      border: 3px solid #3f5efb;
+      margin-bottom: 15px;
+      object-fit: cover;
+      border: 3px solid #fff;
     }
-    .profile-box h2 {
-      margin-top: 10px;
+
+    .username {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
     }
-    .logout-btn {
-      margin-top: 20px;
-      background-color: #fc466b;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
+
+    .info {
+      font-size: 18px;
+      margin: 10px 0;
     }
-    .logout-btn:hover {
-      background-color: #e03d61;
+
+    @media(max-width: 500px){
+      header h1 {
+        font-size: 18px;
+      }
+      .info {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
 <body>
 
-<div class="profile-box">
-  <img id="profileImg" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile Image" />
-  <h2 id="profileName">Loading...</h2>
-  <p>Username: <span id="profileUsername"></span></p>
-  <button class="logout-btn" onclick="logout()">Logout</button>
-</div>
+  <header>
+    <h1>NeuroBot Academy</h1>
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+  </header>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-  import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+  <div class="profile-box">
+    <img src="https://via.placeholder.com/100" alt="Profile" class="profile-img" id="userPhoto">
+    <div class="username" id="username">Loading...</div>
+    <div class="info">Bot Level: <span id="botLevel">-</span></div>
+    <div class="info">AI Coins: <span id="aiCoins">-</span></div>
+  </div>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
-    authDomain: "mybot-e3dbc.firebaseapp.com",
-    projectId: "mybot-e3dbc",
-    storageBucket: "mybot-e3dbc.appspot.com",
-    messagingSenderId: "576870586364",
-    appId: "1:576870586364:web:739707e4ad4cb115d6c479"
-  };
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "SENDER_ID",
+      appId: "APP_ID"
+    };
 
-  const username = localStorage.getItem("username");
-  if (!username) {
-    window.location.href = "login.html";
-  }
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  async function loadProfile() {
-    const q = query(collection(db, "users"), where("username", "==", username));
-    const querySnapshot = await getDocs(q);
+    const currentUsername = localStorage.getItem("username");
 
-    if (!querySnapshot.empty) {
-      const userData = querySnapshot.docs[0].data();
-      document.getElementById("profileName").innerText = userData.name || "No Name";
-      document.getElementById("profileUsername").innerText = userData.username;
-      document.getElementById("profileImg").src = userData.image || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+    if (!currentUsername) {
+      window.location.href = "login.html";
     } else {
-      document.body.innerHTML = "<h2>User not found.</h2>";
+      const userRef = doc(db, "users", currentUsername);
+      getDoc(userRef).then(docSnap => {
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          document.getElementById("username").innerText = data.name || currentUsername;
+          document.getElementById("botLevel").innerText = data.botLevel || "1";
+          document.getElementById("aiCoins").innerText = data.aiCoins || "0";
+          if (data.image) {
+            document.getElementById("userPhoto").src = data.image;
+          }
+        } else {
+          alert("User not found.");
+          localStorage.removeItem("username");
+          window.location.href = "login.html";
+        }
+      }).catch(err => {
+        console.error("Error fetching user:", err);
+        alert("Failed to fetch profile.");
+        window.location.href = "login.html";
+      });
     }
-  }
-
-  loadProfile();
-</script>
-
-<script>
-  function logout() {
-    localStorage.removeItem("username");
-    window.location.href = "login.html";
-  }
-</script>
-
+  </script>
 </body>
 </html>
