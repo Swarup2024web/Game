@@ -1,134 +1,107 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>User Profile</title>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
-      authDomain: "mybot-e3dbc.firebaseapp.com",
-      projectId: "mybot-e3dbc",
-      storageBucket: "mybot-e3dbc.appspot.com",
-      messagingSenderId: "576870586364",
-      appId: "1:576870586364:web:739707e4ad4cb115d6c479"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
-
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        document.getElementById('profile-container').style.display = 'block';
-        document.getElementById('login-form').style.display = 'none';
-
-        const docRef = doc(db, "users", user.displayName || user.email);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          document.getElementById('username').innerText = data.username || "Unknown";
-          document.getElementById('name').innerText = data.name || "No Name";
-          document.getElementById('points').innerText = data.brainPoints || 0;
-          if (data.photoURL) {
-            document.getElementById('profile-pic').src = data.photoURL;
-          }
-        }
-      } else {
-        document.getElementById('profile-container').style.display = 'none';
-        document.getElementById('login-form').style.display = 'block';
-      }
-    });
-
-    async function loginUser(e) {
-      e.preventDefault();
-      const username = document.getElementById("login-username").value;
-      const password = document.getElementById("login-password").value;
-      try {
-        const email = `${username}@mybot.com`;
-        await signInWithEmailAndPassword(auth, email, password);
-      } catch (error) {
-        alert("Login Failed: " + error.message);
-      }
-    }
-
-    window.loginUser = loginUser;
-  </script>
-
+  <title>Profile</title>
   <style>
     body {
       margin: 0;
+      padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #89f7fe, #66a6ff);
+      background: linear-gradient(135deg, #84fab0, #8fd3f4);
       color: #fff;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      padding-top: 50px;
+      height: 100vh;
     }
-    #profile-container {
-      display: none;
-      background: rgba(0,0,0,0.3);
+    .profile-card {
+      background-color: rgba(0, 0, 50, 0.6);
       padding: 30px;
       border-radius: 20px;
-      width: 300px;
+      box-shadow: 0 0 30px rgba(0,255,255,0.6);
       text-align: center;
-      box-shadow: 0 0 20px #fff;
+      width: 90%;
+      max-width: 400px;
     }
-    #profile-pic {
-      width: 100px;
-      height: 100px;
+    .profile-photo {
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
-      border: 3px solid white;
+      border: 3px solid #00f2ff;
+      margin-bottom: 20px;
+      object-fit: cover;
+    }
+    .username {
+      font-size: 24px;
+      font-weight: bold;
       margin-bottom: 10px;
     }
-    #login-form {
-      display: none;
-      background: rgba(0,0,0,0.2);
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 10px #fff;
-    }
-    input {
-      padding: 10px;
-      width: 90%;
-      margin: 10px 0;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-    }
-    button {
+    .logout-btn {
+      margin-top: 20px;
       padding: 10px 20px;
-      background: #0078d4;
-      color: white;
       border: none;
-      border-radius: 10px;
-      font-size: 16px;
+      background: #00d2ff;
+      border-radius: 8px;
       cursor: pointer;
+      font-weight: bold;
+      color: #000;
+    }
+    .logout-btn:hover {
+      background: #00aaff;
     }
   </style>
 </head>
-
 <body>
 
-  <div id="login-form">
-    <h2>Login</h2>
-    <form onsubmit="loginUser(event)">
-      <input type="text" id="login-username" placeholder="Username" required><br>
-      <input type="password" id="login-password" placeholder="Password" required><br>
-      <button type="submit">Login</button>
-    </form>
-  </div>
+<div class="profile-card" id="profileCard" style="display: none;">
+  <img src="" alt="Profile Photo" class="profile-photo" id="profileImage">
+  <div class="username" id="username"></div>
+  <button class="logout-btn" onclick="logout()">Logout</button>
+</div>
 
-  <div id="profile-container">
-    <img id="profile-pic" src="https://via.placeholder.com/100" alt="Profile Photo">
-    <h2 id="name">Name</h2>
-    <p><strong>Username:</strong> <span id="username">-</span></p>
-    <p><strong>Brain Points:</strong> <span id="points">0</span></p>
-  </div>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
+    authDomain: "mybot-e3dbc.firebaseapp.com",
+    projectId: "mybot-e3dbc",
+    storageBucket: "mybot-e3dbc.firebasestorage.app",
+    messagingSenderId: "576870586364",
+    appId: "1:576870586364:web:739707e4ad4cb115d6c479"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const uid = user.uid;
+      const userRef = doc(db, "users", uid);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        const data = userSnap.data();
+        document.getElementById('profileImage').src = data.image || 'https://via.placeholder.com/120';
+        document.getElementById('username').textContent = data.username || "No Username";
+        document.getElementById('profileCard').style.display = 'block';
+      } else {
+        alert("User data not found!");
+      }
+    } else {
+      window.location.href = "login.html";
+    }
+  });
+
+  function logout() {
+    signOut(auth).then(() => {
+      window.location.href = "login.html";
+    });
+  }
+</script>
 </body>
 </html>
