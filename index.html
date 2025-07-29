@@ -2,17 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NeuroBot Academy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NeuroBot Academy - Dashboard</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
 </head>
 <body>
   <!-- Header -->
-  <header>
-    <div class="header-row1">NeuroBot Academy</div>
-    <div class="header-row2">
-      <a href="index.html" title="Home"><i class="fas fa-home"></i></a>
+  <header class="dashboard-header">
+    <div class="row1">
+      <h1>🤖 NeuroBot Academy</h1>
+    </div>
+    <div class="row2 nav-icons">
+      <a href="index.html" title="Home"><i class="fas fa-house"></i></a>
       <a href="robot.html" title="Robot"><i class="fas fa-robot"></i></a>
       <a href="profile.html" title="Profile"><i class="fas fa-user"></i></a>
     </div>
@@ -20,53 +25,49 @@
 
   <!-- Welcome Section -->
   <section class="welcome">
-    <h2>Welcome to the World of Robotics & AI!</h2>
-    <p>Build, Upgrade, and Learn with your own AI Bot in NeuroBot Academy.</p>
+    <h2>Welcome to the world of Robotics and Artificial Intelligence!</h2>
+    <p>Train your bot, solve quizzes, earn coins, and rise to the top!</p>
   </section>
 
-  <!-- Dashboard Cards -->
-  <section class="card-grid">
-    <div class="info-card">
-      <a href="profile.html"><i class="fas fa-user-circle"></i>
+  <!-- Dashboard Navigation Cards -->
+  <section class="dashboard-cards">
+    <a href="profile.html" class="card">
+      <i class="fas fa-user-circle"></i>
       <h3>Profile</h3>
-      <p>View your AI stats and level</p>
-    </div>
-
-    <div class="info-card">
-      <a href="quiz.html"><i class="fas fa-question-circle"></i>
+      <p>Your bot, your progress, your glory!</p>
+    </a>
+    <a href="quiz.html" class="card">
+      <i class="fas fa-question-circle"></i>
       <h3>Quiz</h3>
-      <p>Solve AI questions & earn coins</p>
-    </div>
-
-    <div class="info-card">
-      <a href="robot.html"><i class="fas fa-microchip"></i>
+      <p>Test your knowledge and earn AI Coins.</p>
+    </a>
+    <a href="robot.html" class="card">
+      <i class="fas fa-microchip"></i>
       <h3>Robot</h3>
-      <p>Upgrade and customize your bot</p>
-    </div>
-
-    <div class="info-card">
-      <a href="shop.html"><i class="fas fa-store"></i>
+      <p>View and upgrade your personal AI bot.</p>
+    </a>
+    <a href="shop.html" class="card">
+      <i class="fas fa-store"></i>
       <h3>Shop</h3>
-      <p>Buy parts and skins for your bot</p>
-    </div>
-
-    <div class="info-card">
-      <a href="leaderboard.html"><i class="fas fa-trophy"></i>
+      <p>Spend coins to power-up your robot.</p>
+    </a>
+    <a href="leaderboard.html" class="card">
+      <i class="fas fa-ranking-star"></i>
       <h3>Leaderboard</h3>
-      <p>Compete and rank up</p>
-    </div>
-
-    <div class="info-card logout-card" onclick="logout()">
+      <p>See who's the top AI trainer!</p>
+    </a>
+    <a href="login.html" class="card" onclick="logoutUser()">
       <i class="fas fa-sign-out-alt"></i>
       <h3>Logout</h3>
-      <p>Sign out of your account</p>
-    </div>
+      <p>Exit your dashboard safely.</p>
+    </a>
   </section>
 
   <script>
-    function logout() {
-      // Optionally add Firebase logout here
-      window.location.href = "login.html";
+    function logoutUser() {
+      // Clear any local/session storage if needed
+      localStorage.clear();
+      sessionStorage.clear();
     }
   </script>
 </body>
