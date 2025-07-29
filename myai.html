@@ -1,168 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My AI Evolution</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My AI - Brain Evolution</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.12.0/dist/tf.min.js"></script>
   <style>
     body {
       margin: 0;
       font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #fff;
-      text-align: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
     }
 
     h1 {
-      margin-top: 20px;
-      color: #00ffd5;
-      font-size: 2em;
+      text-align: center;
+      font-size: 2rem;
+      background: linear-gradient(to right, #00f2fe, #4facfe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
     }
 
     canvas {
-      margin: 20px auto;
-      display: block;
-      background: #000;
-      border-radius: 12px;
-      box-shadow: 0 0 20px #00ffd5;
+      border: 2px solid #0ff;
+      border-radius: 15px;
+      background: #111;
+      box-shadow: 0 0 20px #0ff;
     }
 
-    #upgrade-panel {
-      margin: 20px auto;
-      max-width: 400px;
+    #ai-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 700px;
+      width: 100%;
       padding: 20px;
-      background: rgba(0, 255, 150, 0.1);
-      border: 1px solid #00ffcc;
-      border-radius: 12px;
+      box-shadow: 0 0 25px #00ffcc;
+      border-radius: 20px;
+      background-color: rgba(0, 0, 50, 0.3);
     }
 
-    .xp-info {
-      font-size: 1.2em;
-      margin-bottom: 10px;
+    #xp-display {
+      margin: 10px;
+      font-size: 1.2rem;
+      color: #00f2fe;
     }
 
     #upgrade-btn {
-      background: linear-gradient(to right, #00c6ff, #0072ff);
+      margin-top: 20px;
+      padding: 10px 25px;
+      font-size: 1rem;
+      background: linear-gradient(45deg, #4facfe, #00f2fe);
       border: none;
-      padding: 10px 30px;
-      font-size: 1em;
-      border-radius: 20px;
-      color: white;
+      border-radius: 30px;
+      color: black;
       cursor: pointer;
       transition: 0.3s;
+      box-shadow: 0 0 15px #00ffcc;
     }
 
     #upgrade-btn:hover {
-      box-shadow: 0 0 10px #00ffb3;
-      transform: scale(1.05);
+      background: linear-gradient(45deg, #00f2fe, #4facfe);
+      box-shadow: 0 0 25px #00ffcc;
     }
 
-    #functionalities {
+    #features {
       margin-top: 30px;
       text-align: left;
-      padding: 0 20px;
+      width: 100%;
     }
 
-    #functionalities ul {
-      list-style: none;
-      padding: 0;
+    #features ul {
+      padding-left: 20px;
     }
 
-    #functionalities li::before {
-      content: "✓ ";
-      color: #00ffd5;
-    }
+    @media screen and (max-width: 600px) {
+      canvas {
+        width: 100%;
+        height: auto;
+      }
 
-    .glow {
-      box-shadow: 0 0 40px #00ffcc;
-      transition: box-shadow 0.5s ease-in-out;
+      #upgrade-btn {
+        font-size: 0.9rem;
+        padding: 8px 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>AI Evolution Chamber</h1>
-  <canvas id="brainCanvas" width="400" height="400"></canvas>
+  <h1>My AI Evolution</h1>
+  <div id="ai-container">
+    <canvas id="brainCanvas" width="500" height="400"></canvas>
+    <div id="xp-display">Current XP: <span id="xp">120</span> / <span id="requiredXP">200</span></div>
+    <button id="upgrade-btn">Upgrade</button>
 
-  <div id="upgrade-panel">
-    <div class="xp-info">Current XP: <span id="currentXP">1200</span></div>
-    <div class="xp-info">XP Required for Level <span id="nextLevel">2</span>: <span id="xpRequired">1000</span></div>
-    <button id="upgrade-btn">Upgrade Brain</button>
-  </div>
+    <div id="features">
+      <h2>Unlocked Features</h2>
+      <ul id="feature-list">
+        <li>Basic Computation</li>
+        <li>Memory Storage (Level 1)</li>
+      </ul>
 
-  <div id="functionalities" style="display:none;">
-    <h2>Unlocked Functionalities</h2>
-    <ul id="functionList">
-      <!-- Filled dynamically -->
-    </ul>
+      <h2>Rank Achieved: <span id="rank">Novice AI</span></h2>
+    </div>
   </div>
 
   <script>
-    const canvas = document.getElementById("brainCanvas");
-    const ctx = canvas.getContext("2d");
+    const canvas = document.getElementById('brainCanvas');
+    const ctx = canvas.getContext('2d');
+    const upgradeBtn = document.getElementById('upgrade-btn');
+    const xpDisplay = document.getElementById('xp');
+    const requiredXPDisplay = document.getElementById('requiredXP');
+    const featureList = document.getElementById('feature-list');
+    const rankDisplay = document.getElementById('rank');
 
-    let currentXP = 1200;
+    let xp = 120;
     let level = 1;
-    const upgradeThresholds = {
-      2: { xp: 1000, features: ["Basic Problem Solving", "Hint Generator"] },
-      3: { xp: 2000, features: ["Concept Visualizer", "Voice Assistant"] },
-      4: { xp: 3000, features: ["Subject Recommendation Engine", "Multiplayer AI Combat"] },
-      5: { xp: 5000, features: ["Self-Learning AI", "Quantum Simulation Model"] }
-    };
+    let requiredXP = 200;
 
-    function drawBrainMorph(t) {
+    const brainCells = [];
+
+    function drawBrain() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.beginPath();
-      const centerX = 200, centerY = 200, radius = 100;
-      for (let i = 0; i <= 360; i++) {
-        const angle = i * Math.PI / 180;
-        const r = radius + Math.sin(i * 0.3 + t) * 10;
-        const x = centerX + r * Math.cos(angle);
-        const y = centerY + r * Math.sin(angle);
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
+      for (let cell of brainCells) {
+        ctx.beginPath();
+        ctx.arc(cell.x, cell.y, cell.radius, 0, Math.PI * 2);
+        ctx.fillStyle = cell.glow ? '#00ffcc' : '#0088cc';
+        ctx.shadowBlur = cell.glow ? 15 : 0;
+        ctx.shadowColor = cell.glow ? '#00ffcc' : 'transparent';
+        ctx.fill();
+        ctx.closePath();
       }
-      ctx.closePath();
-      ctx.fillStyle = "#00ffcc";
-      ctx.fill();
     }
 
-    let t = 0;
-    function animate() {
-      drawBrainMorph(t);
-      t += 0.05;
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-
-    document.getElementById("upgrade-btn").addEventListener("click", () => {
-      const nextLvl = level + 1;
-      const req = upgradeThresholds[nextLvl];
-      if (req && currentXP >= req.xp) {
-        level++;
-        document.getElementById("nextLevel").innerText = level + 1;
-        document.getElementById("xpRequired").innerText = upgradeThresholds[level + 1]?.xp || "MAX";
-        currentXP -= req.xp;
-        document.getElementById("currentXP").innerText = currentXP;
-
-        document.getElementById("brainCanvas").classList.add("glow");
-        setTimeout(() => {
-          document.getElementById("brainCanvas").classList.remove("glow");
-        }, 1000);
-
-        const ul = document.getElementById("functionList");
-        req.features.forEach(f => {
-          const li = document.createElement("li");
-          li.innerText = f;
-          ul.appendChild(li);
+    function generateBrainCells() {
+      for (let i = 0; i < 100; i++) {
+        brainCells.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 4 + 1,
+          glow: false
         });
-
-        document.getElementById("functionalities").style.display = "block";
-      } else {
-        alert("Not enough XP or maximum level reached!");
       }
-    });
+      drawBrain();
+    }
+
+    function animateUpgrade() {
+      let lit = 0;
+      const interval = setInterval(() => {
+        if (lit >= brainCells.length) {
+          clearInterval(interval);
+          drawBrain();
+          return;
+        }
+        brainCells[lit].glow = true;
+        lit++;
+        drawBrain();
+      }, 15);
+    }
+
+    function upgradeAI() {
+      if (xp >= requiredXP) {
+        xp -= requiredXP;
+        level++;
+        requiredXP += 100;
+
+        // Update UI
+        xpDisplay.textContent = xp;
+        requiredXPDisplay.textContent = requiredXP;
+
+        // Animate Brain
+        animateUpgrade();
+
+        // Unlock new features
+        const newFeature = document.createElement('li');
+        let newRank = '';
+        switch(level) {
+          case 2:
+            newFeature.textContent = 'Scientific Reasoning (Level 2)';
+            newRank = 'Smart Learner';
+            break;
+          case 3:
+            newFeature.textContent = 'Code Debugger (Level 3)';
+            newRank = 'Digital Thinker';
+            break;
+          case 4:
+            newFeature.textContent = 'Conceptual Prediction (Level 4)';
+            newRank = 'Strategic AI';
+            break;
+          case 5:
+            newFeature.textContent = 'PvP Auto Battle System (Level 5)';
+            newRank = 'Mastermind';
+            break;
+          default:
+            newFeature.textContent = 'Advanced Module (Level ' + level + ')';
+            newRank = 'AI++';
+        }
+
+        featureList.appendChild(newFeature);
+        rankDisplay.textContent = newRank;
+      } else {
+        alert("You need more XP to upgrade!");
+      }
+    }
+
+    upgradeBtn.addEventListener('click', upgradeAI);
+
+    generateBrainCells();
   </script>
 </body>
 </html>
