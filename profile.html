@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>User Profile</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Firebase CDN -->
+  <title>Profile</title>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
@@ -22,116 +20,88 @@
     const db = getFirestore(app);
 
     window.onload = async () => {
-      const username = localStorage.getItem("username");
-      if (!username) {
+      const loggedInUsername = localStorage.getItem("loggedInUsername");
+
+      if (!loggedInUsername) {
         window.location.href = "login.html";
         return;
       }
 
-      const docRef = doc(db, "users", username);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        const user = docSnap.data();
-        document.getElementById("profileName").innerText = user.name;
-        document.getElementById("profileUsername").innerText = "@" + username;
-        document.getElementById("brainPoints").innerText = "🧠 Brain Points: " + (user.brainPoints || 0);
-        document.getElementById("profileImg").src = user.image || "https://i.imgur.com/O6R9bHQ.png";
+      const userDoc = await getDoc(doc(db, "users", loggedInUsername));
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        document.getElementById("username").textContent = data.username;
+        document.getElementById("brainPoints").textContent = data.brainPoints || 0;
+        document.getElementById("photo").src = data.photo || "https://via.placeholder.com/100";
       } else {
-        alert("User not found!");
-        localStorage.removeItem("username");
+        alert("User not found.");
+        localStorage.removeItem("loggedInUsername");
         window.location.href = "login.html";
       }
     }
 
-    window.logout = () => {
-      localStorage.removeItem("username");
+    function logout() {
+      localStorage.removeItem("loggedInUsername");
       window.location.href = "login.html";
-    };
+    }
   </script>
-
   <style>
     body {
       margin: 0;
+      padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: white;
+      background: linear-gradient(135deg, #74ebd5, #ACB6E5);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      color: #fff;
     }
-
     .profile-card {
-      background: linear-gradient(135deg, #00c6ff, #0072ff);
-      padding: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 20px;
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+      padding: 40px;
       text-align: center;
-      width: 90%;
-      max-width: 400px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
+      max-width: 350px;
+    }
+    .profile-card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      object-fit: cover;
+    }
+    .profile-card h2 {
+      margin-top: 15px;
+      font-size: 26px;
+    }
+    .profile-card p {
+      font-size: 18px;
+    }
+    .logout-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      background: #00c9ff;
+      border-radius: 25px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
       transition: 0.3s ease;
     }
-
-    .profile-card:hover {
-      transform: scale(1.03);
-    }
-
-    .profile-card img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 4px solid white;
-      margin-bottom: 15px;
-    }
-
-    .profile-card h2 {
-      margin: 5px 0;
-      font-size: 24px;
-    }
-
-    .profile-card p {
-      font-size: 16px;
-      margin: 10px 0;
-    }
-
-    .logout-btn {
-      margin-top: 15px;
-      background-color: #ff1744;
-      border: none;
-      color: white;
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
     .logout-btn:hover {
-      background-color: #d50000;
-    }
-
-    @media (max-width: 480px) {
-      .profile-card {
-        padding: 20px;
-      }
-
-      .profile-card h2 {
-        font-size: 20px;
-      }
-
-      .logout-btn {
-        font-size: 14px;
-      }
+      background: #0077ff;
     }
   </style>
 </head>
 <body>
   <div class="profile-card">
-    <img id="profileImg" src="" alt="Profile Picture">
-    <h2 id="profileName">Loading...</h2>
-    <p id="profileUsername">@user</p>
-    <p id="brainPoints">🧠 Brain Points: 0</p>
+    <img id="photo" src="https://via.placeholder.com/100" alt="Profile Photo" />
+    <h2 id="username">Loading...</h2>
+    <p><strong>Brain Points:</strong> <span id="brainPoints">0</span></p>
     <button class="logout-btn" onclick="logout()">Logout</button>
   </div>
 </body>
