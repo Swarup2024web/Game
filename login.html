@@ -1,119 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Login | MyBot</title>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
-      authDomain: "mybot-e3dbc.firebaseapp.com",
-      projectId: "mybot-e3dbc",
-      storageBucket: "mybot-e3dbc.firebasestorage.app",
-      messagingSenderId: "576870586364",
-      appId: "1:576870586364:web:739707e4ad4cb115d6c479"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById("loginForm");
-
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const username = form.username.value.trim();
-        const password = form.password.value;
-
-        const usersRef = collection(db, "users");
-        const snapshot = await getDocs(usersRef);
-        let loggedIn = false;
-
-        snapshot.forEach((doc) => {
-          const data = doc.data();
-          if (data.username === username && data.password === password) {
-            loggedIn = true;
-            localStorage.setItem("username", username);
-            localStorage.setItem("profileImage", data.profileImage || "");
-            window.location.href = "profile.html";
-          }
-        });
-
-        if (!loggedIn) {
-          alert("Wrong credentials. Please try again.");
-        }
-      });
-    });
-  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #72EDF2 10%, #5151E5 100%);
-      font-family: 'Segoe UI', sans-serif;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
     }
-
     .login-box {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(15px);
+      background: #fff;
+      padding: 30px;
       border-radius: 15px;
-      padding: 40px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
-      width: 90%;
-      max-width: 400px;
-      color: #fff;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      width: 300px;
     }
-
-    .login-box h2 {
+    h2 {
       text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .login-box input {
-      width: 100%;
-      padding: 12px;
       margin-bottom: 20px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
     }
-
-    .login-box button {
+    input {
       width: 100%;
-      padding: 12px;
-      background-color: #00bcd4;
-      border: none;
+      padding: 10px;
+      margin: 10px 0;
       border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      background-color: #0072ff;
       color: #fff;
-      transition: background-color 0.3s ease;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
     }
-
-    .login-box button:hover {
-      background-color: #0097a7;
+    button:hover {
+      background-color: #005cd4;
     }
-
-    @media screen and (max-width: 500px) {
-      .login-box {
-        padding: 20px;
-      }
+    .error {
+      color: red;
+      font-size: 0.9em;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <form class="login-box" id="loginForm">
-    <h2>Login to MyBot</h2>
-    <input type="text" name="username" placeholder="Username" required />
-    <input type="password" name="password" placeholder="Password" required />
-    <button type="submit">Login</button>
-  </form>
+
+<div class="login-box">
+  <h2><i class="fas fa-user"></i> Login</h2>
+  <input type="text" id="username" placeholder="Username" />
+  <input type="password" id="password" placeholder="Password" />
+  <button id="loginBtn">Login</button>
+  <p id="errorMsg" class="error"></p>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
+    authDomain: "mybot-e3dbc.firebaseapp.com",
+    projectId: "mybot-e3dbc",
+    storageBucket: "mybot-e3dbc.appspot.com",
+    messagingSenderId: "576870586364",
+    appId: "1:576870586364:web:739707e4ad4cb115d6c479"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  document.getElementById("loginBtn").addEventListener("click", async () => {
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+
+    const q = query(collection(db, "users"), where("username", "==", username), where("password", "==", password));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      // User found
+      const userDoc = querySnapshot.docs[0];
+      localStorage.setItem("username", userDoc.data().username);
+      window.location.href = "profile.html";
+    } else {
+      document.getElementById("errorMsg").innerText = "Invalid username or password.";
+    }
+  });
+</script>
+
 </body>
 </html>
