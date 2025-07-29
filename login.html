@@ -1,86 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login - AI Arena</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #a8c0ff, #3f2b96);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      color: white;
-    }
-
-    .login-box {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
-      width: 300px;
-      text-align: center;
-    }
-
-    .login-box h2 {
-      margin-bottom: 20px;
-      font-size: 24px;
-    }
-
-    .login-box input {
-      width: 90%;
-      padding: 12px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      outline: none;
-    }
-
-    .login-box button {
-      background: #00c9ff;
-      background: linear-gradient(to right, #00c9ff, #92fe9d);
-      border: none;
-      padding: 12px 20px;
-      font-size: 16px;
-      color: black;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .login-box button:hover {
-      transform: scale(1.05);
-    }
-
-    .error {
-      color: #ffbaba;
-      font-size: 14px;
-      margin-top: 10px;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="login-box">
-    <h2>Login to AI Arena</h2>
-    <input type="text" id="username" placeholder="Username" required />
-    <input type="password" id="password" placeholder="Password" required />
-    <button onclick="login()">Login</button>
-    <div id="error" class="error"></div>
-  </div>
-
+  <meta charset="UTF-8">
+  <title>Login - BrainBot</title>
   <script type="module">
-    // Import Firebase SDK
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
       authDomain: "mybot-e3dbc.firebaseapp.com",
@@ -90,38 +16,99 @@
       appId: "1:576870586364:web:739707e4ad4cb115d6c479"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    const auth = getAuth(app);
 
-    async function login() {
-      const uname = document.getElementById('username').value.trim();
-      const pwd = document.getElementById('password').value.trim();
-      const errorBox = document.getElementById('error');
-      errorBox.textContent = "";
+    window.loginUser = () => {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
 
-      if (!uname || !pwd) {
-        errorBox.textContent = "Please fill all fields.";
+      if (!username || !password) {
+        alert("Please fill both username and password!");
         return;
       }
 
-      try {
-        const q = query(collection(db, "users"), where("username", "==", uname), where("password", "==", pwd));
-        const querySnapshot = await getDocs(q);
+      const email = `${username}@mybot.com`;
 
-        if (!querySnapshot.empty) {
-          const user = querySnapshot.docs[0].data();
-          // Save user info in localStorage
-          localStorage.setItem("user", JSON.stringify(user));
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          localStorage.setItem("username", username);
           window.location.href = "profile.html";
-        } else {
-          errorBox.textContent = "Invalid username or password.";
-        }
-      } catch (err) {
-        console.error(err);
-        errorBox.textContent = "Login failed. Please try again.";
-      }
-    }
+        })
+        .catch((error) => {
+          alert("Login failed! Please check your credentials.");
+          console.error(error);
+        });
+    };
   </script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(12px);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      width: 300px;
+      text-align: center;
+      color: #004466;
+    }
+
+    .login-container h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #003355;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #007acc;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background: #005fa3;
+    }
+
+    .note {
+      font-size: 12px;
+      margin-top: 15px;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login to BrainBot</h2>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="loginUser()">Login</button>
+    <div class="note">Only registered users can log in</div>
+  </div>
 </body>
 </html>
