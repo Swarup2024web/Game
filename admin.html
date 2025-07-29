@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Control - BotSquad</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0a0f1a;
+      color: #00ffe1;
+    }
+    header {
+      background: #101820;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+      border-bottom: 2px solid #00ffe1;
+    }
+    .container {
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: #1a2533;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #00ffe180;
+    }
+    .card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #00ffe1;
+      padding-bottom: 0.5rem;
+    }
+    label {
+      display: block;
+      margin-top: 0.5rem;
+      color: #ffffff;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      margin-top: 0.3rem;
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: none;
+      background: #263040;
+      color: #00ffe1;
+    }
+    button {
+      margin-top: 1rem;
+      background: #00ffe1;
+      color: #000;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #00ccbf;
+    }
+  </style>
+</head>
+<body>
+  <header><i class="fas fa-cogs"></i> Admin Control Panel</header>
+
+  <div class="container">
+
+    <!-- Question Manager -->
+    <div class="card">
+      <h2><i class="fas fa-question-circle"></i> Add/Update Questions</h2>
+      <label>Subject</label>
+      <select>
+        <option>Math</option>
+        <option>Physics</option>
+        <option>Chemistry</option>
+        <option>Computer Science</option>
+      </select>
+
+      <label>Difficulty</label>
+      <select>
+        <option>Easy</option>
+        <option>Medium</option>
+        <option>Hard</option>
+      </select>
+
+      <label>Question</label>
+      <textarea rows="3"></textarea>
+
+      <label>Answer</label>
+      <input type="text" />
+
+      <label>XP Reward</label>
+      <input type="number" />
+
+      <button>Save Question</button>
+    </div>
+
+    <!-- User Manager -->
+    <div class="card">
+      <h2><i class="fas fa-users-cog"></i> Manage Users</h2>
+      <label>User Email/ID</label>
+      <input type="text" />
+
+      <label>Update XP</label>
+      <input type="number" />
+
+      <label>Update Level</label>
+      <input type="number" />
+
+      <button>Update User</button>
+    </div>
+
+    <!-- AI Bot Manager -->
+    <div class="card">
+      <h2><i class="fas fa-robot"></i> Add/Update AI Bots</h2>
+      <label>Bot Name</label>
+      <input type="text" />
+
+      <label>Bot Ability / Description</label>
+      <textarea rows="2"></textarea>
+
+      <label>XP Required to Unlock</label>
+      <input type="number" />
+
+      <button>Save Bot</button>
+    </div>
+
+  </div>
+</body>
+</html>
