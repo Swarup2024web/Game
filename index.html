@@ -1,73 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NeuroBot Academy - Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-  />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NeuroBot Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Header -->
-  <header class="dashboard-header">
-    <div class="row1">
-      <h1>🤖 NeuroBot Academy</h1>
-    </div>
-    <div class="row2 nav-icons">
-      <a href="index.html" title="Home"><i class="fas fa-house"></i></a>
-      <a href="robot.html" title="Robot"><i class="fas fa-robot"></i></a>
-      <a href="profile.html" title="Profile"><i class="fas fa-user"></i></a>
+  <header>
+    <div class="header-row site-name">🤖 NeuroBot Academy</div>
+    <div class="header-row nav-icons">
+      <a href="index.html"><span class="material-icons">home</span></a>
+      <a href="robot.html"><span class="material-icons">android</span></a>
+      <a href="profile.html"><span class="material-icons">person</span></a>
     </div>
   </header>
 
-  <!-- Welcome Section -->
-  <section class="welcome">
-    <h2>Welcome to the world of Robotics and Artificial Intelligence!</h2>
-    <p>Train your bot, solve quizzes, earn coins, and rise to the top!</p>
-  </section>
+  <main class="main-content">
+    <section class="welcome-section">
+      <h2>Welcome to the world of Robotics & AI</h2>
+      <p>Embark on your journey to learn, build, and evolve intelligent machines with NeuroBot Academy.</p>
+    </section>
 
-  <!-- Dashboard Navigation Cards -->
-  <section class="dashboard-cards">
-    <a href="profile.html" class="card">
-      <i class="fas fa-user-circle"></i>
-      <h3>Profile</h3>
-      <p>Your bot, your progress, your glory!</p>
-    </a>
-    <a href="quiz.html" class="card">
-      <i class="fas fa-question-circle"></i>
-      <h3>Quiz</h3>
-      <p>Test your knowledge and earn AI Coins.</p>
-    </a>
-    <a href="robot.html" class="card">
-      <i class="fas fa-microchip"></i>
-      <h3>Robot</h3>
-      <p>View and upgrade your personal AI bot.</p>
-    </a>
-    <a href="shop.html" class="card">
-      <i class="fas fa-store"></i>
-      <h3>Shop</h3>
-      <p>Spend coins to power-up your robot.</p>
-    </a>
-    <a href="leaderboard.html" class="card">
-      <i class="fas fa-ranking-star"></i>
-      <h3>Leaderboard</h3>
-      <p>See who's the top AI trainer!</p>
-    </a>
-    <a href="login.html" class="card" onclick="logoutUser()">
-      <i class="fas fa-sign-out-alt"></i>
-      <h3>Logout</h3>
-      <p>Exit your dashboard safely.</p>
-    </a>
-  </section>
+    <section class="dashboard-cards">
+      <a href="profile.html" class="card">
+        <span class="material-icons">account_circle</span>
+        <h3>Profile</h3>
+        <p>View your info and progress</p>
+      </a>
+
+      <a href="quiz.html" class="card">
+        <span class="material-icons">quiz</span>
+        <h3>Quiz</h3>
+        <p>Test your knowledge</p>
+      </a>
+
+      <a href="robot.html" class="card">
+        <span class="material-icons">smart_toy</span>
+        <h3>My Robot</h3>
+        <p>Upgrade your AI companion</p>
+      </a>
+
+      <a href="shop.html" class="card">
+        <span class="material-icons">shopping_cart</span>
+        <h3>Shop</h3>
+        <p>Buy parts and upgrades</p>
+      </a>
+
+      <a href="leaderboard.html" class="card">
+        <span class="material-icons">emoji_events</span>
+        <h3>Leaderboard</h3>
+        <p>See top students</p>
+      </a>
+
+      <a href="login.html" class="card" onclick="logout()">
+        <span class="material-icons">logout</span>
+        <h3>Logout</h3>
+        <p>Sign out of your account</p>
+      </a>
+    </section>
+  </main>
 
   <script>
-    function logoutUser() {
-      // Clear any local/session storage if needed
-      localStorage.clear();
-      sessionStorage.clear();
+    function logout() {
+      // Clear user session if needed
+      window.location.href = "login.html";
     }
   </script>
 </body>
