@@ -2,50 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Bot Squad - NeuroStrike</title>
+  <title>BotSquad - NeuroStrike</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Font & Icons -->
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Orbitron', sans-serif;
-    }
-
     body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
       background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #0ff;
-      padding: 20px;
-      min-height: 100vh;
+      color: #00ffff;
     }
 
     header {
       text-align: center;
-      margin-bottom: 30px;
+      padding: 20px;
+      background: #111;
+      border-bottom: 2px solid #00ffff;
     }
 
     header h1 {
-      font-size: 2.5em;
-      color: #0ff;
+      font-size: 2em;
       text-shadow: 0 0 10px #0ff;
     }
 
-    .bot-container {
+    .container {
+      padding: 20px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
     }
 
     .bot-card {
-      background: rgba(0,0,0,0.7);
-      border: 1px solid #0ff;
+      background: #1a1a1a;
+      padding: 15px;
       border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 0 15px #0ff4;
-      transition: transform 0.3s;
+      box-shadow: 0 0 10px #0ff;
+      transition: transform 0.3s ease;
     }
 
     .bot-card:hover {
@@ -55,82 +50,84 @@
     .bot-icon {
       font-size: 40px;
       color: #0ff;
+      text-align: center;
       margin-bottom: 10px;
     }
 
     .bot-name {
       font-size: 1.3em;
       margin-bottom: 10px;
+      text-align: center;
     }
 
-    .bot-info {
-      font-size: 0.95em;
-      margin-bottom: 10px;
+    .bot-stats {
+      font-size: 0.9em;
+      color: #ccc;
     }
 
-    .bot-actions button {
-      padding: 8px 14px;
-      margin: 5px 5px 0 0;
-      border: none;
-      background: #0ff;
-      color: #000;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .bot-actions button:hover {
-      background: #00e6e6;
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 0.8em;
+      color: #aaa;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1><i class="fas fa-robot"></i> Bot Squad Command</h1>
-  </header>
+<header>
+  <h1><i class="fas fa-robot"></i> AI Bot Squad Command</h1>
+</header>
 
-  <div class="bot-container">
-    <div class="bot-card">
-      <div class="bot-icon"><i class="fas fa-robot"></i></div>
-      <div class="bot-name">Alpha Sentinel</div>
-      <div class="bot-info">Type: Assault | Status: Ready</div>
-      <div class="bot-actions">
-        <button>Deploy</button>
-        <button>Upgrade</button>
-      </div>
-    </div>
-
-    <div class="bot-card">
-      <div class="bot-icon"><i class="fas fa-microchip"></i></div>
-      <div class="bot-name">Neuro Scout</div>
-      <div class="bot-info">Type: Recon | Status: Standby</div>
-      <div class="bot-actions">
-        <button>Deploy</button>
-        <button>Upgrade</button>
-      </div>
-    </div>
-
-    <div class="bot-card">
-      <div class="bot-icon"><i class="fas fa-bolt"></i></div>
-      <div class="bot-name">Thunder Core</div>
-      <div class="bot-info">Type: Tank | Status: Damaged</div>
-      <div class="bot-actions">
-        <button>Repair</button>
-        <button>Upgrade</button>
-      </div>
-    </div>
-
-    <div class="bot-card">
-      <div class="bot-icon"><i class="fas fa-eye"></i></div>
-      <div class="bot-name">Phantom Drone</div>
-      <div class="bot-info">Type: Surveillance | Status: Deployed</div>
-      <div class="bot-actions">
-        <button>Recall</button>
-        <button>Upgrade</button>
-      </div>
+<div class="container">
+  <div class="bot-card">
+    <div class="bot-icon"><i class="fas fa-shield-alt"></i></div>
+    <div class="bot-name">Aegis-X</div>
+    <div class="bot-stats">
+      Defense Bot<br>
+      Armor: 95<br>
+      AI Level: 7<br>
+      Energy Core: Stable
     </div>
   </div>
+
+  <div class="bot-card">
+    <div class="bot-icon"><i class="fas fa-bolt"></i></div>
+    <div class="bot-name">VoltStreak</div>
+    <div class="bot-stats">
+      Speed Bot<br>
+      Velocity: 120 mph<br>
+      AI Level: 5<br>
+      Energy Core: Hyper
+    </div>
+  </div>
+
+  <div class="bot-card">
+    <div class="bot-icon"><i class="fas fa-skull-crossbones"></i></div>
+    <div class="bot-name">ShadowFang</div>
+    <div class="bot-stats">
+      Assassin Bot<br>
+      Stealth: 100<br>
+      AI Level: 6<br>
+      Energy Core: Low
+    </div>
+  </div>
+
+  <div class="bot-card">
+    <div class="bot-icon"><i class="fas fa-bomb"></i></div>
+    <div class="bot-name">BlastCore</div>
+    <div class="bot-stats">
+      Demolition Bot<br>
+      Damage: 150<br>
+      AI Level: 8<br>
+      Energy Core: Critical
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2025 NeuroStrike | Command your squad, rule the code.
+</footer>
 
 </body>
 </html>
