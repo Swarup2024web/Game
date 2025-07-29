@@ -1,107 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login | NeuroBot Academy</title>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <style>
-    body {
-      font-family: "Segoe UI", sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(to bottom right, #e0f7fa, #b2ebf2);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .login-container {
-      background: white;
-      padding: 2rem;
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
-    }
-
-    h2 {
-      color: #00796b;
-    }
-
-    .input-field {
-      display: flex;
-      align-items: center;
-      margin: 1rem 0;
-      border: 1px solid #ccc;
-      border-radius: 12px;
-      padding: 0.5rem;
-      background-color: #f9f9f9;
-    }
-
-    .input-field .material-icons {
-      margin-right: 0.5rem;
-      color: #00796b;
-    }
-
-    .input-field input {
-      border: none;
-      outline: none;
-      flex: 1;
-      font-size: 1rem;
-      background: transparent;
-    }
-
-    button {
-      background-color: #00796b;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      margin-top: 1rem;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background-color: #004d40;
-    }
-
-    .error {
-      color: red;
-      margin-top: 0.5rem;
-      font-size: 0.9rem;
-    }
-  </style>
-</head>
-<body>
-  <div class="login-container">
-    <h2><span class="material-icons">lock</span> Login</h2>
-    <div class="input-field">
-      <span class="material-icons">person</span>
-      <input type="text" id="username" placeholder="Username" />
-    </div>
-    <div class="input-field">
-      <span class="material-icons">vpn_key</span>
-      <input type="password" id="password" placeholder="Password" />
-    </div>
-    <button onclick="login()">Login</button>
-    <div class="error" id="error-message"></div>
-  </div>
-
-  <!-- Firebase App + Firestore -->
+  <meta charset="UTF-8">
+  <title>Login - NeuroBot Academy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <!-- Material Design Ripple -->
+  <script src="https://unpkg.com/@material/web@latest/all.js" type="module"></script>
+  <!-- Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
       authDomain: "mybot-e3dbc.firebaseapp.com",
       projectId: "mybot-e3dbc",
-      storageBucket: "mybot-e3dbc.appspot.com",
+      storageBucket: "mybot-e3dbc.firebasestorage.app",
       messagingSenderId: "576870586364",
       appId: "1:576870586364:web:739707e4ad4cb115d6c479"
     };
@@ -109,37 +25,116 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    async function login() {
+    window.loginUser = async () => {
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value.trim();
-      const errorMessage = document.getElementById("error-message");
+      const status = document.getElementById("status");
 
       if (!username || !password) {
-        errorMessage.textContent = "Please fill in all fields.";
+        status.textContent = "Please fill in all fields.";
         return;
       }
 
-      try {
-        const usersSnapshot = await getDocs(collection(db, "users"));
-        let found = false;
+      const q = query(collection(db, "users"), where("username", "==", username), where("password", "==", password));
+      const querySnapshot = await getDocs(q);
 
-        usersSnapshot.forEach((doc) => {
-          const data = doc.data();
-          if (data.username === username && data.password === password) {
-            localStorage.setItem("userId", doc.id);
-            found = true;
-            window.location.href = "profile.html";
-          }
-        });
-
-        if (!found) {
-          errorMessage.textContent = "Invalid username or password.";
-        }
-      } catch (error) {
-        console.error("Login error:", error);
-        errorMessage.textContent = "Error occurred while logging in.";
+      if (querySnapshot.empty) {
+        status.textContent = "Invalid credentials!";
+      } else {
+        const userData = querySnapshot.docs[0].data();
+        localStorage.setItem("username", userData.username);
+        localStorage.setItem("botLevel", userData.botLevel || 1);
+        localStorage.setItem("coins", userData.coins || 0);
+        location.href = "profile.html";
       }
-    }
+    };
   </script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Roboto", sans-serif;
+      background: linear-gradient(to right, #cbe7ff, #e1f5ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      padding: 30px;
+      width: 320px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #007BCE;
+    }
+
+    .input-field {
+      margin-bottom: 20px;
+      width: 100%;
+    }
+
+    .input-field input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .input-field input:focus {
+      border-color: #007BCE;
+    }
+
+    .md3-btn {
+      background-color: #007BCE;
+      color: #fff;
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .md3-btn:hover {
+      background-color: #005f99;
+    }
+
+    #status {
+      margin-top: 15px;
+      color: red;
+      font-weight: bold;
+    }
+
+    .material-icons-outlined {
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2><span class="material-icons-outlined">smart_toy</span> NeuroBot Login</h2>
+    <div class="input-field">
+      <input type="text" id="username" placeholder="Username">
+    </div>
+    <div class="input-field">
+      <input type="password" id="password" placeholder="Password">
+    </div>
+    <button class="md3-btn" onclick="loginUser()">
+      <span class="material-icons-outlined">login</span> Login
+    </button>
+    <div id="status"></div>
+  </div>
 </body>
 </html>
