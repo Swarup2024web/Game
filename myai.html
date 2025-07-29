@@ -1,208 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>My AI - AI Quest</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <meta charset="UTF-8">
+  <title>My AI Evolution</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.12.0/dist/tf.min.js"></script>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: "Orbitron", sans-serif;
-      background: linear-gradient(to bottom right, #051f2b, #0a2f13);
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
       color: #fff;
+      text-align: center;
     }
 
-    header {
-      background: #0b0f1f;
+    h1 {
+      margin-top: 20px;
+      color: #00ffd5;
+      font-size: 2em;
+    }
+
+    canvas {
+      margin: 20px auto;
+      display: block;
+      background: #000;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #00ffd5;
+    }
+
+    #upgrade-panel {
+      margin: 20px auto;
+      max-width: 400px;
       padding: 20px;
-      text-align: center;
-      border-bottom: 2px solid #00ffcc;
-      box-shadow: 0 0 10px #00ffd9;
+      background: rgba(0, 255, 150, 0.1);
+      border: 1px solid #00ffcc;
+      border-radius: 12px;
     }
 
-    header h1 {
-      color: #00f7ff;
-      font-size: 2.2em;
-      text-shadow: 0 0 8px #00f7ff;
-    }
-
-    .ai-info {
-      text-align: center;
-      margin: 20px 0;
-    }
-
-    .ai-info h2 {
-      font-size: 1.5em;
-      color: #7fff00;
-    }
-
-    .xp-bar {
-      background: #222;
-      border: 1px solid #0ff;
-      margin: 10px auto;
-      width: 80%;
-      height: 20px;
-      border-radius: 10px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .xp-fill {
-      background: linear-gradient(90deg, #00ffcc, #7fff00);
-      height: 100%;
-      width: 45%; /* Change this based on actual XP */
-    }
-
-    .xp-bar span {
-      position: absolute;
-      width: 100%;
-      text-align: center;
-      top: 0;
-      font-size: 0.9em;
-      color: #fff;
-    }
-
-    .upgrade-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
-
-    .upgrade-card {
-      background: rgba(0, 255, 200, 0.07);
-      border: 2px solid #0ff;
-      border-radius: 10px;
-      padding: 15px;
-      transition: 0.3s;
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
-    }
-
-    .upgrade-card.unlocked {
-      border-color: #7fff00;
-      box-shadow: 0 0 15px #7fff00;
-    }
-
-    .upgrade-card h3 {
-      color: #00f7ff;
+    .xp-info {
       font-size: 1.2em;
       margin-bottom: 10px;
     }
 
-    .upgrade-card p {
-      font-size: 0.9em;
-      margin-bottom: 8px;
-    }
-
-    .upgrade-card button {
-      padding: 8px 16px;
-      background: #00f7ff;
+    #upgrade-btn {
+      background: linear-gradient(to right, #00c6ff, #0072ff);
       border: none;
-      border-radius: 8px;
-      font-weight: bold;
+      padding: 10px 30px;
+      font-size: 1em;
+      border-radius: 20px;
+      color: white;
       cursor: pointer;
-      color: #000;
       transition: 0.3s;
     }
 
-    .upgrade-card button:disabled {
-      background: #666;
-      color: #ccc;
-      cursor: not-allowed;
+    #upgrade-btn:hover {
+      box-shadow: 0 0 10px #00ffb3;
+      transform: scale(1.05);
     }
 
-    footer {
-      background: #0c0c1a;
-      color: #777;
-      text-align: center;
-      padding: 10px;
-      font-size: 0.9em;
-      border-top: 1px solid #222;
+    #functionalities {
+      margin-top: 30px;
+      text-align: left;
+      padding: 0 20px;
+    }
+
+    #functionalities ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    #functionalities li::before {
+      content: "✓ ";
+      color: #00ffd5;
+    }
+
+    .glow {
+      box-shadow: 0 0 40px #00ffcc;
+      transition: box-shadow 0.5s ease-in-out;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1><i class="fas fa-brain"></i> My AI Upgrades</h1>
-  </header>
+  <h1>AI Evolution Chamber</h1>
+  <canvas id="brainCanvas" width="400" height="400"></canvas>
 
-  <section class="ai-info">
-    <h2>Current AI Level: 3</h2>
-    <div class="xp-bar">
-      <div class="xp-fill"></div>
-      <span>XP: 450 / 1000</span>
-    </div>
-  </section>
+  <div id="upgrade-panel">
+    <div class="xp-info">Current XP: <span id="currentXP">1200</span></div>
+    <div class="xp-info">XP Required for Level <span id="nextLevel">2</span>: <span id="xpRequired">1000</span></div>
+    <button id="upgrade-btn">Upgrade Brain</button>
+  </div>
 
-  <section class="upgrade-container">
-    <!-- Upgrade 1 -->
-    <div class="upgrade-card unlocked">
-      <h3><i class="fas fa-bolt"></i> Auto-Solve Easy Questions</h3>
-      <p>Unlocked at Level 2</p>
-      <p>Status: ✅ Unlocked</p>
-      <button disabled>Unlocked</button>
-    </div>
+  <div id="functionalities" style="display:none;">
+    <h2>Unlocked Functionalities</h2>
+    <ul id="functionList">
+      <!-- Filled dynamically -->
+    </ul>
+  </div>
 
-    <!-- Upgrade 2 -->
-    <div class="upgrade-card unlocked">
-      <h3><i class="fas fa-lightbulb"></i> AI Hint Generator</h3>
-      <p>Unlocked at Level 3</p>
-      <p>Status: ✅ Unlocked</p>
-      <button disabled>Unlocked</button>
-    </div>
+  <script>
+    const canvas = document.getElementById("brainCanvas");
+    const ctx = canvas.getContext("2d");
 
-    <!-- Upgrade 3 -->
-    <div class="upgrade-card">
-      <h3><i class="fas fa-chart-line"></i> AI Performance Analyzer</h3>
-      <p>Requires: Level 4 & 600 XP</p>
-      <p>Status: 🔒 Locked</p>
-      <button disabled>Unlock (600 XP)</button>
-    </div>
+    let currentXP = 1200;
+    let level = 1;
+    const upgradeThresholds = {
+      2: { xp: 1000, features: ["Basic Problem Solving", "Hint Generator"] },
+      3: { xp: 2000, features: ["Concept Visualizer", "Voice Assistant"] },
+      4: { xp: 3000, features: ["Subject Recommendation Engine", "Multiplayer AI Combat"] },
+      5: { xp: 5000, features: ["Self-Learning AI", "Quantum Simulation Model"] }
+    };
 
-    <!-- Upgrade 4 -->
-    <div class="upgrade-card">
-      <h3><i class="fas fa-microphone"></i> AI Voice Reader</h3>
-      <p>Requires: Level 6 & 1500 XP</p>
-      <p>Status: 🔒 Locked</p>
-      <button disabled>Unlock (1500 XP)</button>
-    </div>
+    function drawBrainMorph(t) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+      const centerX = 200, centerY = 200, radius = 100;
+      for (let i = 0; i <= 360; i++) {
+        const angle = i * Math.PI / 180;
+        const r = radius + Math.sin(i * 0.3 + t) * 10;
+        const x = centerX + r * Math.cos(angle);
+        const y = centerY + r * Math.sin(angle);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.fillStyle = "#00ffcc";
+      ctx.fill();
+    }
 
-    <!-- Upgrade 5 -->
-    <div class="upgrade-card">
-      <h3><i class="fas fa-paint-brush"></i> Custom Skins</h3>
-      <p>Requires: Level 5 & 1000 XP</p>
-      <p>Status: 🔒 Locked</p>
-      <button disabled>Unlock (1000 XP)</button>
-    </div>
+    let t = 0;
+    function animate() {
+      drawBrainMorph(t);
+      t += 0.05;
+      requestAnimationFrame(animate);
+    }
 
-    <!-- Upgrade 6 -->
-    <div class="upgrade-card">
-      <h3><i class="fas fa-shield-alt"></i> PvP Combat Assistant</h3>
-      <p>Requires: Level 7 & 2000 XP</p>
-      <p>Status: 🔒 Locked</p>
-      <button disabled>Unlock (2000 XP)</button>
-    </div>
+    animate();
 
-    <!-- Upgrade 7 -->
-    <div class="upgrade-card">
-      <h3><i class="fas fa-star"></i> Smart Topic Recommender</h3>
-      <p>Requires: Level 8 & 2500 XP</p>
-      <p>Status: 🔒 Locked</p>
-      <button disabled>Unlock (2500 XP)</button>
-    </div>
+    document.getElementById("upgrade-btn").addEventListener("click", () => {
+      const nextLvl = level + 1;
+      const req = upgradeThresholds[nextLvl];
+      if (req && currentXP >= req.xp) {
+        level++;
+        document.getElementById("nextLevel").innerText = level + 1;
+        document.getElementById("xpRequired").innerText = upgradeThresholds[level + 1]?.xp || "MAX";
+        currentXP -= req.xp;
+        document.getElementById("currentXP").innerText = currentXP;
 
-    <!-- Upgrade 8 -->
-    <div class="upgrade-card">
-      <h3><i class="fas fa-brush"></i> AI Color Themes</h3>
-      <p>Requires: Level 9 & 3000 XP</p>
-      <p>Status: 🔒 Locked</p>
-      <button disabled>Unlock (3000 XP)</button>
-    </div>
-  </section>
+        document.getElementById("brainCanvas").classList.add("glow");
+        setTimeout(() => {
+          document.getElementById("brainCanvas").classList.remove("glow");
+        }, 1000);
 
-  <footer>
-    <p>© 2025 AI Quest - Upgrade your intelligence</p>
-  </footer>
+        const ul = document.getElementById("functionList");
+        req.features.forEach(f => {
+          const li = document.createElement("li");
+          li.innerText = f;
+          ul.appendChild(li);
+        });
+
+        document.getElementById("functionalities").style.display = "block";
+      } else {
+        alert("Not enough XP or maximum level reached!");
+      }
+    });
+  </script>
 </body>
-        </html>
+</html>
