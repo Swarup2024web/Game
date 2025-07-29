@@ -3,22 +3,79 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Student Profile</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Profile - AI Arena</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #003973, #E5E5BE);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .card {
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(0, 200, 255, 0.5);
+      width: 320px;
+      text-align: center;
+    }
+    .input-group {
+      margin: 15px 0;
+    }
+    input {
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      width: 100%;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #003973;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    #userProfile {
+      display: none;
+      font-size: 18px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Student Login</h2>
-    <input type="text" id="username" placeholder="Username" />
-    <input type="password" id="password" placeholder="Password" />
-    <button id="loginBtn">Login</button>
 
-    <div id="result" style="margin-top: 20px;"></div>
+  <h1>Welcome to Your Profile</h1>
+
+  <div class="card" id="loginCard">
+    <div class="input-group">
+      <input type="text" id="username" placeholder="Username"/>
+    </div>
+    <div class="input-group">
+      <input type="password" id="password" placeholder="Password"/>
+    </div>
+    <button onclick="login()">Login</button>
+    <p id="error" style="color: #ffdddd;"></p>
+  </div>
+
+  <div class="card" id="userProfile">
+    <h2 id="name">Loading...</h2>
+    <p><strong>Username:</strong> <span id="uname"></span></p>
+    <p><strong>Brain Points:</strong> <span id="brainPoints">0</span></p>
+    <button onclick="logout()">Logout</button>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
@@ -30,36 +87,49 @@
     };
 
     const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
     const db = getFirestore(app);
 
-    document.getElementById("loginBtn").addEventListener("click", async () => {
+    async function login() {
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value.trim();
-      const resultBox = document.getElementById("result");
+      const email = username + "@mybot.com"; // virtual email
 
-      if (!username || !password) {
-        resultBox.innerHTML = `<p style="color:red;">Enter username and password</p>`;
-        return;
+      try {
+        const userCred = await signInWithEmailAndPassword(auth, email, password);
+        loadUserData(userCred.user.uid);
+      } catch (e) {
+        document.getElementById("error").innerText = "Login failed. Try again.";
       }
+    }
 
-      const q = query(collection(db, "users"), where("username", "==", username), where("password", "==", password));
-      const querySnapshot = await getDocs(q);
-
-      if (querySnapshot.empty) {
-        resultBox.innerHTML = `<p style="color:red;">Invalid login details</p>`;
-        return;
-      }
-
-      querySnapshot.forEach(doc => {
-        const user = doc.data();
-        resultBox.innerHTML = `
-          <h3>Welcome, ${user.name}</h3>
-          <img src="${user.image}" alt="Profile Image" width="120" style="border-radius: 50%; margin: 10px 0;" />
-          <p><strong>Username:</strong> ${user.username}</p>
-          <p><strong>Brain Points:</strong> ${user.brainPoints ?? 0}</p>
-        `;
+    function logout() {
+      signOut(auth).then(() => {
+        document.getElementById("loginCard").style.display = "block";
+        document.getElementById("userProfile").style.display = "none";
       });
+    }
+
+    async function loadUserData(uid) {
+      const userRef = doc(db, "users", uid);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        const data = userSnap.data();
+        document.getElementById("name").innerText = data.name || "Unknown";
+        document.getElementById("uname").innerText = data.username || "Unknown";
+        document.getElementById("brainPoints").innerText = data.brainPoints || "0";
+        document.getElementById("loginCard").style.display = "none";
+        document.getElementById("userProfile").style.display = "block";
+      }
+    }
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        loadUserData(user.uid);
+      }
     });
   </script>
+
 </body>
 </html>
