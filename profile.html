@@ -1,120 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>User Profile</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #74ebd5, #ACB6E5);
-      color: #fff;
-    }
-    header {
-      padding: 20px;
-      text-align: center;
-      background-color: rgba(0, 0, 50, 0.7);
-      font-size: 28px;
-      font-weight: bold;
-    }
-    .profile-container {
-      max-width: 400px;
-      margin: 40px auto;
-      background: rgba(0, 0, 60, 0.6);
-      padding: 30px;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(255,255,255,0.2);
-    }
-    .profile-container img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 20px;
-      border: 3px solid #fff;
-    }
-    .profile-container h2 {
-      margin: 10px 0 5px;
-    }
-    .info {
-      font-size: 16px;
-      margin: 5px 0;
-    }
-    .logout {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background: #f00;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      color: #fff;
-    }
-  </style>
-</head>
-<body>
-  <header>👤 Profile</header>
-
-  <div class="profile-container" id="profileBox">
-    <img src="default.jpg" id="profilePhoto" alt="Profile Photo" />
-    <h2 id="name">Name</h2>
-    <div class="info" id="username">@username</div>
-    <div class="info">Brain Points: <span id="points">0</span></div>
-    <button class="logout" onclick="logout()">Logout</button>
-  </div>
-
-  <!-- Firebase SDKs -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
       authDomain: "mybot-e3dbc.firebaseapp.com",
       projectId: "mybot-e3dbc",
-      storageBucket: "mybot-e3dbc.firebasestorage.app",
+      storageBucket: "mybot-e3dbc.appspot.com",
       messagingSenderId: "576870586364",
       appId: "1:576870586364:web:739707e4ad4cb115d6c479"
     };
 
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
     const db = getFirestore(app);
-
-    const nameEl = document.getElementById('name');
-    const usernameEl = document.getElementById('username');
-    const pointsEl = document.getElementById('points');
-    const profilePhoto = document.getElementById('profilePhoto');
+    const auth = getAuth(app);
 
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const uid = user.uid;
-        const docRef = doc(db, "users", uid);
-        const docSnap = await getDoc(docRef);
+        document.getElementById('profile-container').style.display = 'block';
+        document.getElementById('login-form').style.display = 'none';
 
+        const docRef = doc(db, "users", user.displayName || user.email);
+        const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           const data = docSnap.data();
-          nameEl.textContent = data.name;
-          usernameEl.textContent = '@' + data.username;
-          pointsEl.textContent = data.brainPoints || 0;
-          profilePhoto.src = data.image || 'default.jpg';
-        } else {
-          alert('User data not found!');
+          document.getElementById('username').innerText = data.username || "Unknown";
+          document.getElementById('name').innerText = data.name || "No Name";
+          document.getElementById('points').innerText = data.brainPoints || 0;
+          if (data.photoURL) {
+            document.getElementById('profile-pic').src = data.photoURL;
+          }
         }
       } else {
-        window.location.href = 'login.html';
+        document.getElementById('profile-container').style.display = 'none';
+        document.getElementById('login-form').style.display = 'block';
       }
     });
 
-    window.logout = function () {
-      signOut(auth).then(() => {
-        window.location.href = 'login.html';
-      });
-    };
+    async function loginUser(e) {
+      e.preventDefault();
+      const username = document.getElementById("login-username").value;
+      const password = document.getElementById("login-password").value;
+      try {
+        const email = `${username}@mybot.com`;
+        await signInWithEmailAndPassword(auth, email, password);
+      } catch (error) {
+        alert("Login Failed: " + error.message);
+      }
+    }
+
+    window.loginUser = loginUser;
   </script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #89f7fe, #66a6ff);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 50px;
+    }
+    #profile-container {
+      display: none;
+      background: rgba(0,0,0,0.3);
+      padding: 30px;
+      border-radius: 20px;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 0 20px #fff;
+    }
+    #profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid white;
+      margin-bottom: 10px;
+    }
+    #login-form {
+      display: none;
+      background: rgba(0,0,0,0.2);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px #fff;
+    }
+    input {
+      padding: 10px;
+      width: 90%;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #0078d4;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="login-form">
+    <h2>Login</h2>
+    <form onsubmit="loginUser(event)">
+      <input type="text" id="login-username" placeholder="Username" required><br>
+      <input type="password" id="login-password" placeholder="Password" required><br>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <div id="profile-container">
+    <img id="profile-pic" src="https://via.placeholder.com/100" alt="Profile Photo">
+    <h2 id="name">Name</h2>
+    <p><strong>Username:</strong> <span id="username">-</span></p>
+    <p><strong>Brain Points:</strong> <span id="points">0</span></p>
+  </div>
+
 </body>
 </html>
