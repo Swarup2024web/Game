@@ -1,52 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Profile - NeuroBot Academy</title>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-  />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Firebase Auth and Config -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
+      authDomain: "mybot-e3dbc.firebaseapp.com",
+      projectId: "mybot-e3dbc",
+      storageBucket: "mybot-e3dbc.appspot.com",
+      messagingSenderId: "576870586364",
+      appId: "1:576870586364:web:739707e4ad4cb115d6c479"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    window.onload = () => {
+      const userName = document.getElementById("user-name");
+      const userEmail = document.getElementById("user-email");
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          userName.textContent = user.displayName || "No name set";
+          userEmail.textContent = user.email;
+        } else {
+          window.location.href = "login.html"; // redirect if not logged in
+        }
+      });
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f7fa;
+      color: #333;
+    }
+    header {
+      background-color: #6200ee;
+      color: white;
+      padding: 10px 20px;
+    }
+    .header-row1 {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+    .header-row2 {
+      display: flex;
+      justify-content: space-around;
+      padding-top: 8px;
+    }
+    .header-row2 i {
+      font-size: 24px;
+      cursor: pointer;
+    }
+    main {
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin: 30px auto;
+    }
+    .card h2 {
+      margin-top: 0;
+      color: #6200ee;
+    }
+    .info {
+      font-size: 1.1em;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Header included from index.html using style.css -->
-
-  <!-- Profile Section -->
-  <section style="
-    max-width: 800px;
-    margin: 60px auto;
-    background: #fff;
-    padding: 30px;
-    border-radius: 16px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    text-align: center;
-    font-family: 'Segoe UI', sans-serif;
-  ">
-    <h2 style="font-size: 2rem; color: #0077cc; margin-bottom: 20px;">
-      <i class="fas fa-user-circle"></i> My Profile
-    </h2>
-
-    <img
-      src="https://i.imgur.com/8Km9tLL.png"
-      alt="Bot Avatar"
-      style="width: 150px; height: 150px; border-radius: 50%; margin-bottom: 20px;"
-    />
-
-    <h3 style="margin-bottom: 10px;">Username: <strong>neuro_master42</strong></h3>
-    <p style="margin: 10px 0;">Level: <strong>12</strong></p>
-    <p style="margin: 10px 0;">XP: <strong>4,350 / 5,000</strong></p>
-    <p style="margin: 10px 0;">AI Coins: <strong>1,250</strong></p>
-
-    <div style="margin-top: 30px;">
-      <h4 style="color: #333;">Bot Status</h4>
-      <p style="margin: 10px 0;">Name: <strong>NeuroZilla</strong></p>
-      <p style="margin: 10px 0;">Power Level: <strong>3,500</strong></p>
-      <p style="margin: 10px 0;">Upgrades: <strong>Armor V2, Auto-Learn Chip</strong></p>
+  <header>
+    <div class="header-row1">MyBot Academy</div>
+    <div class="header-row2">
+      <span onclick="location.href='index.html'"><i class="material-icons">home</i></span>
+      <span onclick="location.href='robot.html'"><i class="material-icons">smart_toy</i></span>
+      <span onclick="location.href='profile.html'"><i class="material-icons">person</i></span>
     </div>
-  </section>
+  </header>
+
+  <main>
+    <div class="card">
+      <h2>User Profile</h2>
+      <div class="info"><strong>Name:</strong> <span id="user-name">Loading...</span></div>
+      <div class="info"><strong>Email:</strong> <span id="user-email">Loading...</span></div>
+    </div>
+  </main>
 
 </body>
 </html>
