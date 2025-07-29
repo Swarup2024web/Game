@@ -1,76 +1,104 @@
-body {
+/* Reset and Base */
+* {
   margin: 0;
-  font-family: 'Orbitron', sans-serif;
-  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-  color: #0ff;
-  text-align: center;
-  padding: 20px;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Orbitron", sans-serif;
 }
 
-header h1 {
+body {
+  background: radial-gradient(circle at top, #1f1f3b, #0d0d1f);
+  color: #f0f0f0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.game-header {
+  background: #11152a;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 0 10px #0ff;
+}
+
+.game-header h1 {
   font-size: 2.5em;
-  margin-bottom: 5px;
-  color: #0ff;
+  color: #00f7ff;
   text-shadow: 0 0 10px #0ff;
 }
 
-header p {
-  margin-bottom: 20px;
-  font-size: 1.2em;
-}
-
-.stats {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 30px;
-}
-
-.stat-box {
-  background: #111;
+/* XP Bar */
+.xp-bar {
+  background: #222;
   border: 1px solid #0ff;
-  padding: 10px 20px;
+  margin-top: 10px;
+  width: 80%;
+  margin-inline: auto;
+  height: 20px;
+  position: relative;
   border-radius: 10px;
-  font-size: 1em;
-  box-shadow: 0 0 8px #0ff inset;
+  overflow: hidden;
 }
 
-.grid {
+.xp-fill {
+  background: linear-gradient(90deg, #00ffe7, #0055ff);
+  height: 100%;
+}
+
+.xp-bar span {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-size: 0.9em;
+  top: 0;
+}
+
+/* Dashboard Grid */
+.dashboard {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 20px;
+  padding: 30px;
+  flex: 1;
 }
 
+/* Card Design */
 .card {
-  background: #111;
-  padding: 20px;
+  background: rgba(0, 255, 255, 0.1);
+  border: 2px solid #0ff;
   border-radius: 15px;
-  color: #0ff;
-  text-decoration: none;
-  border: 1px solid #0ff;
-  box-shadow: 0 0 10px #0ff;
-  transition: transform 0.3s, box-shadow 0.3s;
+  text-align: center;
+  padding: 25px 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
 }
 
 .card:hover {
+  background: rgba(0, 255, 255, 0.2);
+  box-shadow: 0 0 20px #0ff;
   transform: scale(1.05);
-  box-shadow: 0 0 20px #0ff, 0 0 30px #0ff;
 }
 
 .card i {
-  font-size: 2em;
+  font-size: 2.5em;
   margin-bottom: 10px;
-  display: block;
+  color: #00f7ff;
 }
 
-.card span {
-  display: block;
-  font-size: 1em;
+.card h2 {
+  font-size: 1.2em;
+  color: #ffffff;
 }
 
+/* Footer */
 footer {
-  margin-top: 40px;
+  background: #0c0c1a;
+  color: #777;
+  text-align: center;
+  padding: 10px;
   font-size: 0.9em;
-  color: #aaa;
+  border-top: 1px solid #222;
 }
