@@ -3,146 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NeuroBot Academy - Profile</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
-    }
-
-    body {
-      min-height: 100vh;
-      background: linear-gradient(to right, #00c6ff, #0072ff);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-    }
-
-    header {
-      width: 100%;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.3);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-
-    header h1 {
-      font-size: 24px;
-      letter-spacing: 1px;
-    }
-
-    header a {
-      text-decoration: none;
-      color: #fff;
-      background: rgba(255, 255, 255, 0.2);
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-
-    .profile-box {
-      background: rgba(0, 0, 0, 0.2);
-      padding: 30px;
-      border-radius: 15px;
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-    }
-
-    .profile-img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      margin-bottom: 15px;
-      object-fit: cover;
-      border: 3px solid #fff;
-    }
-
-    .username {
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .info {
-      font-size: 18px;
-      margin: 10px 0;
-    }
-
-    @media(max-width: 500px){
-      header h1 {
-        font-size: 18px;
-      }
-      .info {
-        font-size: 16px;
-      }
-    }
-  </style>
+  <title>My Profile - NeuroBot Academy</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <header>
-    <h1>NeuroBot Academy</h1>
-    <a href="index.html"><i class="fas fa-home"></i> Home</a>
-  </header>
+  <!-- Header included from index.html using style.css -->
 
-  <div class="profile-box">
-    <img src="https://via.placeholder.com/100" alt="Profile" class="profile-img" id="userPhoto">
-    <div class="username" id="username">Loading...</div>
-    <div class="info">Bot Level: <span id="botLevel">-</span></div>
-    <div class="info">AI Coins: <span id="aiCoins">-</span></div>
-  </div>
+  <!-- Profile Section -->
+  <section style="
+    max-width: 800px;
+    margin: 60px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+  ">
+    <h2 style="font-size: 2rem; color: #0077cc; margin-bottom: 20px;">
+      <i class="fas fa-user-circle"></i> My Profile
+    </h2>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    <img
+      src="https://i.imgur.com/8Km9tLL.png"
+      alt="Bot Avatar"
+      style="width: 150px; height: 150px; border-radius: 50%; margin-bottom: 20px;"
+    />
 
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT.appspot.com",
-      messagingSenderId: "SENDER_ID",
-      appId: "APP_ID"
-    };
+    <h3 style="margin-bottom: 10px;">Username: <strong>neuro_master42</strong></h3>
+    <p style="margin: 10px 0;">Level: <strong>12</strong></p>
+    <p style="margin: 10px 0;">XP: <strong>4,350 / 5,000</strong></p>
+    <p style="margin: 10px 0;">AI Coins: <strong>1,250</strong></p>
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    <div style="margin-top: 30px;">
+      <h4 style="color: #333;">Bot Status</h4>
+      <p style="margin: 10px 0;">Name: <strong>NeuroZilla</strong></p>
+      <p style="margin: 10px 0;">Power Level: <strong>3,500</strong></p>
+      <p style="margin: 10px 0;">Upgrades: <strong>Armor V2, Auto-Learn Chip</strong></p>
+    </div>
+  </section>
 
-    const currentUsername = localStorage.getItem("username");
-
-    if (!currentUsername) {
-      window.location.href = "login.html";
-    } else {
-      const userRef = doc(db, "users", currentUsername);
-      getDoc(userRef).then(docSnap => {
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          document.getElementById("username").innerText = data.name || currentUsername;
-          document.getElementById("botLevel").innerText = data.botLevel || "1";
-          document.getElementById("aiCoins").innerText = data.aiCoins || "0";
-          if (data.image) {
-            document.getElementById("userPhoto").src = data.image;
-          }
-        } else {
-          alert("User not found.");
-          localStorage.removeItem("username");
-          window.location.href = "login.html";
-        }
-      }).catch(err => {
-        console.error("Error fetching user:", err);
-        alert("Failed to fetch profile.");
-        window.location.href = "login.html";
-      });
-    }
-  </script>
 </body>
 </html>
