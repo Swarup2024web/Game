@@ -1,140 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Login - NeuroBot Academy</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Material Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-  <!-- Material Design Ripple -->
-  <script src="https://unpkg.com/@material/web@latest/all.js" type="module"></script>
-  <!-- Firebase SDK -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
-      authDomain: "mybot-e3dbc.firebaseapp.com",
-      projectId: "mybot-e3dbc",
-      storageBucket: "mybot-e3dbc.firebasestorage.app",
-      messagingSenderId: "576870586364",
-      appId: "1:576870586364:web:739707e4ad4cb115d6c479"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    window.loginUser = async () => {
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const status = document.getElementById("status");
-
-      if (!username || !password) {
-        status.textContent = "Please fill in all fields.";
-        return;
-      }
-
-      const q = query(collection(db, "users"), where("username", "==", username), where("password", "==", password));
-      const querySnapshot = await getDocs(q);
-
-      if (querySnapshot.empty) {
-        status.textContent = "Invalid credentials!";
-      } else {
-        const userData = querySnapshot.docs[0].data();
-        localStorage.setItem("username", userData.username);
-        localStorage.setItem("botLevel", userData.botLevel || 1);
-        localStorage.setItem("coins", userData.coins || 0);
-        location.href = "profile.html";
-      }
-    };
-  </script>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | MyBot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
+  <script type="module" src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js"></script>
+  <script type="module" src="firebaseConfig.js"></script>
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
     body {
-      margin: 0;
-      font-family: "Roboto", sans-serif;
-      background: linear-gradient(to right, #cbe7ff, #e1f5ff);
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       height: 100vh;
+      color: white;
     }
-
-    .card {
-      background: #ffffff;
+    .login-container {
+      background: #ffffff0f;
+      padding: 40px;
       border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-      padding: 30px;
-      width: 320px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 380px;
       text-align: center;
+      backdrop-filter: blur(10px);
+      position: relative;
     }
-
-    h2 {
+    .login-container h2 {
       margin-bottom: 20px;
-      color: #007BCE;
+      font-size: 1.8rem;
+      color: #fff;
     }
-
-    .input-field {
-      margin-bottom: 20px;
-      width: 100%;
+    .material-symbols-rounded {
+      font-size: 28px;
+      vertical-align: middle;
+      margin-right: 8px;
     }
-
-    .input-field input {
+    .input-group {
+      margin: 15px 0;
+      text-align: left;
+    }
+    .input-group label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: #ddd;
+    }
+    .input-group input {
       width: 100%;
       padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-      outline: none;
-      transition: border-color 0.3s;
-    }
-
-    .input-field input:focus {
-      border-color: #007BCE;
-    }
-
-    .md3-btn {
-      background-color: #007BCE;
-      color: #fff;
-      padding: 12px 20px;
-      font-size: 16px;
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
+      background: #ffffff18;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+    }
+    .input-group input:focus {
+      border: 1px solid #00cfff;
+      background: #ffffff22;
+    }
+    button {
+      background: #00cfff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 24px;
+      margin-top: 20px;
+      font-size: 1rem;
+      color: white;
       cursor: pointer;
-      transition: background-color 0.3s;
       position: relative;
       overflow: hidden;
     }
-
-    .md3-btn:hover {
-      background-color: #005f99;
+    button::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255,255,255,0.4);
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      transition: width 0.4s ease, height 0.4s ease;
     }
-
-    #status {
-      margin-top: 15px;
-      color: red;
-      font-weight: bold;
+    button:active::after {
+      width: 300px;
+      height: 300px;
     }
-
-    .material-icons-outlined {
-      vertical-align: middle;
+    .error {
+      margin-top: 10px;
+      color: #ff8080;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h2><span class="material-icons-outlined">smart_toy</span> NeuroBot Login</h2>
-    <div class="input-field">
-      <input type="text" id="username" placeholder="Username">
+  <div class="login-container">
+    <h2><span class="material-symbols-rounded">robot</span> Login to MyBot</h2>
+
+    <div class="input-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" placeholder="Enter your username" required>
     </div>
-    <div class="input-field">
-      <input type="password" id="password" placeholder="Password">
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter your password" required>
     </div>
-    <button class="md3-btn" onclick="loginUser()">
-      <span class="material-icons-outlined">login</span> Login
-    </button>
-    <div id="status"></div>
+
+    <button id="loginBtn">Login</button>
+    <div class="error" id="errorMsg"></div>
   </div>
+
+  <script type="module">
+    import { app } from './firebaseConfig.js';
+    import {
+      getFirestore,
+      collection,
+      getDocs
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+    const db = getFirestore(app);
+    const loginBtn = document.getElementById("loginBtn");
+    const errorMsg = document.getElementById("errorMsg");
+
+    loginBtn.addEventListener("click", async () => {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+
+      if (!username || !password) {
+        errorMsg.textContent = "Please fill all fields.";
+        return;
+      }
+
+      const usersRef = collection(db, "users");
+      const snapshot = await getDocs(usersRef);
+
+      let validUser = false;
+
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        if (data.username === username && data.password === password) {
+          validUser = true;
+        }
+      });
+
+      if (validUser) {
+        localStorage.setItem("loggedInUser", username);
+        window.location.href = "profile.html";
+      } else {
+        errorMsg.textContent = "Invalid username or password.";
+      }
+    });
+  </script>
 </body>
 </html>
