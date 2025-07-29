@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NeuroBot Academy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    // Redirect if not logged in
+    window.onload = function () {
+      const user = localStorage.getItem("loggedInUser");
+      if (!user) {
+        window.location.href = "login.html";
+      }
+    };
+
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "login.html";
+    }
+  </script>
 </head>
 <body>
   <header>
@@ -55,19 +69,12 @@
         <p>See top students</p>
       </a>
 
-      <a href="login.html" class="card" onclick="logout()">
+      <a class="card" href="#" onclick="logout()">
         <span class="material-icons">logout</span>
         <h3>Logout</h3>
         <p>Sign out of your account</p>
       </a>
     </section>
   </main>
-
-  <script>
-    function logout() {
-      // Clear user session if needed
-      window.location.href = "login.html";
-    }
-  </script>
 </body>
 </html>
