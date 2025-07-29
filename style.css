@@ -1,143 +1,93 @@
-/* Reset & Base */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Orbitron", sans-serif;
-}
-
 body {
-  background: linear-gradient(to bottom right, #02121b, #051f0c);
-  color: #f0f0f0;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Header */
-.game-header {
-  background: #0a0e1b;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 0 10px #00ffd9;
-}
-
-.game-header h1 {
-  font-size: 2.5em;
-  color: #00ffd0;
-  text-shadow: 0 0 15px #00ffcc;
-}
-
-/* XP Bar */
-.xp-bar {
-  background: #222;
-  border: 1px solid #00ffcc;
-  margin-top: 10px;
-  width: 80%;
-  margin-inline: auto;
-  height: 20px;
-  border-radius: 10px;
-  overflow: hidden;
-  position: relative;
-}
-
-.xp-fill {
-  background: linear-gradient(90deg, #00ffcc, #7fff00);
-  height: 100%;
-}
-
-.xp-bar span {
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  color: #fff;
-  font-size: 0.9em;
-  top: 0;
-}
-
-/* Dashboard */
-.dashboard {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 20px;
-  padding: 30px;
-  flex: 1;
-}
-
-/* Cards */
-.card {
-  background: rgba(0, 255, 200, 0.1);
-  border: 2px solid #00ffd9;
-  border-radius: 15px;
-  text-align: center;
-  padding: 25px 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 15px rgba(0, 255, 200, 0.2);
-}
-
-.card:hover {
-  background: rgba(127, 255, 0, 0.2);
-  box-shadow: 0 0 25px #7fff00;
-  transform: scale(1.05);
-}
-
-.card i {
-  font-size: 2.5em;
-  margin-bottom: 10px;
-  color: #00ffcc;
-}
-
-.card h2 {
-  font-size: 1.2em;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #0f0f2e;
   color: #ffffff;
 }
 
-/* Modal */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  padding-top: 150px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.6);
+.main-header {
+  text-align: center;
+  background: #1c1c3c;
+  padding: 2rem 1rem;
+  border-bottom: 3px solid #00ffc3;
 }
 
-.modal-content {
-  background-color: #111;
-  margin: auto;
-  padding: 20px;
-  border: 2px solid #00ffcc;
-  width: 80%;
-  max-width: 400px;
+.main-header h1 {
+  font-size: 2.5rem;
+  color: #00ffc3;
+}
+
+.main-header p {
+  font-size: 1rem;
+  color: #aaa;
+}
+
+.main-content {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-card {
+  background: #1a1a3a;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
   border-radius: 10px;
   text-align: center;
-  color: #fff;
-  box-shadow: 0 0 20px #00ffcc;
+  max-width: 600px;
+  box-shadow: 0 0 10px #00ffc3;
 }
 
-.modal-content h3 {
-  color: #00ffcc;
-  margin-bottom: 10px;
-}
-
-.modal-content .close {
-  color: #ff4444;
-  float: right;
-  font-size: 24px;
+.btn {
+  background: #00ffc3;
+  color: #000;
+  padding: 0.8rem 1.5rem;
+  text-decoration: none;
+  border-radius: 5px;
   font-weight: bold;
-  cursor: pointer;
 }
 
-/* Footer */
-footer {
-  background: #0c0c1a;
-  color: #777;
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.card {
+  background: #1a1a3a;
+  padding: 1rem;
+  border-radius: 10px;
   text-align: center;
-  padding: 10px;
-  font-size: 0.9em;
-  border-top: 1px solid #222;
+  box-shadow: 0 0 8px #00ffc3;
+}
+
+.card i {
+  font-size: 2rem;
+  color: #00ffc3;
+}
+
+.card h3 {
+  margin: 1rem 0 0.5rem;
+}
+
+.btn-sm {
+  background: #00ffc3;
+  color: #000;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-top: 1rem;
+  display: inline-block;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #1c1c3c;
+  color: #aaa;
+  margin-top: 2rem;
 }
