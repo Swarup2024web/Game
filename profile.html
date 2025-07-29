@@ -1,164 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>BotSquad | Player Profile</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Font and Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile - AI Quest</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-      color: #0ff;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Orbitron", sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at center, #1e1e3f, #0a0a1f);
+      color: #eee;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      background: #11152a;
       padding: 20px;
-    }
-
-    header {
       text-align: center;
-      margin-bottom: 20px;
+      box-shadow: 0 0 10px #0ff;
     }
 
-    header h1 {
-      font-size: 2.5em;
+    .header h1 {
+      font-size: 2em;
+      color: #00f7ff;
       text-shadow: 0 0 10px #0ff;
     }
 
     .profile-container {
-      background: #111;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 0 15px #0ff;
-      max-width: 600px;
-      margin: auto;
+      display: flex;
+      flex-direction: column;
+      padding: 30px;
+      gap: 30px;
+      flex: 1;
+    }
+
+    .profile-card {
+      background: rgba(0, 255, 255, 0.1);
+      border: 2px solid #0ff;
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+      transition: 0.3s;
     }
 
     .avatar {
-      text-align: center;
+      font-size: 3em;
+      color: #00ffe7;
+      margin-bottom: 10px;
     }
 
-    .avatar img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 3px solid #0ff;
-    }
-
-    .info {
-      text-align: center;
-      margin-top: 10px;
-    }
-
-    .info h2 {
-      margin-bottom: 5px;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .stat {
-      background: #222;
-      padding: 10px;
-      border-radius: 8px;
-      text-align: center;
-      box-shadow: 0 0 5px #0ff;
-    }
-
-    .stat i {
-      display: block;
+    .profile-card h2 {
       font-size: 1.5em;
       margin-bottom: 5px;
     }
 
-    .equipment {
-      margin-top: 25px;
+    .profile-card p {
+      margin: 5px 0;
+      font-size: 1em;
     }
 
-    .equipment h3 {
-      margin-bottom: 10px;
-      text-align: center;
-      color: #0ff;
+    .xp-bar {
+      background: #222;
+      border: 1px solid #0ff;
+      height: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 10px 0;
     }
 
-    .equipment ul {
-      list-style: none;
-      padding: 0;
+    .xp-fill {
+      background: linear-gradient(90deg, #00ffe7, #0055ff);
+      height: 100%;
     }
 
-    .equipment li {
-      background: #1a1a1a;
-      padding: 10px;
-      border-radius: 6px;
-      margin-bottom: 8px;
-      box-shadow: 0 0 5px #0ff;
-    }
-
-    a.back-btn {
-      display: block;
-      text-align: center;
-      margin-top: 25px;
-      color: #0ff;
-      text-decoration: none;
+    .title {
+      color: #00e7ff;
       font-weight: bold;
     }
 
-    a.back-btn:hover {
-      color: cyan;
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #00f7ff;
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #00c9d6;
+    }
+
+    .achievements {
+      background: rgba(255, 255, 255, 0.05);
+      border-left: 4px solid #0ff;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .achievements h3 {
+      color: #00f7ff;
+      margin-bottom: 10px;
+    }
+
+    .achievements ul {
+      list-style: none;
+    }
+
+    .achievements li {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1em;
+    }
+
+    .achievements li i {
+      color: #00ffcc;
+    }
+
+    footer {
+      background: #0c0c1a;
+      color: #777;
+      text-align: center;
+      padding: 10px;
+      font-size: 0.9em;
+      border-top: 1px solid #222;
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1><i class="fas fa-robot"></i> BotSquad | Profile</h1>
+  <header class="header">
+    <h1><i class="fas fa-user-circle"></i> Your Profile</h1>
   </header>
 
-  <div class="profile-container">
-    <div class="avatar">
-      <img src="https://i.ibb.co/Cv7cqGp/ai-avatar.png" alt="Player Avatar">
-    </div>
-    <div class="info">
-      <h2>NeuroKnight</h2>
-      <p>Rank: <strong>Alpha Commander</strong></p>
-    </div>
+  <main class="profile-container">
+    <section class="profile-card">
+      <div class="avatar">
+        <i class="fas fa-user-astronaut"></i>
+      </div>
+      <h2>Dip Das</h2>
+      <p>Email: dip@example.com</p>
+      <p>XP: 450 / 1000</p>
+      <div class="xp-bar">
+        <div class="xp-fill" style="width: 45%;"></div>
+      </div>
+      <p>AI Level: 2 - <span class="title">Smart Learner</span></p>
+      <button onclick="alert('Logged out!')">Log Out</button>
+    </section>
 
-    <div class="stats">
-      <div class="stat">
-        <i class="fas fa-bolt"></i>
-        Power: 14,500
-      </div>
-      <div class="stat">
-        <i class="fas fa-microchip"></i>
-        Intelligence: 9,300
-      </div>
-      <div class="stat">
-        <i class="fas fa-shield-alt"></i>
-        Defense: 7,800
-      </div>
-      <div class="stat">
-        <i class="fas fa-crosshairs"></i>
-        Accuracy: 95%
-      </div>
-    </div>
-
-    <div class="equipment">
-      <h3><i class="fas fa-tools"></i> Equipment</h3>
+    <section class="achievements">
+      <h3><i class="fas fa-award"></i> Achievements</h3>
       <ul>
-        <li><i class="fas fa-robot"></i> ExoSkeleton Mk.7</li>
-        <li><i class="fas fa-gun"></i> Plasma Rifle X2</li>
-        <li><i class="fas fa-hat-wizard"></i> Quantum Neural Visor</li>
+        <li><i class="fas fa-check-circle"></i> Completed 10 Questions</li>
+        <li><i class="fas fa-check-circle"></i> Reached Level 2 AI</li>
+        <li><i class="fas fa-lock"></i> Win 1 PvP Match</li>
       </ul>
-    </div>
-  </div>
+    </section>
+  </main>
 
-  <a class="back-btn" href="index.html"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
-
+  <footer>
+    <p>© 2025 AI Quest. Profile Page.</p>
+  </footer>
 </body>
 </html>
