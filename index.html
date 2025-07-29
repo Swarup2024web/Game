@@ -1,80 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NeuroBot Academy</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
   <!-- Header -->
   <header>
-    <h1>🤖 NeuroBot Academy</h1>
+    <div class="header-row1">NeuroBot Academy</div>
+    <div class="header-row2">
+      <a href="index.html" title="Home"><i class="fas fa-home"></i></a>
+      <a href="robot.html" title="Robot"><i class="fas fa-robot"></i></a>
+      <a href="profile.html" title="Profile"><i class="fas fa-user"></i></a>
+    </div>
   </header>
 
-  <!-- Navigation -->
-  <nav class="nav-bar">
-    <a href="index.html" title="Home"><i class="fas fa-home"></i></a>
-    <a href="profile.html" title="Profile"><i class="fas fa-user"></i></a>
-    <a href="shop.html" title="Shop"><i class="fas fa-shopping-cart"></i></a>
-    <a href="bots.html" title="My Bots"><i class="fas fa-robot"></i></a>
-    <a href="rewards.html" title="Rewards"><i class="fas fa-gift"></i></a>
-    <a href="logout.html" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
-  </nav>
+  <!-- Welcome Section -->
+  <section class="welcome">
+    <h2>Welcome to the World of Robotics & AI!</h2>
+    <p>Build, Upgrade, and Learn with your own AI Bot in NeuroBot Academy.</p>
+  </section>
 
-  <!-- Info Cards -->
-  <section class="card-container">
-    <div class="card" onclick="openPopup('brain')">
-      <i class="fas fa-brain card-icon"></i>
-      <h3>Learn AI</h3>
+  <!-- Dashboard Cards -->
+  <section class="card-grid">
+    <div class="info-card">
+      <i class="fas fa-user-circle"></i>
+      <h3>Profile</h3>
+      <p>View your AI stats and level</p>
     </div>
-    <div class="card" onclick="openPopup('upgrade')">
-      <i class="fas fa-bolt card-icon"></i>
-      <h3>Upgrade Bot</h3>
+
+    <div class="info-card">
+      <i class="fas fa-question-circle"></i>
+      <h3>Quiz</h3>
+      <p>Solve AI questions & earn coins</p>
     </div>
-    <div class="card" onclick="openPopup('rewards')">
-      <i class="fas fa-coins card-icon"></i>
-      <h3>Earn Coins</h3>
+
+    <div class="info-card">
+      <i class="fas fa-microchip"></i>
+      <h3>Robot</h3>
+      <p>Upgrade and customize your bot</p>
     </div>
-    <div class="card" onclick="openPopup('rank')">
-      <i class="fas fa-trophy card-icon"></i>
-      <h3>Rankings</h3>
+
+    <div class="info-card">
+      <i class="fas fa-store"></i>
+      <h3>Shop</h3>
+      <p>Buy parts and skins for your bot</p>
+    </div>
+
+    <div class="info-card">
+      <i class="fas fa-trophy"></i>
+      <h3>Leaderboard</h3>
+      <p>Compete and rank up</p>
+    </div>
+
+    <div class="info-card logout-card" onclick="logout()">
+      <i class="fas fa-sign-out-alt"></i>
+      <h3>Logout</h3>
+      <p>Sign out of your account</p>
     </div>
   </section>
 
-  <!-- Pop-up Modals -->
-  <div id="popup" class="popup">
-    <div class="popup-content">
-      <span class="close-btn" onclick="closePopup()">&times;</span>
-      <h2 id="popup-title">Title</h2>
-      <p id="popup-text">Description here...</p>
-    </div>
-  </div>
-
-  <!-- Script -->
   <script>
-    function openPopup(topic) {
-      const titleMap = {
-        brain: "Learn AI Modules",
-        upgrade: "Upgrade Your Bot",
-        rewards: "Complete Quests to Earn AI Coins",
-        rank: "See Who’s on Top"
-      };
-      const textMap = {
-        brain: "Start learning AI with fun, bite-sized modules. Your bot grows smarter with every lesson!",
-        upgrade: "Use your coins to upgrade your bot’s power, armor, and intelligence.",
-        rewards: "Solve puzzles and missions to earn coins and unlock exclusive rewards!",
-        rank: "Compete with others and rise up the leaderboard!"
-      };
-      document.getElementById('popup-title').innerText = titleMap[topic];
-      document.getElementById('popup-text').innerText = textMap[topic];
-      document.getElementById('popup').style.display = 'flex';
-    }
-    function closePopup() {
-      document.getElementById('popup').style.display = 'none';
+    function logout() {
+      // Optionally add Firebase logout here
+      window.location.href = "login.html";
     }
   </script>
-
 </body>
 </html>
