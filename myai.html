@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My AI - AI Quest</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Orbitron", sans-serif;
+      background: linear-gradient(to bottom right, #051f2b, #0a2f13);
+      color: #fff;
+    }
+
+    header {
+      background: #0b0f1f;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 2px solid #00ffcc;
+      box-shadow: 0 0 10px #00ffd9;
+    }
+
+    header h1 {
+      color: #00f7ff;
+      font-size: 2.2em;
+      text-shadow: 0 0 8px #00f7ff;
+    }
+
+    .ai-info {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .ai-info h2 {
+      font-size: 1.5em;
+      color: #7fff00;
+    }
+
+    .xp-bar {
+      background: #222;
+      border: 1px solid #0ff;
+      margin: 10px auto;
+      width: 80%;
+      height: 20px;
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .xp-fill {
+      background: linear-gradient(90deg, #00ffcc, #7fff00);
+      height: 100%;
+      width: 45%; /* Change this based on actual XP */
+    }
+
+    .xp-bar span {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      top: 0;
+      font-size: 0.9em;
+      color: #fff;
+    }
+
+    .upgrade-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .upgrade-card {
+      background: rgba(0, 255, 200, 0.07);
+      border: 2px solid #0ff;
+      border-radius: 10px;
+      padding: 15px;
+      transition: 0.3s;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+    }
+
+    .upgrade-card.unlocked {
+      border-color: #7fff00;
+      box-shadow: 0 0 15px #7fff00;
+    }
+
+    .upgrade-card h3 {
+      color: #00f7ff;
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+
+    .upgrade-card p {
+      font-size: 0.9em;
+      margin-bottom: 8px;
+    }
+
+    .upgrade-card button {
+      padding: 8px 16px;
+      background: #00f7ff;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #000;
+      transition: 0.3s;
+    }
+
+    .upgrade-card button:disabled {
+      background: #666;
+      color: #ccc;
+      cursor: not-allowed;
+    }
+
+    footer {
+      background: #0c0c1a;
+      color: #777;
+      text-align: center;
+      padding: 10px;
+      font-size: 0.9em;
+      border-top: 1px solid #222;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-brain"></i> My AI Upgrades</h1>
+  </header>
+
+  <section class="ai-info">
+    <h2>Current AI Level: 3</h2>
+    <div class="xp-bar">
+      <div class="xp-fill"></div>
+      <span>XP: 450 / 1000</span>
+    </div>
+  </section>
+
+  <section class="upgrade-container">
+    <!-- Upgrade 1 -->
+    <div class="upgrade-card unlocked">
+      <h3><i class="fas fa-bolt"></i> Auto-Solve Easy Questions</h3>
+      <p>Unlocked at Level 2</p>
+      <p>Status: ✅ Unlocked</p>
+      <button disabled>Unlocked</button>
+    </div>
+
+    <!-- Upgrade 2 -->
+    <div class="upgrade-card unlocked">
+      <h3><i class="fas fa-lightbulb"></i> AI Hint Generator</h3>
+      <p>Unlocked at Level 3</p>
+      <p>Status: ✅ Unlocked</p>
+      <button disabled>Unlocked</button>
+    </div>
+
+    <!-- Upgrade 3 -->
+    <div class="upgrade-card">
+      <h3><i class="fas fa-chart-line"></i> AI Performance Analyzer</h3>
+      <p>Requires: Level 4 & 600 XP</p>
+      <p>Status: 🔒 Locked</p>
+      <button disabled>Unlock (600 XP)</button>
+    </div>
+
+    <!-- Upgrade 4 -->
+    <div class="upgrade-card">
+      <h3><i class="fas fa-microphone"></i> AI Voice Reader</h3>
+      <p>Requires: Level 6 & 1500 XP</p>
+      <p>Status: 🔒 Locked</p>
+      <button disabled>Unlock (1500 XP)</button>
+    </div>
+
+    <!-- Upgrade 5 -->
+    <div class="upgrade-card">
+      <h3><i class="fas fa-paint-brush"></i> Custom Skins</h3>
+      <p>Requires: Level 5 & 1000 XP</p>
+      <p>Status: 🔒 Locked</p>
+      <button disabled>Unlock (1000 XP)</button>
+    </div>
+
+    <!-- Upgrade 6 -->
+    <div class="upgrade-card">
+      <h3><i class="fas fa-shield-alt"></i> PvP Combat Assistant</h3>
+      <p>Requires: Level 7 & 2000 XP</p>
+      <p>Status: 🔒 Locked</p>
+      <button disabled>Unlock (2000 XP)</button>
+    </div>
+
+    <!-- Upgrade 7 -->
+    <div class="upgrade-card">
+      <h3><i class="fas fa-star"></i> Smart Topic Recommender</h3>
+      <p>Requires: Level 8 & 2500 XP</p>
+      <p>Status: 🔒 Locked</p>
+      <button disabled>Unlock (2500 XP)</button>
+    </div>
+
+    <!-- Upgrade 8 -->
+    <div class="upgrade-card">
+      <h3><i class="fas fa-brush"></i> AI Color Themes</h3>
+      <p>Requires: Level 9 & 3000 XP</p>
+      <p>Status: 🔒 Locked</p>
+      <button disabled>Unlock (3000 XP)</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 AI Quest - Upgrade your intelligence</p>
+  </footer>
+</body>
+        </html>
