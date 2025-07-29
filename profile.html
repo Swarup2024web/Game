@@ -1,157 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Profile - NeuroBot Academy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script type="module" src="firebaseConfig.js"></script>
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      margin: 0;
-      background: linear-gradient(to right, #e0f7fa, #e1f5fe);
-      color: #333;
-    }
-
-    .header {
-      background: white;
-      padding: 10px 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .header h1 {
-      margin: 0;
-      font-size: 24px;
-      font-weight: bold;
-      color: #0288d1;
-    }
-
-    .nav {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      background: #ffffff;
-      padding: 10px 0;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .nav i {
-      font-size: 24px;
-      color: #0288d1;
-      cursor: pointer;
-    }
-
-    .container {
-      max-width: 500px;
-      margin: 40px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .profile-field {
-      margin-bottom: 20px;
-    }
-
-    .profile-field label {
-      font-weight: bold;
-      font-size: 14px;
-      color: #616161;
-    }
-
-    .profile-field div {
-      font-size: 18px;
-      color: #333;
-      margin-top: 4px;
-    }
-
-    .material-icons {
-      vertical-align: middle;
-    }
-
-    .logout-btn {
-      background-color: #0288d1;
-      color: white;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 30px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-
-    .logout-btn:hover {
-      background-color: #0277bd;
-    }
-  </style>
-</head>
-<body>
-  <div class="header">
-    <h1>NeuroBot Academy</h1>
-  </div>
-
-  <div class="nav">
-    <i class="material-icons" onclick="location.href='index.html'">home</i>
-    <i class="material-icons" onclick="location.href='robot.html'">smart_toy</i>
-    <i class="material-icons" onclick="location.href='profile.html'">person</i>
-  </div>
-
-  <div class="container">
-    <h2>👤 Profile</h2>
-    <div class="profile-field">
-      <label>Username:</label>
-      <div id="username">Loading...</div>
-    </div>
-    <div class="profile-field">
-      <label>Email:</label>
-      <div id="email">Loading...</div>
-    </div>
-
-    <button class="logout-btn" onclick="logout()">Logout</button>
-  </div>
-
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <script type="module">
-    import { app } from './firebaseConfig.js';
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-    import {
-      getFirestore,
-      doc,
-      getDoc
-    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+    const firebaseConfig = {
+      apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
+      authDomain: "mybot-e3dbc.firebaseapp.com",
+      projectId: "mybot-e3dbc",
+      storageBucket: "mybot-e3dbc.appspot.com",
+      messagingSenderId: "576870586364",
+      appId: "1:576870586364:web:739707e4ad4cb115d6c479"
+    };
+
+    const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    const userNameEl = document.getElementById("username");
+    const emailEl = document.getElementById("email");
+
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const userDocRef = doc(db, "users", user.uid);
-        const userSnap = await getDoc(userDocRef);
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
         if (userSnap.exists()) {
-          const data = userSnap.data();
-          document.getElementById("username").textContent = data.username || "N/A";
-          document.getElementById("email").textContent = data.email || user.email;
+          const userData = userSnap.data();
+          userNameEl.textContent = userData.username;
+          emailEl.textContent = user.email;
         } else {
-          document.getElementById("username").textContent = "Unknown User";
-          document.getElementById("email").textContent = user.email;
+          userNameEl.textContent = "Unknown User";
         }
       } else {
+        // Not logged in, redirect to login.html
         window.location.href = "login.html";
       }
     });
 
-    window.logout = function () {
+    window.logoutUser = () => {
       signOut(auth).then(() => {
         window.location.href = "login.html";
       });
     };
   </script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #b2ebf2);
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #00796b;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .nav-icons {
+      display: flex;
+      justify-content: center;
+      background: #004d40;
+      padding: 10px 0;
+    }
+
+    .nav-icons i {
+      font-size: 28px;
+      color: white;
+      margin: 0 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .nav-icons i:hover {
+      color: #b2dfdb;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 30px auto;
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #004d40;
+    }
+
+    .info {
+      font-size: 18px;
+      margin: 15px 0;
+      color: #333;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-top: 30px;
+      background: #00796b;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #004d40;
+    }
+  </style>
+</head>
+<body>
+
+  <header>NeuroBot Academy</header>
+
+  <div class="nav-icons">
+    <span class="material-icons-outlined" onclick="window.location.href='index.html'">home</span>
+    <span class="material-icons-outlined" onclick="window.location.href='robot.html'">android</span>
+    <span class="material-icons-outlined" onclick="window.location.href='profile.html'">account_circle</span>
+  </div>
+
+  <div class="container">
+    <h2>User Profile</h2>
+    <div class="info"><strong>Username:</strong> <span id="username">Loading...</span></div>
+    <div class="info"><strong>Email:</strong> <span id="email">Loading...</span></div>
+    <button onclick="logoutUser()">Logout</button>
+  </div>
+
 </body>
 </html>
