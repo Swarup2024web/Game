@@ -3,176 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Profile - AI Quest</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Orbitron", sans-serif;
-    }
-
-    body {
-      background: radial-gradient(circle at center, #1e1e3f, #0a0a1f);
-      color: #eee;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .header {
-      background: #11152a;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 0 10px #0ff;
-    }
-
-    .header h1 {
-      font-size: 2em;
-      color: #00f7ff;
-      text-shadow: 0 0 10px #0ff;
-    }
-
-    .profile-container {
-      display: flex;
-      flex-direction: column;
-      padding: 30px;
-      gap: 30px;
-      flex: 1;
-    }
-
-    .profile-card {
-      background: rgba(0, 255, 255, 0.1);
-      border: 2px solid #0ff;
-      border-radius: 15px;
-      padding: 25px;
-      text-align: center;
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-      transition: 0.3s;
-    }
-
-    .avatar {
-      font-size: 3em;
-      color: #00ffe7;
-      margin-bottom: 10px;
-    }
-
-    .profile-card h2 {
-      font-size: 1.5em;
-      margin-bottom: 5px;
-    }
-
-    .profile-card p {
-      margin: 5px 0;
-      font-size: 1em;
-    }
-
-    .xp-bar {
-      background: #222;
-      border: 1px solid #0ff;
-      height: 20px;
-      border-radius: 10px;
-      overflow: hidden;
-      margin: 10px 0;
-    }
-
-    .xp-fill {
-      background: linear-gradient(90deg, #00ffe7, #0055ff);
-      height: 100%;
-    }
-
-    .title {
-      color: #00e7ff;
-      font-weight: bold;
-    }
-
-    button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      background: #00f7ff;
-      color: #000;
-      border: none;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background: #00c9d6;
-    }
-
-    .achievements {
-      background: rgba(255, 255, 255, 0.05);
-      border-left: 4px solid #0ff;
-      padding: 20px;
-      border-radius: 10px;
-    }
-
-    .achievements h3 {
-      color: #00f7ff;
-      margin-bottom: 10px;
-    }
-
-    .achievements ul {
-      list-style: none;
-    }
-
-    .achievements li {
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 1em;
-    }
-
-    .achievements li i {
-      color: #00ffcc;
-    }
-
-    footer {
-      background: #0c0c1a;
-      color: #777;
-      text-align: center;
-      padding: 10px;
-      font-size: 0.9em;
-      border-top: 1px solid #222;
-    }
-  </style>
+  <title>Student Profile</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="header">
-    <h1><i class="fas fa-user-circle"></i> Your Profile</h1>
-  </header>
+  <div class="container">
+    <h2>Student Login</h2>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button id="loginBtn">Login</button>
 
-  <main class="profile-container">
-    <section class="profile-card">
-      <div class="avatar">
-        <i class="fas fa-user-astronaut"></i>
-      </div>
-      <h2>Dip Das</h2>
-      <p>Email: dip@example.com</p>
-      <p>XP: 450 / 1000</p>
-      <div class="xp-bar">
-        <div class="xp-fill" style="width: 45%;"></div>
-      </div>
-      <p>AI Level: 2 - <span class="title">Smart Learner</span></p>
-      <button onclick="alert('Logged out!')">Log Out</button>
-    </section>
+    <div id="result" style="margin-top: 20px;"></div>
+  </div>
 
-    <section class="achievements">
-      <h3><i class="fas fa-award"></i> Achievements</h3>
-      <ul>
-        <li><i class="fas fa-check-circle"></i> Completed 10 Questions</li>
-        <li><i class="fas fa-check-circle"></i> Reached Level 2 AI</li>
-        <li><i class="fas fa-lock"></i> Win 1 PvP Match</li>
-      </ul>
-    </section>
-  </main>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-  <footer>
-    <p>© 2025 AI Quest. Profile Page.</p>
-  </footer>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
+      authDomain: "mybot-e3dbc.firebaseapp.com",
+      projectId: "mybot-e3dbc",
+      storageBucket: "mybot-e3dbc.firebasestorage.app",
+      messagingSenderId: "576870586364",
+      appId: "1:576870586364:web:739707e4ad4cb115d6c479"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    document.getElementById("loginBtn").addEventListener("click", async () => {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const resultBox = document.getElementById("result");
+
+      if (!username || !password) {
+        resultBox.innerHTML = `<p style="color:red;">Enter username and password</p>`;
+        return;
+      }
+
+      const q = query(collection(db, "users"), where("username", "==", username), where("password", "==", password));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        resultBox.innerHTML = `<p style="color:red;">Invalid login details</p>`;
+        return;
+      }
+
+      querySnapshot.forEach(doc => {
+        const user = doc.data();
+        resultBox.innerHTML = `
+          <h3>Welcome, ${user.name}</h3>
+          <img src="${user.image}" alt="Profile Image" width="120" style="border-radius: 50%; margin: 10px 0;" />
+          <p><strong>Username:</strong> ${user.username}</p>
+          <p><strong>Brain Points:</strong> ${user.brainPoints ?? 0}</p>
+        `;
+      });
+    });
+  </script>
 </body>
 </html>
