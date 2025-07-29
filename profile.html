@@ -1,69 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Profile - NeuroBot Academy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-  <script type="module" src="https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js"></script>
-  <script type="module" src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script type="module" src="firebaseConfig.js"></script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      background: linear-gradient(to right, #e0f7fa, #e1f5fe);
+      color: #333;
+    }
+
+    .header {
+      background: white;
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+      color: #0288d1;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      background: #ffffff;
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .nav i {
+      font-size: 24px;
+      color: #0288d1;
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .profile-field {
+      margin-bottom: 20px;
+    }
+
+    .profile-field label {
+      font-weight: bold;
+      font-size: 14px;
+      color: #616161;
+    }
+
+    .profile-field div {
+      font-size: 18px;
+      color: #333;
+      margin-top: 4px;
+    }
+
+    .material-icons {
+      vertical-align: middle;
+    }
+
+    .logout-btn {
+      background-color: #0288d1;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 30px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .logout-btn:hover {
+      background-color: #0277bd;
+    }
+  </style>
 </head>
-<body style="font-family: 'Roboto', sans-serif; background: linear-gradient(to bottom right, #e0f7fa, #b2ebf2); margin: 0;">
+<body>
+  <div class="header">
+    <h1>NeuroBot Academy</h1>
+  </div>
 
-  <!-- Header from index.html -->
-  <header class="site-header">
-    <div class="header-row1">NeuroBot Academy</div>
-    <div class="header-row2">
-      <a href="index.html"><span class="material-icons-outlined">home</span></a>
-      <a href="robot.html"><span class="material-icons-outlined">smart_toy</span></a>
-      <a href="profile.html"><span class="material-icons-outlined">person</span></a>
+  <div class="nav">
+    <i class="material-icons" onclick="location.href='index.html'">home</i>
+    <i class="material-icons" onclick="location.href='robot.html'">smart_toy</i>
+    <i class="material-icons" onclick="location.href='profile.html'">person</i>
+  </div>
+
+  <div class="container">
+    <h2>👤 Profile</h2>
+    <div class="profile-field">
+      <label>Username:</label>
+      <div id="username">Loading...</div>
     </div>
-  </header>
-
-  <!-- Profile Section -->
-  <section style="padding: 2rem; display: flex; flex-direction: column; align-items: center;">
-    <h2 style="font-size: 1.8rem; color: #00796b;">Your Profile</h2>
-
-    <div style="margin-top: 1rem; background: white; border-radius: 12px; padding: 1.5rem 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 400px;">
-      <p><strong>Username:</strong> <span id="username">Loading...</span></p>
-      <p><strong>AI Coins:</strong> <span id="coins">Loading...</span></p>
+    <div class="profile-field">
+      <label>Email:</label>
+      <div id="email">Loading...</div>
     </div>
-  </section>
+
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    import { app } from './firebaseConfig.js';
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
-      authDomain: "mybot-e3dbc.firebaseapp.com",
-      projectId: "mybot-e3dbc",
-      storageBucket: "mybot-e3dbc.firebasestorage.app",
-      messagingSenderId: "576870586364",
-      appId: "1:576870586364:web:739707e4ad4cb115d6c479"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth();
-    const db = getFirestore();
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const userDoc = doc(db, "users", user.uid);
-        const docSnap = await getDoc(userDoc);
-        if (docSnap.exists()) {
-          const data = docSnap.data();
+        const userDocRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userDocRef);
+        if (userSnap.exists()) {
+          const data = userSnap.data();
           document.getElementById("username").textContent = data.username || "N/A";
-          document.getElementById("coins").textContent = data.coins || 0;
+          document.getElementById("email").textContent = data.email || user.email;
         } else {
-          document.getElementById("username").textContent = "User data not found.";
+          document.getElementById("username").textContent = "Unknown User";
+          document.getElementById("email").textContent = user.email;
         }
       } else {
         window.location.href = "login.html";
       }
     });
+
+    window.logout = function () {
+      signOut(auth).then(() => {
+        window.location.href = "login.html";
+      });
+    };
   </script>
 </body>
 </html>
