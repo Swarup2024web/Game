@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz - AI Bot Academy</title>
+  <script src="https://kit.fontawesome.com/a2e0c6ad4f.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0d0d0d;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #1a1a1a;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      color: #0ff;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1em;
+    }
+    .back-link:hover {
+      color: #0ff;
+    }
+    main {
+      padding: 30px;
+      text-align: center;
+    }
+    .question-box {
+      background: #222;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 500px;
+      margin: 0 auto;
+      box-shadow: 0 0 12px rgba(0,255,255,0.3);
+    }
+    .question {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #444;
+      color: #fff;
+      font-size: 1em;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .options button:hover {
+      background: #0ff;
+      color: #000;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #0f0;
+    }
+    .score {
+      margin-top: 10px;
+      font-size: 1em;
+      color: #0ff;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🧠 Quiz Arena</h1>
+    <a href="index.html" class="back-link"><i class="fas fa-home"></i> Back to Home</a>
+  </header>
+
+  <main>
+    <div class="question-box">
+      <div class="question" id="question">Loading question...</div>
+      <div class="options" id="options"></div>
+      <div class="result" id="result"></div>
+      <div class="score" id="score">Brain Points: 0</div>
+    </div>
+  </main>
+
+  <script>
+    const questions = [
+      {
+        q: "What is the boiling point of water?",
+        options: ["90°C", "100°C", "110°C", "80°C"],
+        answer: "100°C"
+      },
+      {
+        q: "Which planet is known as the Red Planet?",
+        options: ["Earth", "Venus", "Mars", "Jupiter"],
+        answer: "Mars"
+      },
+      {
+        q: "What is the capital of India?",
+        options: ["Mumbai", "Kolkata", "New Delhi", "Chennai"],
+        answer: "New Delhi"
+      },
+      {
+        q: "What is 7 × 6?",
+        options: ["42", "36", "48", "56"],
+        answer: "42"
+      }
+    ];
+
+    let current = 0;
+    let points = localStorage.getItem('brainPoints') ? parseInt(localStorage.getItem('brainPoints')) : 0;
+
+    function loadQuestion() {
+      const q = questions[current];
+      document.getElementById("question").innerText = q.q;
+      document.getElementById("options").innerHTML = "";
+
+      q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(opt);
+        document.getElementById("options").appendChild(btn);
+      });
+
+      document.getElementById("result").innerText = "";
+      document.getElementById("score").innerText = `Brain Points: ${points}`;
+    }
+
+    function checkAnswer(selected) {
+      const correct = questions[current].answer;
+      if (selected === correct) {
+        points += 10;
+        document.getElementById("result").innerText = "✅ Correct! +10 Brain Points";
+      } else {
+        document.getElementById("result").innerText = `❌ Wrong! Correct answer: ${correct}`;
+      }
+
+      localStorage.setItem('brainPoints', points);
+      document.getElementById("score").innerText = `Brain Points: ${points}`;
+      current++;
+
+      setTimeout(() => {
+        if (current < questions.length) {
+          loadQuestion();
+        } else {
+          document.getElementById("question").innerText = "🎉 Quiz Complete!";
+          document.getElementById("options").innerHTML = "";
+        }
+      }, 1500);
+    }
+
+    loadQuestion();
+  </script>
+
+</body>
+</html>
