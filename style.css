@@ -1,108 +1,128 @@
-/* Reset and base styles */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
+/* General reset and font */
 body {
+  margin: 0;
   font-family: 'Roboto', sans-serif;
-  background: linear-gradient(to bottom right, #e3f2fd, #ffffff);
-  color: #212121;
-  min-height: 100vh;
+  background: linear-gradient(to right, #e0f7fa, #b2ebf2);
+  color: #333;
 }
 
-/* Header styles */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Header */
 header {
-  background-color: #ffffff;
-  border-bottom: 1px solid #ddd;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding-bottom: 5px;
 }
 
 .header-row.site-name {
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: #0d47a1;
+  padding: 16px 24px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #0077b6;
 }
 
 .header-row.nav-icons {
   display: flex;
-  gap: 1rem;
-  justify-content: start;
+  justify-content: center;
+  gap: 40px;
+  padding: 10px 0;
+  border-top: 1px solid #e0e0e0;
+  background: #f9f9f9;
 }
 
-.header-row.nav-icons a {
-  color: #0d47a1;
-  font-size: 24px;
-  text-decoration: none;
-  transition: transform 0.2s ease;
+.nav-icons .material-icons {
+  font-size: 26px;
+  color: #0077b6;
+  transition: 0.3s ease;
 }
 
-.header-row.nav-icons a:hover {
-  transform: scale(1.2);
+.nav-icons .material-icons:hover {
+  color: #00bcd4;
+}
+
+/* Main content */
+.main-content {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
 /* Welcome section */
 .welcome-section {
   text-align: center;
-  padding: 2rem 1rem;
-  color: #0d47a1;
+  margin-bottom: 40px;
 }
 
 .welcome-section h2 {
-  font-size: 1.8rem;
-  margin-bottom: 0.5rem;
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #004d40;
 }
 
 .welcome-section p {
-  font-size: 1rem;
-  color: #424242;
+  font-size: 16px;
+  color: #555;
 }
 
-/* Dashboard card grid */
+/* Dashboard cards */
 .dashboard-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
-  padding: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  padding-bottom: 60px;
 }
 
-/* Card styles */
 .card {
-  background-color: #ffffff;
+  background: white;
   border-radius: 16px;
-  padding: 1.5rem;
+  padding: 24px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   text-align: center;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.08);
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
-  text-decoration: none;
-  color: #212121;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
 }
 
 .card:hover {
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  transform: translateY(-4px);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 }
 
 .card .material-icons {
-  font-size: 40px;
-  color: #1976d2;
-  margin-bottom: 0.5rem;
+  font-size: 36px;
+  color: #0288d1;
+  margin-bottom: 12px;
 }
 
 .card h3 {
-  font-size: 1.2rem;
-  margin: 0.5rem 0;
+  font-size: 20px;
+  color: #0077b6;
+  margin-bottom: 8px;
 }
 
 .card p {
-  font-size: 0.95rem;
-  color: #616161;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Responsive for small screens but keep nav in one row */
+@media (max-width: 600px) {
+  .header-row.nav-icons {
+    gap: 20px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .card h3 {
+    font-size: 18px;
+  }
+
+  .card .material-icons {
+    font-size: 30px;
+  }
 }
