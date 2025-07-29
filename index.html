@@ -2,88 +2,54 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI Quest Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Bot Academy</title>
+  <link rel="stylesheet" href="style/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
-  <header class="game-header">
-    <h1><i class="fas fa-robot"></i> AI QUEST</h1>
-    <div class="xp-bar">
-      <div class="xp-fill" style="width: 45%;"></div>
-      <span>XP: 450 / 1000</span>
-    </div>
+  <header class="main-header">
+    <h1><i class="fas fa-robot"></i> AI Bot Academy</h1>
+    <p>Answer. Earn. Build. Upgrade.</p>
   </header>
 
-  <main class="dashboard">
-    <div class="card" onclick="location.href='profile.html'">
-      <i class="fas fa-user"></i>
-      <h2>Profile</h2>
-    </div>
+  <main class="main-content">
+    <section class="hero-card">
+      <h2>Welcome, Young Engineer!</h2>
+      <p>Embark on your journey to build the smartest robot. Earn AI Coins by solving fun questions. Upgrade your bot to become an Autobot!</p>
+      <a href="quiz.html" class="btn">Start Quiz</a>
+    </section>
 
-    <div class="card" onclick="location.href='myai.html'">
-      <i class="fas fa-brain"></i>
-      <h2>My AI</h2>
-    </div>
-
-    <div class="card" onclick="location.href='questions.html'">
-      <i class="fas fa-question-circle"></i>
-      <h2>Questions</h2>
-    </div>
-
-    <div class="card" onclick="showComingSoon('PvP Arena')">
-      <i class="fas fa-crosshairs"></i>
-      <h2>PvP Arena</h2>
-    </div>
-
-    <div class="card" onclick="showComingSoon('Leaderboard')">
-      <i class="fas fa-trophy"></i>
-      <h2>Leaderboard</h2>
-    </div>
-
-    <div class="card" onclick="logout()">
-      <i class="fas fa-sign-out-alt"></i>
-      <h2>Logout</h2>
-    </div>
+    <section class="features-grid">
+      <div class="card">
+        <i class="fas fa-brain"></i>
+        <h3>Answer Questions</h3>
+        <p>Test your skills in Math, Science & Computers to earn XP and AI Coins.</p>
+        <a href="quiz.html" class="btn-sm">Play Quiz</a>
+      </div>
+      <div class="card">
+        <i class="fas fa-tools"></i>
+        <h3>Build Your Bot</h3>
+        <p>Use coins to collect robot parts. Customize and upgrade your AI creation.</p>
+        <a href="buildbot.html" class="btn-sm">Build Bot</a>
+      </div>
+      <div class="card">
+        <i class="fas fa-user-graduate"></i>
+        <h3>Student Dashboard</h3>
+        <p>Track your progress, coins, level, and robot evolution here.</p>
+        <a href="dashboard.html" class="btn-sm">Dashboard</a>
+      </div>
+      <div class="card">
+        <i class="fas fa-user-cog"></i>
+        <h3>Admin Panel</h3>
+        <p>For teachers to manage questions, rewards and view student stats.</p>
+        <a href="admin.html" class="btn-sm">Admin</a>
+      </div>
+    </section>
   </main>
 
-  <!-- Modal -->
-  <div id="comingSoonModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h3 id="modalTitle"></h3>
-      <p>This feature is coming soon! Stay tuned.</p>
-    </div>
-  </div>
-
   <footer>
-    <p>© 2025 AI Quest. Learn. Evolve. Win.</p>
+    <p>&copy; 2025 AI Bot Academy | Powered by Learning & Imagination</p>
   </footer>
-
-  <script>
-    function showComingSoon(title) {
-      document.getElementById("modalTitle").innerText = title;
-      document.getElementById("comingSoonModal").style.display = "block";
-    }
-
-    function closeModal() {
-      document.getElementById("comingSoonModal").style.display = "none";
-    }
-
-    function logout() {
-      // Fake logout logic — use Firebase auth signOut() in real app
-      alert("Logged out successfully!");
-      location.href = "login.html";
-    }
-
-    // Close modal when clicking outside
-    window.onclick = function(event) {
-      const modal = document.getElementById("comingSoonModal");
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    };
-  </script>
 </body>
 </html>
