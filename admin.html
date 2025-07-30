@@ -1,11 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin Panel</title>
+  <meta charset="UTF-8" />
+  <title>Admin Panel | NeuroBot Academy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      padding: 20px;
+    }
+
+    h1 {
+      color: #0288d1;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    section {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    h2 {
+      margin-bottom: 16px;
+      color: #01579b;
+      display: flex;
+      align-items: center;
+    }
+
+    h2 .material-icons {
+      margin-right: 8px;
+    }
+
+    input, textarea, select, button {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      background-color: #0288d1;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0277bd;
+    }
+
+    .user-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .user-card img {
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media(max-width: 600px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    import {
+      getFirestore, collection, addDoc, getDocs, doc, updateDoc
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
@@ -25,9 +115,12 @@
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
       const image = document.getElementById('userimg').value;
+      const points = parseInt(document.getElementById('brainpoints').value);
+
+      if (!name || !username || !password || !image) return alert("Fill all fields");
 
       await addDoc(collection(db, "users"), {
-        name, username, password, image, brainPoints: 0
+        name, username, password, image, brainPoints: points || 0
       });
       alert("User added!");
       loadUsers();
@@ -41,12 +134,16 @@
       snapshot.forEach(docSnap => {
         const u = docSnap.data();
         usersList.innerHTML += `
-          <div style="border:1px solid #ccc; padding:10px; margin:5px;">
-            <img src="${u.image}" width="50" height="50" style="border-radius:50%">
-            <strong>${u.name}</strong> (@${u.username})<br>
-            Brain Points: ${u.brainPoints}
-            <input type="number" id="points-${docSnap.id}" placeholder="Add Points">
-            <button onclick="updatePoints('${docSnap.id}')">Update</button>
+          <div class="user-card">
+            <img src="${u.image}" />
+            <div>
+              <strong>${u.name}</strong> (@${u.username})<br>
+              Brain Points: ${u.brainPoints || 0}
+              <div class="grid-2">
+                <input type="number" id="points-${docSnap.id}" placeholder="New Points" />
+                <button onclick="updatePoints('${docSnap.id}')">Update</button>
+              </div>
+            </div>
           </div>
         `;
       });
@@ -54,10 +151,10 @@
 
     window.updatePoints = async (id) => {
       const val = parseInt(document.getElementById(`points-${id}`).value);
-      if (!val) return alert("Enter points");
+      if (isNaN(val)) return alert("Enter valid number");
       const userRef = doc(db, "users", id);
       await updateDoc(userRef, { brainPoints: val });
-      alert("Brain points updated!");
+      alert("Updated successfully!");
       loadUsers();
     };
 
@@ -75,6 +172,8 @@
       const answer = document.getElementById('mcq-answer').value;
       const points = parseInt(document.getElementById('mcq-points').value);
 
+      if (!subject || !question || !answer || isNaN(points)) return alert("Fill all fields");
+
       await addDoc(collection(db, "questions"), {
         subject, difficulty, question, options, answer, points
       });
@@ -87,85 +186,64 @@
       const desc = document.getElementById('part-desc').value;
       const img = document.getElementById('part-img').value;
       const points = parseInt(document.getElementById('part-points').value);
+      const power = parseInt(document.getElementById('part-power').value);
+
+      if (!part || !desc || !img || isNaN(points)) return alert("Fill all fields");
 
       await addDoc(collection(db, "robot_parts"), {
-        part, description: desc, image: img, requiredPoints: points
+        part, description: desc, image: img, requiredPoints: points, power: power || 0
       });
       alert("Robot part added!");
     };
 
     window.onload = loadUsers;
   </script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background: #f0f4f8;
-    }
-    h2 {
-      background: #444;
-      color: white;
-      padding: 10px;
-    }
-    input, textarea, select, button {
-      padding: 8px;
-      margin: 5px;
-      width: 90%;
-      max-width: 400px;
-    }
-    section {
-      background: white;
-      padding: 20px;
-      margin: 20px 0;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-  </style>
 </head>
 <body>
 
-  <h1>Admin Panel</h1>
+<h1>NeuroBot Admin Panel</h1>
 
-  <!-- Add User -->
-  <section>
-    <h2>Add User</h2>
-    <input type="text" id="name" placeholder="Full Name">
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <input type="text" id="userimg" placeholder="Image URL">
-    <button onclick="addUser()">Add User</button>
-  </section>
+<!-- User Section -->
+<section>
+  <h2><span class="material-icons">person_add</span>Add User</h2>
+  <input type="text" id="name" placeholder="Full Name">
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+  <input type="text" id="userimg" placeholder="Profile Image URL">
+  <input type="number" id="brainpoints" placeholder="Initial Brain Points">
+  <button onclick="addUser()">Add User</button>
+</section>
 
-  <!-- View Users -->
-  <section>
-    <h2>All Users (Update Brain Points)</h2>
-    <div id="usersList">Loading...</div>
-  </section>
+<section>
+  <h2><span class="material-icons">group</span>Manage Users</h2>
+  <div id="usersList">Loading users...</div>
+</section>
 
-  <!-- Add MCQ -->
-  <section>
-    <h2>Add MCQ Question</h2>
-    <input type="text" id="mcq-subject" placeholder="Subject">
-    <input type="text" id="mcq-difficulty" placeholder="Difficulty (Easy, Medium, Hard)">
-    <textarea id="mcq-question" placeholder="Question Text"></textarea>
-    <input type="text" id="opt1" placeholder="Option 1">
-    <input type="text" id="opt2" placeholder="Option 2">
-    <input type="text" id="opt3" placeholder="Option 3">
-    <input type="text" id="opt4" placeholder="Option 4">
-    <input type="text" id="mcq-answer" placeholder="Correct Answer (must match one option)">
-    <input type="number" id="mcq-points" placeholder="Brain Points for Correct Answer">
-    <button onclick="addMCQ()">Add MCQ</button>
-  </section>
+<!-- MCQ Section -->
+<section>
+  <h2><span class="material-icons">quiz</span>Add MCQ</h2>
+  <input type="text" id="mcq-subject" placeholder="Subject">
+  <input type="text" id="mcq-difficulty" placeholder="Difficulty (Easy, Medium, Hard)">
+  <textarea id="mcq-question" placeholder="Question Text"></textarea>
+  <input type="text" id="opt1" placeholder="Option 1">
+  <input type="text" id="opt2" placeholder="Option 2">
+  <input type="text" id="opt3" placeholder="Option 3">
+  <input type="text" id="opt4" placeholder="Option 4">
+  <input type="text" id="mcq-answer" placeholder="Correct Answer">
+  <input type="number" id="mcq-points" placeholder="Brain Points">
+  <button onclick="addMCQ()">Add MCQ</button>
+</section>
 
-  <!-- Add Robot Parts -->
-  <section>
-    <h2>Add Robot Part</h2>
-    <input type="text" id="part-name" placeholder="Part Name (e.g., Head, Arm)">
-    <textarea id="part-desc" placeholder="Description"></textarea>
-    <input type="text" id="part-img" placeholder="Image URL">
-    <input type="number" id="part-points" placeholder="Required Brain Points">
-    <button onclick="addPart()">Add Part</button>
-  </section>
+<!-- Robot Parts -->
+<section>
+  <h2><span class="material-icons">smart_toy</span>Add Robot Part</h2>
+  <input type="text" id="part-name" placeholder="Part Name">
+  <textarea id="part-desc" placeholder="Short Description"></textarea>
+  <input type="text" id="part-img" placeholder="Image URL (assets/img.png)">
+  <input type="number" id="part-points" placeholder="Required Brain Points">
+  <input type="number" id="part-power" placeholder="Power Value">
+  <button onclick="addPart()">Add Part</button>
+</section>
 
 </body>
 </html>
