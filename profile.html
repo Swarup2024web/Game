@@ -91,7 +91,7 @@
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(2, 1fr); /* Always 2 per row */
       gap: 20px;
       margin-top: 15px;
     }
@@ -198,7 +198,12 @@
 
     const userData = snapshot.docs[0].data();
     document.getElementById("username").textContent = userData.username;
-    document.getElementById("profilePic").src = userData.photo || "https://via.placeholder.com/100";
+
+    const imagePath = userData.image
+      ? `https://raw.githubusercontent.com/swarup2024web/newswarup/main/${userData.image}`
+      : "https://via.placeholder.com/100";
+    document.getElementById("profilePic").src = imagePath;
+
     document.getElementById("brainPoints").textContent = userData.brainPoints || 0;
     document.getElementById("botPower").textContent = userData.botPower || 0;
 
