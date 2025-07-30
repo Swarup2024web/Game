@@ -2,194 +2,152 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NeuroBot Academy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <title>NeuroChat | Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Roboto', sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      background: linear-gradient(to right, #c6f1ff, #f0fcff);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: #e5ddd5;
     }
-
     header {
-      background: white;
-      width: 100%;
+      background-color: #075e54;
+      color: white;
       padding: 16px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       position: sticky;
       top: 0;
       z-index: 10;
     }
-
-    .logo {
+    header h1 {
       font-size: 20px;
-      font-weight: bold;
-      color: #0288d1;
+      margin: 0;
     }
-
-    .nav-icons a {
-      margin-left: 20px;
-      color: #0288d1;
-      text-decoration: none;
-    }
-
-    .nav-icons .material-icons {
-      font-size: 24px;
-      vertical-align: middle;
-    }
-
-    .main-content {
-      padding: 24px;
-      width: 100%;
-      max-width: 900px;
-    }
-
-    .welcome-banner {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-
-    .welcome-banner h2 {
-      font-size: 28px;
-      color: #01579b;
-      margin-bottom: 8px;
-    }
-
-    .welcome-banner p {
-      font-size: 16px;
-      color: #555;
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    nav {
+      display: flex;
       gap: 20px;
     }
-
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      text-align: center;
+    nav a {
+      color: white;
       text-decoration: none;
-      color: #222;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-      transition: transform 0.3s, box-shadow 0.3s;
     }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 15px;
     }
-
-    .card-icon {
-      font-size: 40px;
-      color: #0288d1;
-      margin-bottom: 12px;
+    .bubble {
+      background: #ffffff;
+      padding: 16px;
+      border-radius: 12px 12px 0 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
-
-    .card h3 {
+    .bubble h3 {
+      margin: 0 0 10px;
+      color: #075e54;
+    }
+    .bubble p {
       margin: 0;
-      font-size: 18px;
-      color: #0077b6;
-    }
-
-    .card p {
       font-size: 14px;
-      color: #555;
-      margin-top: 6px;
     }
-
-    @media (max-width: 600px) {
-      .nav-icons a {
-        margin-left: 12px;
-      }
-      .card-grid {
-        gap: 16px;
+    .bubble a {
+      display: inline-block;
+      margin-top: 12px;
+      background: #25D366;
+      color: white;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+    .bubble a:hover {
+      background: #1eb14c;
+    }
+    .material-icons {
+      vertical-align: middle;
+    }
+    @media (min-width: 700px) {
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
       }
     }
   </style>
-  <script>
-    window.onload = () => {
-      const user = localStorage.getItem("loggedInUser");
-      if (!user) window.location.href = "login.html";
-    };
-
-    function logout() {
-      localStorage.removeItem("loggedInUser");
-      window.location.href = "login.html";
-    }
-  </script>
 </head>
 <body>
 
-  <header>
-    <div class="logo">NeuroBot Academy</div>
-    <div class="nav-icons">
-      <a href="index.html" title="Home"><span class="material-icons">home</span></a>
-      <a href="robot.html" title="My Robot"><span class="material-icons">smart_toy</span></a>
-      <a href="profile.html" title="Profile"><span class="material-icons">person</span></a>
+<header>
+  <h1>NeuroChat</h1>
+  <nav>
+    <a href="index.html"><span class="material-icons">home</span></a>
+    <a href="profile.html"><span class="material-icons">person</span></a>
+    <a href="shop.html"><span class="material-icons">smart_toy</span></a>
+    <a href="#" onclick="logout()"><span class="material-icons">logout</span></a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="bubble">
+    <h3>👋 Welcome to NeuroChat Academy</h3>
+    <p>Start your journey by earning brain points and building your AI-powered robot. Explore the quiz, shop, and leaderboard!</p>
+  </div>
+
+  <div class="grid">
+    <div class="bubble">
+      <h3>Profile</h3>
+      <p>Check your brain points, bot power and parts.</p>
+      <a href="profile.html">Open</a>
     </div>
-  </header>
 
-  <main class="main-content">
-    <section class="welcome-banner">
-      <h2>Welcome to NeuroBot Academy</h2>
-      <p>Level up your brain, build futuristic bots, and master AI!</p>
-    </section>
+    <div class="bubble">
+      <h3>Quiz</h3>
+      <p>Answer MCQs and earn brain points!</p>
+      <a href="quiz.html">Play</a>
+    </div>
 
-    <section class="card-grid">
-      <a href="profile.html" class="card">
-        <span class="material-icons card-icon">account_circle</span>
-        <h3>Profile</h3>
-        <p>View your info and progress</p>
-      </a>
+    <div class="bubble">
+      <h3>Robot</h3>
+      <p>See the robot you’ve assembled so far.</p>
+      <a href="robot.html">View Bot</a>
+    </div>
 
-      <a href="quiz.html" class="card">
-        <span class="material-icons card-icon">quiz</span>
-        <h3>Quiz</h3>
-        <p>Earn brain points</p>
-      </a>
+    <div class="bubble">
+      <h3>Shop</h3>
+      <p>Buy parts to build and upgrade your robot.</p>
+      <a href="shop.html">Go to Shop</a>
+    </div>
 
-      <a href="robot.html" class="card">
-        <span class="material-icons card-icon">android</span>
-        <h3>Robot</h3>
-        <p>Upgrade your robot with earned points</p>
-      </a>
+    <div class="bubble">
+      <h3>Leaderboard</h3>
+      <p>See top players and your rank.</p>
+      <a href="leaderboard.html">View</a>
+    </div>
 
-      <a href="shop.html" class="card">
-        <span class="material-icons card-icon">shopping_cart</span>
-        <h3>Shop</h3>
-        <p>Buy new parts and upgrades</p>
-      </a>
+    <div class="bubble">
+      <h3>Logout</h3>
+      <p>End your session securely.</p>
+      <a href="#" onclick="logout()">Logout</a>
+    </div>
+  </div>
+</div>
 
-      <a href="leaderboard.html" class="card">
-        <span class="material-icons card-icon">emoji_events</span>
-        <h3>Leaderboard</h3>
-        <p>Compete with others</p>
-      </a>
+<script>
+  const username = localStorage.getItem("username");
+  if (!username) {
+    window.location.href = "login.html";
+  }
 
-      <a href="#" onclick="logout()" class="card">
-        <span class="material-icons card-icon">logout</span>
-        <h3>Logout</h3>
-        <p>Sign out from your account</p>
-      </a>
-    </section>
-  </main>
+  function logout() {
+    localStorage.removeItem("username");
+    window.location.href = "login.html";
+  }
+</script>
 
 </body>
-          </html>
+</html>
