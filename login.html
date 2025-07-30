@@ -3,119 +3,105 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login | MyBot</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <title>Login | NeuroBot Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
-  <script type="module" src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js"></script>
-  <script type="module" src="firebaseConfig.js"></script>
   <style>
     * {
       box-sizing: border-box;
-      margin: 0; padding: 0;
       font-family: 'Roboto', sans-serif;
     }
+
     body {
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      margin: 0;
+      background: linear-gradient(to right, #2BC0E4, #EAECC6);
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       height: 100vh;
-      color: white;
+      color: #333;
     }
-    .login-container {
-      background: #ffffff0f;
-      padding: 40px;
+
+    .login-card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
       border-radius: 20px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      padding: 40px 30px;
       width: 90%;
-      max-width: 380px;
+      max-width: 400px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
       text-align: center;
-      backdrop-filter: blur(10px);
-      position: relative;
     }
-    .login-container h2 {
+
+    h2 {
       margin-bottom: 20px;
-      font-size: 1.8rem;
-      color: #fff;
+      color: #0077b6;
     }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin: 12px 0;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      background: #ffffffdd;
+    }
+
+    input:focus {
+      outline: 2px solid #00bcd4;
+    }
+
     .material-symbols-rounded {
-      font-size: 28px;
       vertical-align: middle;
       margin-right: 8px;
     }
-    .input-group {
-      margin: 15px 0;
-      text-align: left;
-    }
-    .input-group label {
-      display: block;
-      font-size: 14px;
-      margin-bottom: 6px;
-      color: #ddd;
-    }
-    .input-group input {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 12px;
-      background: #ffffff18;
-      color: white;
-      font-size: 1rem;
-      outline: none;
-    }
-    .input-group input:focus {
-      border: 1px solid #00cfff;
-      background: #ffffff22;
-    }
+
     button {
-      background: #00cfff;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 24px;
-      margin-top: 20px;
-      font-size: 1rem;
+      margin-top: 16px;
+      padding: 12px 24px;
+      background: #00bcd4;
       color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
       cursor: pointer;
       position: relative;
       overflow: hidden;
     }
+
     button::after {
       content: "";
       position: absolute;
-      left: 50%;
-      top: 50%;
       width: 0;
       height: 0;
-      background: rgba(255,255,255,0.4);
+      left: 50%;
+      top: 50%;
       transform: translate(-50%, -50%);
+      background: rgba(255, 255, 255, 0.3);
       border-radius: 50%;
       transition: width 0.4s ease, height 0.4s ease;
     }
+
     button:active::after {
       width: 300px;
       height: 300px;
     }
+
     .error {
+      color: red;
       margin-top: 10px;
-      color: #ff8080;
       font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <div class="login-container">
-    <h2><span class="material-symbols-rounded">robot</span> Login to MyBot</h2>
 
-    <div class="input-group">
-      <label for="username">Username</label>
-      <input type="text" id="username" placeholder="Enter your username" required>
-    </div>
-    <div class="input-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" placeholder="Enter your password" required>
-    </div>
-
-    <button id="loginBtn">Login</button>
+  <div class="login-card">
+    <h2><span class="material-symbols-rounded">login</span>Login</h2>
+    <input type="text" id="username" placeholder="Username" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button onclick="loginUser()">Login</button>
     <div class="error" id="errorMsg"></div>
   </div>
 
@@ -128,37 +114,34 @@
     } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
     const db = getFirestore(app);
-    const loginBtn = document.getElementById("loginBtn");
-    const errorMsg = document.getElementById("errorMsg");
+    const usersRef = collection(db, "users");
 
-    loginBtn.addEventListener("click", async () => {
+    window.loginUser = async function () {
       const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value;
+      const password = document.getElementById("password").value.trim();
+      const errorBox = document.getElementById("errorMsg");
 
       if (!username || !password) {
-        errorMsg.textContent = "Please fill all fields.";
+        errorBox.innerText = "Please enter both username and password.";
         return;
       }
 
-      const usersRef = collection(db, "users");
       const snapshot = await getDocs(usersRef);
-
-      let validUser = false;
+      let valid = false;
 
       snapshot.forEach(doc => {
-        const data = doc.data();
-        if (data.username === username && data.password === password) {
-          validUser = true;
+        const user = doc.data();
+        if (user.username === username && user.password === password) {
+          localStorage.setItem("loggedInUser", user.username);
+          window.location.href = "profile.html";
+          valid = true;
         }
       });
 
-      if (validUser) {
-        localStorage.setItem("loggedInUser", username);
-        window.location.href = "profile.html";
-      } else {
-        errorMsg.textContent = "Invalid username or password.";
+      if (!valid) {
+        errorBox.innerText = "Invalid username or password.";
       }
-    });
+    };
   </script>
 </body>
 </html>
