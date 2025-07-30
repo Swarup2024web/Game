@@ -36,20 +36,17 @@
     .tab-button {
       background: #0288d1;
       color: white;
-      padding: 10px 20px;
-      border-radius: 8px;
+      padding: 10px;
+      border-radius: 50%;
       border: none;
-      font-weight: bold;
+      font-size: 20px;
       cursor: pointer;
       transition: 0.3s;
     }
 
     .tab-button.active {
       background: #01579b;
-    }
-
-    .tab-button:hover {
-      background: #0277bd;
+      transform: scale(1.1);
     }
 
     section {
@@ -108,8 +105,8 @@
       border-radius: 8px;
     }
 
-    .user-card p {
-      margin: 4px 0;
+    .user-card input {
+      margin: 5px 0;
     }
 
     .grid-2 {
@@ -124,13 +121,16 @@
       }
 
       .tabs {
-        flex-direction: column;
-        align-items: stretch;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
       }
 
       .tab-button {
-        width: 100%;
-        text-align: center;
+        width: 45px;
+        height: 45px;
+        font-size: 22px;
+        border-radius: 50%;
       }
     }
   </style>
@@ -139,12 +139,20 @@
 
 <h1>NeuroBot Admin Panel</h1>
 
-<!-- Tabs -->
+<!-- Tabs (icons only) -->
 <div class="tabs">
-  <button class="tab-button active" onclick="showTab(0)">Add User</button>
-  <button class="tab-button" onclick="showTab(1)">Manage Users</button>
-  <button class="tab-button" onclick="showTab(2)">Add Quiz</button>
-  <button class="tab-button" onclick="showTab(3)">Add Robot Parts</button>
+  <button class="tab-button active" onclick="showTab(0)" title="Add User">
+    <span class="material-icons">person_add</span>
+  </button>
+  <button class="tab-button" onclick="showTab(1)" title="Manage Users">
+    <span class="material-icons">group</span>
+  </button>
+  <button class="tab-button" onclick="showTab(2)" title="Add Quiz">
+    <span class="material-icons">quiz</span>
+  </button>
+  <button class="tab-button" onclick="showTab(3)" title="Robot Parts">
+    <span class="material-icons">smart_toy</span>
+  </button>
 </div>
 
 <!-- Sections -->
@@ -186,7 +194,6 @@
   <input type="number" id="part-power" placeholder="Power Value" />
   <button onclick="addPart()">Add Robot Part</button>
 </section>
-<!-- Firestore + JS -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
   import {
@@ -210,7 +217,7 @@
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // TAB SWITCHING
+  // 🔁 Tab Switching
   window.showTab = (index) => {
     const tabs = document.querySelectorAll("section");
     const buttons = document.querySelectorAll(".tab-button");
@@ -220,7 +227,7 @@
     });
   };
 
-  // ADD USER
+  // ➕ Add User
   window.addUser = async () => {
     const name = document.getElementById("name").value.trim();
     const username = document.getElementById("username").value.trim();
@@ -239,11 +246,12 @@
       botPower: 0,
       unlockedParts: []
     });
+
     alert("✅ User Added!");
     loadUsers();
   };
 
-  // LOAD USERS
+  // 🔁 Load Users
   window.loadUsers = async () => {
     const usersList = document.getElementById("usersList");
     usersList.innerHTML = "Loading...";
@@ -251,32 +259,36 @@
     usersList.innerHTML = "";
     snap.forEach((docSnap) => {
       const u = docSnap.data();
+      const id = docSnap.id;
       usersList.innerHTML += `
         <div class="user-card">
-          <p><strong>Name:</strong> ${u.name || ""}</p>
-          <p><strong>Username:</strong> ${u.username}</p>
-          <p><strong>Password:</strong> ${u.password}</p>
-          <p><strong>Image URL:</strong> ${u.image}</p>
-          <p><strong>Brain Points:</strong> ${u.brainPoints || 0}</p>
-          <div class="grid-2">
-            <input type="number" id="points-${docSnap.id}" placeholder="New Points" />
-            <button onclick="updatePoints('${docSnap.id}')">Update</button>
-          </div>
+          <input type="text" id="name-${id}" value="${u.name || ''}" placeholder="Full Name" />
+          <input type="text" id="username-${id}" value="${u.username}" placeholder="Username" />
+          <input type="text" id="password-${id}" value="${u.password}" placeholder="Password" />
+          <input type="text" id="image-${id}" value="${u.image}" placeholder="Profile Photo URL" />
+          <input type="number" id="brainPoints-${id}" value="${u.brainPoints || 0}" placeholder="Brain Points" />
+          <button onclick="updateUser('${id}')">Update</button>
         </div>
       `;
     });
   };
 
-  // UPDATE POINTS
-  window.updatePoints = async (id) => {
-    const value = parseInt(document.getElementById(`points-${id}`).value);
-    if (isNaN(value)) return alert("Enter valid number!");
-    await updateDoc(doc(db, "users", id), { brainPoints: value });
-    alert("✅ Updated!");
+  // 🔁 Update User
+  window.updateUser = async (id) => {
+    const updatedUser = {
+      name: document.getElementById(`name-${id}`).value.trim(),
+      username: document.getElementById(`username-${id}`).value.trim(),
+      password: document.getElementById(`password-${id}`).value.trim(),
+      image: document.getElementById(`image-${id}`).value.trim(),
+      brainPoints: parseInt(document.getElementById(`brainPoints-${id}`).value || 0)
+    };
+
+    await updateDoc(doc(db, "users", id), updatedUser);
+    alert("✅ User updated successfully!");
     loadUsers();
   };
 
-  // ADD MCQ
+  // ➕ Add MCQ
   window.addMCQ = async () => {
     const subject = document.getElementById("mcq-subject").value.trim();
     const difficulty = document.getElementById("mcq-difficulty").value.trim();
@@ -291,7 +303,7 @@
     const points = parseInt(document.getElementById("mcq-points").value || 0);
 
     if (!question || !answer || options.includes("") || isNaN(points)) {
-      alert("Please fill all quiz fields.");
+      alert("❌ Please fill all quiz fields.");
       return;
     }
 
@@ -307,7 +319,7 @@
     alert("✅ Question added!");
   };
 
-  // ADD ROBOT PART
+  // ➕ Add Robot Part
   window.addPart = async () => {
     const name = document.getElementById("part-name").value.trim();
     const desc = document.getElementById("part-desc").value.trim();
@@ -316,7 +328,7 @@
     const power = parseInt(document.getElementById("part-power").value || 0);
 
     if (!name || !desc || !image || isNaN(requiredPoints)) {
-      alert("Please fill all robot part fields.");
+      alert("❌ Please fill all robot part fields.");
       return;
     }
 
@@ -331,7 +343,7 @@
     alert("✅ Robot part added!");
   };
 
-  // Load users initially
+  // Auto load users
   window.onload = loadUsers;
 </script>
 
