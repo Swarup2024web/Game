@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shop | NeuroBot Academy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(to right, #c6f1ff, #f0fcff);
+      padding: 20px;
+    }
+
+    header {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      text-align: center;
+      color: #01579b;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    nav .material-icons {
+      font-size: 24px;
+      color: #0288d1;
+      cursor: pointer;
+    }
+
+    h2 {
+      text-align: center;
+      color: #0277bd;
+      margin-bottom: 10px;
+    }
+
+    #filter {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #filter select {
+      padding: 8px;
+      font-size: 14px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .part-card {
+      background: #ffffffcc;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+      transition: 0.3s;
+    }
+
+    .part-card:hover {
+      transform: scale(1.02);
+    }
+
+    .part-card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .part-card h3 {
+      color: #01579b;
+      margin-bottom: 5px;
+      font-size: 18px;
+    }
+
+    .part-card p {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .part-info {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>NeuroBot Academy</h1>
+  <nav>
+    <a href="index.html" title="Home"><span class="material-icons">home</span></a>
+    <a href="robot.html" title="Robot"><span class="material-icons">smart_toy</span></a>
+    <a href="profile.html" title="Profile"><span class="material-icons">person</span></a>
+  </nav>
+</header>
+
+<h2>Build Your Bot: Parts Shop</h2>
+
+<div id="filter">
+  <label for="sort">Sort By: </label>
+  <select id="sort" onchange="loadParts()">
+    <option value="az">Name (A-Z)</option>
+    <option value="cost">Cost (Low to High)</option>
+    <option value="power">Power (High to Low)</option>
+  </select>
+</div>
+
+<div class="grid" id="partsList">Loading...</div>
+
+<!-- Firebase & JS -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import {
+    getFirestore,
+    collection,
+    getDocs
+  } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
+    authDomain: "mybot-e3dbc.firebaseapp.com",
+    projectId: "mybot-e3dbc",
+    storageBucket: "mybot-e3dbc.firebasestorage.app",
+    messagingSenderId: "576870586364",
+    appId: "1:576870586364:web:739707e4ad4cb115d6c479"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  async function loadParts() {
+    const sortBy = document.getElementById("sort").value;
+    const snap = await getDocs(collection(db, "robot_parts"));
+    const parts = [];
+    snap.forEach(doc => parts.push(doc.data()));
+
+    if (sortBy === "cost") {
+      parts.sort((a, b) => a.requiredPoints - b.requiredPoints);
+    } else if (sortBy === "power") {
+      parts.sort((a, b) => b.power - a.power);
+    } else {
+      parts.sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    const container = document.getElementById("partsList");
+    container.innerHTML = "";
+    for (let part of parts) {
+      container.innerHTML += `
+        <div class="part-card">
+          <img src="${part.image}" alt="${part.name}" />
+          <h3>${part.name}</h3>
+          <p>${part.description}</p>
+          <div class="part-info">
+            <span><span class="material-icons" style="font-size:16px;">bolt</span> ${part.power}</span>
+            <span><span class="material-icons" style="font-size:16px;">psychology</span> ${part.requiredPoints}</span>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  loadParts();
+</script>
+
+</body>
+</html>
