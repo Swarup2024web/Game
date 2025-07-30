@@ -2,264 +2,223 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Profile | NeuroBot Academy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <style>
     * {
       box-sizing: border-box;
       font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
-      background: linear-gradient(to right, #e0f7fa, #b2ebf2);
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background: linear-gradient(to right, #c6f1ff, #f0fcff);
       min-height: 100vh;
     }
 
-    .header {
+    header {
       background: white;
       width: 100%;
       padding: 16px 20px;
-      font-size: 22px;
-      font-weight: bold;
-      color: #0077b6;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    .nav {
       display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 10px 0;
-      background: #ffffff;
-      width: 100%;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
-    .nav .material-symbols-rounded {
-      font-size: 28px;
-      color: #0288d1;
-      cursor: pointer;
-    }
-
-    .container {
-      background: white;
-      padding: 30px;
-      margin: 30px 16px;
-      border-radius: 16px;
-      width: 100%;
-      max-width: 440px;
-      text-align: center;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-    }
-
-    .avatar {
-      width: 100px;
-      height: 100px;
-      margin: 0 auto;
-      border-radius: 50%;
-      background: url('https://cdn-icons-png.flaticon.com/512/219/219983.png') no-repeat center;
-      background-size: cover;
-      border: 3px solid #00bcd4;
-    }
-
-    #username {
+    .logo {
       font-size: 20px;
       font-weight: bold;
-      color: #0077b6;
-      margin-top: 10px;
+      color: #0288d1;
+    }
+
+    .nav-icons a {
+      margin-left: 20px;
+      color: #0288d1;
+      text-decoration: none;
+    }
+
+    .nav-icons .material-icons {
+      font-size: 24px;
+      vertical-align: middle;
+    }
+
+    .main-content {
+      padding: 24px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .profile-box {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .profile-photo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: #fff;
+      object-fit: cover;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin-bottom: 12px;
+    }
+
+    .username {
+      font-size: 20px;
+      font-weight: bold;
+      color: #01579b;
+      margin-bottom: 16px;
     }
 
     .stats {
       display: flex;
-      justify-content: space-between;
-      margin: 20px 0;
-      gap: 12px;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
     }
 
     .stat-box {
-      flex: 1;
-      background: #e0f7fa;
-      padding: 16px;
-      border-radius: 12px;
       display: flex;
-      flex-direction: column;
       align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      color: #0277bd;
+      background: white;
+      padding: 10px 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
-    .stat-icon {
-      font-size: 28px;
-      margin-bottom: 6px;
-      color: #00796b;
-    }
-
-    .stat-value {
-      font-size: 18px;
-      font-weight: bold;
-      color: #00796b;
+    .stat-box .material-icons {
+      font-size: 22px;
+      color: #00acc1;
     }
 
     .parts-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
     }
 
     .part-card {
-      background: #f0faff;
-      width: 48%;
-      padding: 12px;
+      background: white;
       border-radius: 12px;
+      padding: 16px;
       text-align: center;
-      font-size: 14px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
     .part-card img {
-      width: 60px;
-      height: 60px;
+      width: 100%;
+      max-height: 120px;
       object-fit: contain;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
-    .part-name {
-      font-weight: bold;
+    .part-card h4 {
+      font-size: 16px;
       color: #0288d1;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
-    .part-info {
-      font-size: 12px;
+    .part-card p {
+      font-size: 14px;
       color: #555;
     }
 
-    button {
-      margin-top: 24px;
-      padding: 12px 24px;
-      background-color: #00bcd4;
-      color: white;
-      border: none;
-      font-size: 16px;
-      border-radius: 24px;
-      cursor: pointer;
-      transition: 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #0097a7;
-    }
-
-    @media (max-width: 480px) {
-      .part-card {
-        width: 48%;
+    @media (max-width: 500px) {
+      .stats {
+        flex-direction: column;
+        gap: 15px;
       }
     }
   </style>
-</head>
-<body>
-
-  <div class="header">NeuroBot Academy</div>
-  <div class="nav">
-    <span class="material-symbols-rounded" onclick="location.href='index.html'">home</span>
-    <span class="material-symbols-rounded" onclick="location.href='robot.html'">android</span>
-    <span class="material-symbols-rounded" onclick="location.href='profile.html'">person</span>
-  </div>
-
-  <div class="container">
-    <div class="avatar"></div>
-    <div id="username">Loading...</div>
-
-    <div class="stats">
-      <div class="stat-box">
-        <span class="material-symbols-rounded stat-icon">psychology</span>
-        <div class="stat-value" id="brainPoints">--</div>
-      </div>
-      <div class="stat-box">
-        <span class="material-symbols-rounded stat-icon">bolt</span>
-        <div class="stat-value" id="botPower">--</div>
-      </div>
-    </div>
-
-    <div class="parts-grid" id="partsGrid"></div>
-
-    <button onclick="logout()">Logout</button>
-  </div>
-
   <script type="module">
     import { app } from './firebaseConfig.js';
     import {
       getFirestore,
       collection,
       getDocs
-    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js';
+
+    const user = localStorage.getItem("loggedInUser");
+    if (!user) {
+      window.location.href = "login.html";
+    }
 
     const db = getFirestore(app);
-    const loggedInUser = localStorage.getItem("loggedInUser");
-
-    if (!loggedInUser) {
-      window.location.href = "login.html";
-    }
-
     const usersRef = collection(db, "users");
-    const snapshot = await getDocs(usersRef);
 
-    let found = false;
+    async function loadProfile() {
+      const snapshot = await getDocs(usersRef);
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        if (data.username === user) {
+          document.getElementById("username").innerText = data.username;
+          document.getElementById("brainPoints").innerText = data.brainPoints || 0;
+          document.getElementById("botPower").innerText = data.botPower || 0;
 
-    snapshot.forEach(doc => {
-      const user = doc.data();
-      if (user.username === loggedInUser) {
-        document.getElementById("username").innerText = user.username || "Unknown";
-        document.getElementById("brainPoints").innerText = user.brainPoints ?? 0;
-        document.getElementById("botPower").innerText = user.botPower ?? 0;
+          const grid = document.getElementById("partsGrid");
+          grid.innerHTML = "";
 
-        const partsGrid = document.getElementById("partsGrid");
-        const unlockedParts = user.unlockedParts || [];
-
-        unlockedParts.forEach(part => {
-          const card = document.createElement("div");
-          card.className = "part-card";
-
-          const image = document.createElement("img");
-          image.src = part.image || "https://cdn-icons-png.flaticon.com/512/4712/4712109.png";
-          image.alt = part.name;
-
-          const name = document.createElement("div");
-          name.className = "part-name";
-          name.textContent = part.name;
-
-          const info = document.createElement("div");
-          info.className = "part-info";
-          info.textContent = part.info;
-
-          card.appendChild(image);
-          card.appendChild(name);
-          card.appendChild(info);
-          partsGrid.appendChild(card);
-        });
-
-        found = true;
-      }
-    });
-
-    if (!found) {
-      alert("User not found. Please login again.");
-      localStorage.removeItem("loggedInUser");
-      window.location.href = "login.html";
+          if (data.unlockedParts) {
+            data.unlockedParts.forEach(part => {
+              const div = document.createElement("div");
+              div.className = "part-card";
+              div.innerHTML = `
+                <img src="${part.image}" alt="${part.name}" />
+                <h4>${part.name}</h4>
+                <p>${part.info}</p>
+              `;
+              grid.appendChild(div);
+            });
+          }
+        }
+      });
     }
 
-    window.logout = () => {
-      localStorage.removeItem("loggedInUser");
-      window.location.href = "login.html";
-    };
+    window.onload = loadProfile;
   </script>
+</head>
+<body>
+
+  <header>
+    <div class="logo">NeuroBot Academy</div>
+    <div class="nav-icons">
+      <a href="index.html" title="Home"><span class="material-icons">home</span></a>
+      <a href="robot.html" title="My Robot"><span class="material-icons">smart_toy</span></a>
+      <a href="profile.html" title="Profile"><span class="material-icons">person</span></a>
+    </div>
+  </header>
+
+  <div class="main-content">
+    <div class="profile-box">
+      <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="profile-photo" alt="Profile Photo"/>
+      <div class="username" id="username">Loading...</div>
+
+      <div class="stats">
+        <div class="stat-box">
+          <span class="material-icons">psychology</span>
+          <span id="brainPoints">0</span>
+        </div>
+        <div class="stat-box">
+          <span class="material-icons">bolt</span>
+          <span id="botPower">0</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom: 16px; color: #01579b;">Unlocked Parts</h3>
+    <div class="parts-grid" id="partsGrid"></div>
+  </div>
+
 </body>
-    </html>
+</html>
