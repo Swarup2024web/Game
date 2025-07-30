@@ -10,100 +10,131 @@
     * {
       box-sizing: border-box;
       font-family: 'Roboto', sans-serif;
+    }
+    body {
       margin: 0;
+      background: linear-gradient(to right, #d1f4ff, #eafcff);
       padding: 0;
     }
-
-    body {
-      background: linear-gradient(to right, #c6f1ff, #f0fcff);
-      padding: 20px;
-    }
-
     header {
+      position: sticky;
+      top: 0;
       background: white;
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      border-bottom: 2px solid #c5ebff;
+      z-index: 100;
     }
-
     header h1 {
-      text-align: center;
-      color: #01579b;
-      font-size: 24px;
-      margin-bottom: 10px;
+      color: #0288d1;
+      font-size: 22px;
     }
-
     nav {
       display: flex;
-      justify-content: center;
-      gap: 20px;
+      gap: 18px;
     }
-
+    nav a {
+      color: #0277bd;
+      text-decoration: none;
+    }
     nav .material-icons {
       font-size: 24px;
-      color: #0288d1;
-      cursor: pointer;
+      transition: 0.2s;
     }
-
+    nav .material-icons:hover {
+      color: #01579b;
+    }
     h2 {
       text-align: center;
-      color: #0277bd;
-      margin-bottom: 10px;
+      margin-top: 20px;
+      color: #01579b;
     }
-
     #filter {
       text-align: center;
-      margin-bottom: 20px;
+      margin: 10px auto 20px;
     }
-
     #filter select {
       padding: 8px;
-      font-size: 14px;
       border-radius: 8px;
       border: 1px solid #ccc;
+      font-size: 14px;
     }
-
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 20px;
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
     }
-
     .part-card {
-      background: #ffffffcc;
+      background: #ffffffd9;
       border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
       padding: 15px;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       transition: 0.3s;
     }
-
     .part-card:hover {
       transform: scale(1.02);
     }
-
     .part-card img {
       width: 100%;
+      max-height: 160px;
+      object-fit: contain;
       border-radius: 10px;
-      margin-bottom: 10px;
+      background: #f3f9ff;
     }
-
     .part-card h3 {
-      color: #01579b;
-      margin-bottom: 5px;
+      color: #0277bd;
+      margin: 10px 0 4px;
       font-size: 18px;
+      text-align: center;
     }
-
     .part-card p {
       font-size: 14px;
-      margin-bottom: 5px;
+      text-align: center;
+      margin-bottom: 8px;
     }
-
-    .part-info {
+    .info-row {
       display: flex;
       justify-content: space-between;
-      margin-top: 10px;
+      width: 100%;
+      padding: 6px 0;
+    }
+    .info-pill {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      background: #e0f7fa;
+      border-radius: 20px;
       font-size: 14px;
+      color: #00796b;
+    }
+    .info-pill .material-icons {
+      font-size: 16px;
+    }
+    button.buy-btn {
+      margin-top: 10px;
+      background: #0288d1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button.buy-btn:hover {
+      background: #01579b;
+    }
+    button.buy-btn:disabled {
+      background: gray;
+      cursor: default;
     }
   </style>
 </head>
@@ -118,26 +149,30 @@
   </nav>
 </header>
 
-<h2>Build Your Bot: Parts Shop</h2>
+<h2>Bot Parts Shop</h2>
 
 <div id="filter">
-  <label for="sort">Sort By: </label>
+  <label for="sort">Sort By:</label>
   <select id="sort" onchange="loadParts()">
     <option value="az">Name (A-Z)</option>
-    <option value="cost">Cost (Low to High)</option>
     <option value="power">Power (High to Low)</option>
+    <option value="cost">Cost (Low to High)</option>
   </select>
 </div>
 
-<div class="grid" id="partsList">Loading...</div>
+<div class="grid" id="partsList">Loading parts...</div>
 
-<!-- Firebase & JS -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
   import {
     getFirestore,
     collection,
-    getDocs
+    getDocs,
+    doc,
+    updateDoc,
+    query,
+    where,
+    getDoc
   } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -152,36 +187,89 @@
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  async function loadParts() {
-    const sortBy = document.getElementById("sort").value;
-    const snap = await getDocs(collection(db, "robot_parts"));
-    const parts = [];
-    snap.forEach(doc => parts.push(doc.data()));
+  let currentUserDoc = null;
+  let currentUsername = localStorage.getItem("username");
 
-    if (sortBy === "cost") {
-      parts.sort((a, b) => a.requiredPoints - b.requiredPoints);
-    } else if (sortBy === "power") {
+  if (!currentUsername) {
+    location.href = "login.html";
+  }
+
+  async function loadUser() {
+    const q = query(collection(db, "users"), where("username", "==", currentUsername));
+    const snap = await getDocs(q);
+    if (snap.empty) {
+      alert("User not found. Logging out.");
+      localStorage.removeItem("username");
+      location.href = "login.html";
+    }
+    currentUserDoc = snap.docs[0];
+  }
+
+  async function loadParts() {
+    await loadUser();
+    const user = currentUserDoc.data();
+    const unlocked = user.unlockedParts || [];
+    const partsSnap = await getDocs(collection(db, "robot_parts"));
+    let parts = [];
+    partsSnap.forEach(doc => parts.push(doc.data()));
+
+    const sortBy = document.getElementById("sort").value;
+    if (sortBy === "power") {
       parts.sort((a, b) => b.power - a.power);
+    } else if (sortBy === "cost") {
+      parts.sort((a, b) => a.requiredPoints - b.requiredPoints);
     } else {
       parts.sort((a, b) => a.name.localeCompare(b.name));
     }
 
     const container = document.getElementById("partsList");
     container.innerHTML = "";
-    for (let part of parts) {
+    parts.forEach(part => {
+      const isUnlocked = unlocked.includes(part.name);
       container.innerHTML += `
         <div class="part-card">
           <img src="${part.image}" alt="${part.name}" />
           <h3>${part.name}</h3>
           <p>${part.description}</p>
-          <div class="part-info">
-            <span><span class="material-icons" style="font-size:16px;">bolt</span> ${part.power}</span>
-            <span><span class="material-icons" style="font-size:16px;">psychology</span> ${part.requiredPoints}</span>
+          <div class="info-row">
+            <div class="info-pill"><span class="material-icons">bolt</span> ${part.power}</div>
+            <div class="info-pill"><span class="material-icons">psychology</span> ${part.requiredPoints}</div>
           </div>
+          <button class="buy-btn" ${isUnlocked ? "disabled" : ""} onclick="buyPart('${part.name}', ${part.requiredPoints}, ${part.power})">
+            ${isUnlocked ? "Owned" : "Buy"}
+          </button>
         </div>
       `;
-    }
+    });
   }
+
+  window.buyPart = async (partName, cost, power) => {
+    const userRef = doc(db, "users", currentUserDoc.id);
+    const userData = (await getDoc(userRef)).data();
+
+    if (userData.unlockedParts.includes(partName)) {
+      alert("You already own this part.");
+      return;
+    }
+
+    if (userData.brainPoints < cost) {
+      alert("Not enough Brain Points!");
+      return;
+    }
+
+    const newPoints = userData.brainPoints - cost;
+    const newPower = (userData.botPower || 0) + power;
+    const newParts = [...(userData.unlockedParts || []), partName];
+
+    await updateDoc(userRef, {
+      brainPoints: newPoints,
+      botPower: newPower,
+      unlockedParts: newParts
+    });
+
+    alert(`You bought ${partName}!`);
+    loadParts();
+  };
 
   loadParts();
 </script>
