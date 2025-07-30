@@ -2,18 +2,131 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NeuroBot Academy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-  <script>
-    // Redirect if not logged in
-    window.onload = function () {
-      const user = localStorage.getItem("loggedInUser");
-      if (!user) {
-        window.location.href = "login.html";
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(to right, #c6f1ff, #f0fcff);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      background: white;
+      width: 100%;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: #0288d1;
+    }
+
+    .nav-icons a {
+      margin-left: 20px;
+      color: #0288d1;
+      text-decoration: none;
+    }
+
+    .nav-icons .material-icons {
+      font-size: 24px;
+      vertical-align: middle;
+    }
+
+    .main-content {
+      padding: 24px;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .welcome-banner {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .welcome-banner h2 {
+      font-size: 28px;
+      color: #01579b;
+      margin-bottom: 8px;
+    }
+
+    .welcome-banner p {
+      font-size: 16px;
+      color: #555;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      text-decoration: none;
+      color: #222;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .card-icon {
+      font-size: 40px;
+      color: #0288d1;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #0077b6;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #555;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 600px) {
+      .nav-icons a {
+        margin-left: 12px;
       }
+      .card-grid {
+        gap: 16px;
+      }
+    }
+  </style>
+  <script>
+    window.onload = () => {
+      const user = localStorage.getItem("loggedInUser");
+      if (!user) window.location.href = "login.html";
     };
 
     function logout() {
@@ -23,58 +136,60 @@
   </script>
 </head>
 <body>
+
   <header>
-    <div class="header-row site-name">🤖 NeuroBot Academy</div>
-    <div class="header-row nav-icons">
-      <a href="index.html"><span class="material-icons">home</span></a>
-      <a href="robot.html"><span class="material-icons">android</span></a>
-      <a href="profile.html"><span class="material-icons">person</span></a>
+    <div class="logo">NeuroBot Academy</div>
+    <div class="nav-icons">
+      <a href="index.html" title="Home"><span class="material-icons">home</span></a>
+      <a href="robot.html" title="My Robot"><span class="material-icons">smart_toy</span></a>
+      <a href="profile.html" title="Profile"><span class="material-icons">person</span></a>
     </div>
   </header>
 
   <main class="main-content">
-    <section class="welcome-section">
-      <h2>Welcome to the world of Robotics & AI</h2>
-      <p>Embark on your journey to learn, build, and evolve intelligent machines with NeuroBot Academy.</p>
+    <section class="welcome-banner">
+      <h2>Welcome to NeuroBot Academy</h2>
+      <p>Level up your brain, build futuristic bots, and master AI!</p>
     </section>
 
-    <section class="dashboard-cards">
+    <section class="card-grid">
       <a href="profile.html" class="card">
-        <span class="material-icons">account_circle</span>
+        <span class="material-icons card-icon">account_circle</span>
         <h3>Profile</h3>
         <p>View your info and progress</p>
       </a>
 
       <a href="quiz.html" class="card">
-        <span class="material-icons">quiz</span>
+        <span class="material-icons card-icon">quiz</span>
         <h3>Quiz</h3>
-        <p>Test your knowledge</p>
+        <p>Earn brain points</p>
       </a>
 
       <a href="robot.html" class="card">
-        <span class="material-icons">smart_toy</span>
-        <h3>My Robot</h3>
-        <p>Upgrade your AI companion</p>
+        <span class="material-icons card-icon">android</span>
+        <h3>Robot</h3>
+        <p>Upgrade your robot with earned points</p>
       </a>
 
       <a href="shop.html" class="card">
-        <span class="material-icons">shopping_cart</span>
+        <span class="material-icons card-icon">shopping_cart</span>
         <h3>Shop</h3>
-        <p>Buy parts and upgrades</p>
+        <p>Buy new parts and upgrades</p>
       </a>
 
       <a href="leaderboard.html" class="card">
-        <span class="material-icons">emoji_events</span>
+        <span class="material-icons card-icon">emoji_events</span>
         <h3>Leaderboard</h3>
-        <p>See top students</p>
+        <p>Compete with others</p>
       </a>
 
-      <a class="card" href="#" onclick="logout()">
-        <span class="material-icons">logout</span>
+      <a href="#" onclick="logout()" class="card">
+        <span class="material-icons card-icon">logout</span>
         <h3>Logout</h3>
-        <p>Sign out of your account</p>
+        <p>Sign out from your account</p>
       </a>
     </section>
   </main>
+
 </body>
-</html>
+          </html>
