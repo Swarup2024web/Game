@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Profile | NeuroBot</title>
+  <title>Profile | NeuroChat</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <style>
     body {
       margin: 0;
@@ -12,154 +12,143 @@
       background: #e5ddd5;
     }
     header {
-      background: #075e54;
+      background-color: #075e54;
       color: white;
-      padding: 14px 20px;
+      padding: 16px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
     header h1 {
       font-size: 20px;
       margin: 0;
     }
-    header nav {
+    nav {
       display: flex;
-      gap: 16px;
+      gap: 20px;
     }
-    header nav a {
+    nav a {
       color: white;
       text-decoration: none;
     }
     .container {
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
       padding: 20px 15px;
+      text-align: center;
     }
-    .chat-bubble {
-      background: #dcf8c6;
-      padding: 15px;
-      border-radius: 10px 10px 0 10px;
-      margin-bottom: 12px;
-      width: fit-content;
-      max-width: 100%;
-      box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-    }
-    .chat-bubble img {
-      width: 90px;
-      height: 90px;
+    .profile-photo {
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid #25d366;
-      display: block;
-      margin: 0 auto 10px;
+      border: 3px solid #075e54;
+      margin-bottom: 10px;
     }
-    .chat-bubble h2 {
-      text-align: center;
-      margin: 6px 0;
-      font-size: 18px;
-      color: #075e54;
+    .username {
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
     }
     .stats {
       display: flex;
       justify-content: center;
-      gap: 15px;
-      margin: 10px 0;
+      gap: 20px;
+      margin: 20px 0;
     }
     .stat {
-      background: #fff;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 14px;
-      color: #00796b;
+      background: white;
+      padding: 12px 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
-    .section-title {
-      margin: 25px 10px 10px;
+    .stat span {
+      font-size: 20px;
       color: #075e54;
-      font-weight: bold;
     }
-    .grid {
+    .parts-section {
+      margin-top: 30px;
+      text-align: left;
+    }
+    .parts-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
+      gap: 20px;
     }
     .part-card {
-      background: white;
-      padding: 10px;
-      border-radius: 10px 10px 10px 0;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+      background: #fff;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     .part-card img {
       width: 100%;
-      height: 100px;
-      object-fit: contain;
-      border-radius: 8px;
-      margin-bottom: 8px;
+      border-radius: 10px;
+      margin-bottom: 10px;
     }
-    .part-card h4 {
-      margin: 0;
-      font-size: 15px;
+    .part-name {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 4px;
       color: #075e54;
     }
-    .part-card p {
-      font-size: 13px;
-      color: #333;
+    .part-info {
+      font-size: 14px;
+      color: #444;
     }
-    .fab {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #ff5252;
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 50%;
-      font-size: 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      cursor: pointer;
+    @media (max-width: 600px) {
+      .parts-grid {
+        grid-template-columns: 1fr 1fr;
+      }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>NeuroBot</h1>
+  <h1>NeuroChat</h1>
   <nav>
     <a href="index.html"><span class="material-icons">home</span></a>
-    <a href="shop.html"><span class="material-icons">storefront</span></a>
-    <a href="robot.html"><span class="material-icons">smart_toy</span></a>
+    <a href="shop.html"><span class="material-icons">smart_toy</span></a>
+    <a href="#" onclick="logout()"><span class="material-icons">logout</span></a>
   </nav>
 </header>
 
 <div class="container">
-  <div class="chat-bubble">
-    <img id="profilePic" src="" alt="Profile Pic">
-    <h2 id="username">Loading...</h2>
-    <div class="stats">
-      <div class="stat"><span class="material-icons">psychology</span> <span id="brainPoints">0</span></div>
-      <div class="stat"><span class="material-icons">bolt</span> <span id="botPower">0</span></div>
+  <img src="assets/default.png" class="profile-photo" id="profilePhoto" />
+  <div class="username" id="username">Loading...</div>
+
+  <div class="stats">
+    <div class="stat">
+      <span class="material-icons">psychology</span>
+      <div id="brainPoints">0</div>
+    </div>
+    <div class="stat">
+      <span class="material-icons">bolt</span>
+      <div id="botPower">0</div>
     </div>
   </div>
 
-  <div class="section-title">Unlocked Parts</div>
-  <div class="grid" id="partsGrid">Loading...</div>
+  <div class="parts-section">
+    <h3>Unlocked Parts</h3>
+    <div class="parts-grid" id="partsGrid"></div>
+  </div>
 </div>
-
-<button class="fab" onclick="logout()" title="Logout">
-  <span class="material-icons">logout</span>
-</button>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
   import {
     getFirestore,
     collection,
-    getDocs,
-    query,
-    where
+    doc,
+    getDoc
   } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -175,50 +164,42 @@
   const db = getFirestore(app);
 
   const username = localStorage.getItem("username");
-  if (!username) window.location.href = "login.html";
+  if (!username) {
+    window.location.href = "login.html";
+  }
+
+  const userRef = doc(db, "users", username);
+  const partsGrid = document.getElementById("partsGrid");
 
   async function loadProfile() {
-    const q = query(collection(db, "users"), where("username", "==", username));
-    const snapshot = await getDocs(q);
+    const snap = await getDoc(userRef);
+    if (!snap.exists()) return;
 
-    if (snapshot.empty) {
-      localStorage.removeItem("username");
-      window.location.href = "login.html";
-      return;
-    }
+    const data = snap.data();
+    document.getElementById("username").innerText = data.name || username;
+    document.getElementById("brainPoints").innerText = data.brainPoints || 0;
+    document.getElementById("botPower").innerText = data.botPower || 0;
 
-    const user = snapshot.docs[0].data();
-    document.getElementById("username").textContent = user.username;
-    document.getElementById("brainPoints").textContent = user.brainPoints || 0;
-    document.getElementById("botPower").textContent = user.botPower || 0;
+    const photo = data.image || "default.png";
+    document.getElementById("profilePhoto").src = "https://raw.githubusercontent.com/Swarup2024web/Game/main/assets/" + photo;
 
-    const imgURL = user.image
-      ? `https://raw.githubusercontent.com/Swarup2024web/Game/main/${user.image}`
-      : "https://via.placeholder.com/100";
-    document.getElementById("profilePic").src = imgURL;
-
-    const unlocked = user.unlockedParts || [];
-    const partsSnap = await getDocs(collection(db, "robot_parts"));
-    const grid = document.getElementById("partsGrid");
-    grid.innerHTML = "";
-
-    partsSnap.forEach(doc => {
-      const part = doc.data();
-      if (unlocked.includes(part.name)) {
-        grid.innerHTML += `
-          <div class="part-card">
-            <img src="${part.image}" alt="${part.name}">
-            <h4>${part.name}</h4>
-            <p>${part.description}</p>
-          </div>
+    if (data.parts && Array.isArray(data.parts)) {
+      data.parts.forEach(part => {
+        const div = document.createElement("div");
+        div.className = "part-card";
+        div.innerHTML = `
+          <img src="https://raw.githubusercontent.com/Swarup2024web/Game/main/assets/${part.image}" />
+          <div class="part-name">${part.name}</div>
+          <div class="part-info">${part.info}</div>
         `;
-      }
-    });
+        partsGrid.appendChild(div);
+      });
+    }
   }
 
   function logout() {
     localStorage.removeItem("username");
-    location.href = "login.html";
+    window.location.href = "login.html";
   }
 
   loadProfile();
