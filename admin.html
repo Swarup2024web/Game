@@ -2,43 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Admin Panel | NeuroBot Academy</title>
+  <title>Admin | NeuroBot Academy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
   <style>
     * {
       box-sizing: border-box;
       font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      background: linear-gradient(to right, #c6f1ff, #f0fcff);
       padding: 20px;
     }
 
     h1 {
-      color: #0288d1;
-      margin-bottom: 20px;
       text-align: center;
+      color: #01579b;
+      margin-bottom: 30px;
     }
 
     section {
-      background: #fff;
+      background: #ffffffcc;
       border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       margin-bottom: 30px;
-      max-width: 800px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      max-width: 900px;
       margin-left: auto;
       margin-right: auto;
     }
 
     h2 {
-      margin-bottom: 16px;
-      color: #01579b;
+      color: #0277bd;
+      margin-bottom: 15px;
       display: flex;
       align-items: center;
+      font-size: 20px;
     }
 
     h2 .material-icons {
@@ -47,18 +50,19 @@
 
     input, textarea, select, button {
       width: 100%;
-      margin-bottom: 10px;
       padding: 10px;
+      margin-bottom: 12px;
       border: 1px solid #ccc;
       border-radius: 8px;
+      font-size: 15px;
     }
 
     button {
       background-color: #0288d1;
       color: white;
       font-weight: bold;
+      transition: 0.3s;
       cursor: pointer;
-      transition: 0.3s ease;
     }
 
     button:hover {
@@ -68,21 +72,23 @@
     .user-card {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px;
+      gap: 12px;
+      padding: 12px;
       border-bottom: 1px solid #ccc;
+      margin-bottom: 10px;
     }
 
     .user-card img {
-      border-radius: 50%;
       width: 50px;
       height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
     }
 
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 12px;
     }
 
     @media(max-width: 600px) {
@@ -91,159 +97,182 @@
       }
     }
   </style>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import {
-      getFirestore, collection, addDoc, getDocs, doc, updateDoc
-    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
-      authDomain: "mybot-e3dbc.firebaseapp.com",
-      projectId: "mybot-e3dbc",
-      storageBucket: "mybot-e3dbc.firebasestorage.app",
-      messagingSenderId: "576870586364",
-      appId: "1:576870586364:web:739707e4ad4cb115d6c479"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // Add user
-    window.addUser = async () => {
-      const name = document.getElementById('name').value;
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      const image = document.getElementById('userimg').value;
-      const points = parseInt(document.getElementById('brainpoints').value);
-
-      if (!name || !username || !password || !image) return alert("Fill all fields");
-
-      await addDoc(collection(db, "users"), {
-        name, username, password, image, brainPoints: points || 0
-      });
-      alert("User added!");
-      loadUsers();
-    };
-
-    // Load users
-    window.loadUsers = async () => {
-      const usersList = document.getElementById('usersList');
-      usersList.innerHTML = '';
-      const snapshot = await getDocs(collection(db, "users"));
-      snapshot.forEach(docSnap => {
-        const u = docSnap.data();
-        usersList.innerHTML += `
-          <div class="user-card">
-            <img src="${u.image}" />
-            <div>
-              <strong>${u.name}</strong> (@${u.username})<br>
-              Brain Points: ${u.brainPoints || 0}
-              <div class="grid-2">
-                <input type="number" id="points-${docSnap.id}" placeholder="New Points" />
-                <button onclick="updatePoints('${docSnap.id}')">Update</button>
-              </div>
-            </div>
-          </div>
-        `;
-      });
-    };
-
-    window.updatePoints = async (id) => {
-      const val = parseInt(document.getElementById(`points-${id}`).value);
-      if (isNaN(val)) return alert("Enter valid number");
-      const userRef = doc(db, "users", id);
-      await updateDoc(userRef, { brainPoints: val });
-      alert("Updated successfully!");
-      loadUsers();
-    };
-
-    // Add MCQ
-    window.addMCQ = async () => {
-      const subject = document.getElementById('mcq-subject').value;
-      const difficulty = document.getElementById('mcq-difficulty').value;
-      const question = document.getElementById('mcq-question').value;
-      const options = [
-        document.getElementById('opt1').value,
-        document.getElementById('opt2').value,
-        document.getElementById('opt3').value,
-        document.getElementById('opt4').value
-      ];
-      const answer = document.getElementById('mcq-answer').value;
-      const points = parseInt(document.getElementById('mcq-points').value);
-
-      if (!subject || !question || !answer || isNaN(points)) return alert("Fill all fields");
-
-      await addDoc(collection(db, "questions"), {
-        subject, difficulty, question, options, answer, points
-      });
-      alert("MCQ Added!");
-    };
-
-    // Add Robot Part
-    window.addPart = async () => {
-      const part = document.getElementById('part-name').value;
-      const desc = document.getElementById('part-desc').value;
-      const img = document.getElementById('part-img').value;
-      const points = parseInt(document.getElementById('part-points').value);
-      const power = parseInt(document.getElementById('part-power').value);
-
-      if (!part || !desc || !img || isNaN(points)) return alert("Fill all fields");
-
-      await addDoc(collection(db, "robot_parts"), {
-        part, description: desc, image: img, requiredPoints: points, power: power || 0
-      });
-      alert("Robot part added!");
-    };
-
-    window.onload = loadUsers;
-  </script>
 </head>
 <body>
 
 <h1>NeuroBot Admin Panel</h1>
 
-<!-- User Section -->
+<!-- Add User Section -->
 <section>
-  <h2><span class="material-icons">person_add</span>Add User</h2>
-  <input type="text" id="name" placeholder="Full Name">
-  <input type="text" id="username" placeholder="Username">
-  <input type="password" id="password" placeholder="Password">
-  <input type="text" id="userimg" placeholder="Profile Image URL">
-  <input type="number" id="brainpoints" placeholder="Initial Brain Points">
+  <h2><span class="material-icons">person_add</span>Add New User</h2>
+  <input type="text" id="name" placeholder="Full Name" />
+  <input type="text" id="username" placeholder="Username" />
+  <input type="password" id="password" placeholder="Password" />
+  <input type="text" id="userimg" placeholder="Profile Photo URL (from GitHub assets)" />
+  <input type="number" id="brainpoints" placeholder="Initial Brain Points" />
   <button onclick="addUser()">Add User</button>
 </section>
 
+<!-- Users List + Update -->
 <section>
   <h2><span class="material-icons">group</span>Manage Users</h2>
   <div id="usersList">Loading users...</div>
 </section>
 
-<!-- MCQ Section -->
+<!-- Add Quiz Questions -->
 <section>
-  <h2><span class="material-icons">quiz</span>Add MCQ</h2>
-  <input type="text" id="mcq-subject" placeholder="Subject">
-  <input type="text" id="mcq-difficulty" placeholder="Difficulty (Easy, Medium, Hard)">
-  <textarea id="mcq-question" placeholder="Question Text"></textarea>
-  <input type="text" id="opt1" placeholder="Option 1">
-  <input type="text" id="opt2" placeholder="Option 2">
-  <input type="text" id="opt3" placeholder="Option 3">
-  <input type="text" id="opt4" placeholder="Option 4">
-  <input type="text" id="mcq-answer" placeholder="Correct Answer">
-  <input type="number" id="mcq-points" placeholder="Brain Points">
-  <button onclick="addMCQ()">Add MCQ</button>
+  <h2><span class="material-icons">quiz</span>Add MCQ Question</h2>
+  <input type="text" id="mcq-subject" placeholder="Subject" />
+  <input type="text" id="mcq-difficulty" placeholder="Difficulty (Easy/Medium/Hard)" />
+  <textarea id="mcq-question" placeholder="Question text"></textarea>
+  <input type="text" id="opt1" placeholder="Option 1" />
+  <input type="text" id="opt2" placeholder="Option 2" />
+  <input type="text" id="opt3" placeholder="Option 3" />
+  <input type="text" id="opt4" placeholder="Option 4" />
+  <input type="text" id="mcq-answer" placeholder="Correct Answer" />
+  <input type="number" id="mcq-points" placeholder="Brain Points Reward" />
+  <button onclick="addMCQ()">Add Question</button>
 </section>
-
-<!-- Robot Parts -->
+<!-- Add Robot Part Section -->
 <section>
   <h2><span class="material-icons">smart_toy</span>Add Robot Part</h2>
-  <input type="text" id="part-name" placeholder="Part Name">
+  <input type="text" id="part-name" placeholder="Part Name" />
   <textarea id="part-desc" placeholder="Short Description"></textarea>
-  <input type="text" id="part-img" placeholder="Image URL (assets/img.png)">
-  <input type="number" id="part-points" placeholder="Required Brain Points">
-  <input type="number" id="part-power" placeholder="Power Value">
-  <button onclick="addPart()">Add Part</button>
+  <input type="text" id="part-img" placeholder="Image URL (assets/...)" />
+  <input type="number" id="part-points" placeholder="Required Brain Points" />
+  <input type="number" id="part-power" placeholder="Power Value" />
+  <button onclick="addPart()">Add Robot Part</button>
 </section>
+
+<!-- Firebase + Firestore Scripts -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    doc,
+    updateDoc
+  } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBlOC2J2pt6_BuwsFch-bj13s9CQdrCRq0",
+    authDomain: "mybot-e3dbc.firebaseapp.com",
+    projectId: "mybot-e3dbc",
+    storageBucket: "mybot-e3dbc.firebasestorage.app",
+    messagingSenderId: "576870586364",
+    appId: "1:576870586364:web:739707e4ad4cb115d6c479"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Add user
+  window.addUser = async () => {
+    const name = document.getElementById("name").value;
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const image = document.getElementById("userimg").value;
+    const brainPoints = parseInt(document.getElementById("brainpoints").value || 0);
+
+    if (!username || !password || !image) return alert("Fill all required fields");
+
+    await addDoc(collection(db, "users"), {
+      name,
+      username,
+      password,
+      image,
+      brainPoints,
+      botPower: 0,
+      unlockedParts: []
+    });
+    alert("User added!");
+    loadUsers();
+  };
+
+  // Load & manage users
+  window.loadUsers = async () => {
+    const usersList = document.getElementById("usersList");
+    usersList.innerHTML = "";
+    const snap = await getDocs(collection(db, "users"));
+    snap.forEach(docSnap => {
+      const u = docSnap.data();
+      usersList.innerHTML += `
+        <div class="user-card">
+          <img src="${u.image}" />
+          <div>
+            <strong>${u.name}</strong> (@${u.username})<br/>
+            Brain Points: ${u.brainPoints || 0}
+            <div class="grid-2">
+              <input type="number" id="points-${docSnap.id}" placeholder="New Points" />
+              <button onclick="updatePoints('${docSnap.id}')">Update</button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  };
+
+  // Update brain points
+  window.updatePoints = async (id) => {
+    const value = parseInt(document.getElementById(`points-${id}`).value);
+    if (isNaN(value)) return alert("Enter valid number");
+    await updateDoc(doc(db, "users", id), { brainPoints: value });
+    alert("Updated!");
+    loadUsers();
+  };
+
+  // Add MCQ
+  window.addMCQ = async () => {
+    const subject = document.getElementById("mcq-subject").value;
+    const difficulty = document.getElementById("mcq-difficulty").value;
+    const question = document.getElementById("mcq-question").value;
+    const options = [
+      document.getElementById("opt1").value,
+      document.getElementById("opt2").value,
+      document.getElementById("opt3").value,
+      document.getElementById("opt4").value
+    ];
+    const answer = document.getElementById("mcq-answer").value;
+    const points = parseInt(document.getElementById("mcq-points").value || 0);
+
+    if (!question || !answer || options.includes("") || isNaN(points)) return alert("Fill all fields");
+
+    await addDoc(collection(db, "questions"), {
+      subject,
+      difficulty,
+      question,
+      options,
+      answer,
+      points
+    });
+    alert("MCQ added!");
+  };
+
+  // Add robot part
+  window.addPart = async () => {
+    const name = document.getElementById("part-name").value;
+    const desc = document.getElementById("part-desc").value;
+    const image = document.getElementById("part-img").value;
+    const requiredPoints = parseInt(document.getElementById("part-points").value || 0);
+    const power = parseInt(document.getElementById("part-power").value || 0);
+
+    if (!name || !desc || !image || isNaN(requiredPoints)) return alert("Fill all fields");
+
+    await addDoc(collection(db, "robot_parts"), {
+      name,
+      description: desc,
+      image,
+      requiredPoints,
+      power
+    });
+    alert("Robot part added!");
+  };
+
+  // Load users on page start
+  window.onload = loadUsers;
+</script>
 
 </body>
 </html>
