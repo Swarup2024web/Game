@@ -200,8 +200,8 @@
     document.getElementById("username").textContent = userData.username;
 
     const imagePath = userData.image
-      ? `https://raw.githubusercontent.com/swarup2024web/newswarup/main/${userData.image}`
-      : "https://via.placeholder.com/100";
+      ? `https://raw.githubusercontent.com/swarup2024web/Game/main/${userData.image}`
+      : " ";
     document.getElementById("profilePic").src = imagePath;
 
     document.getElementById("brainPoints").textContent = userData.brainPoints || 0;
