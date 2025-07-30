@@ -2,165 +2,117 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Shop | NeuroBot Academy</title>
+  <title>Bot Shop | NeuroBot</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Roboto', sans-serif;
-    }
     body {
       margin: 0;
-      background: linear-gradient(to right, #d1f4ff, #eafcff);
-      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background: #e5ddd5;
     }
     header {
-      position: sticky;
-      top: 0;
-      background: white;
+      background: #075e54;
+      color: white;
+      padding: 14px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 20px;
-      border-bottom: 2px solid #c5ebff;
-      z-index: 100;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
     header h1 {
-      color: #0288d1;
-      font-size: 22px;
+      font-size: 20px;
+      margin: 0;
     }
     nav {
       display: flex;
-      gap: 18px;
+      gap: 16px;
     }
     nav a {
-      color: #0277bd;
+      color: white;
       text-decoration: none;
     }
-    nav .material-icons {
-      font-size: 24px;
-      transition: 0.2s;
-    }
-    nav .material-icons:hover {
-      color: #01579b;
-    }
-    h2 {
-      text-align: center;
-      margin-top: 20px;
-      color: #01579b;
-    }
-    #filter {
-      text-align: center;
-      margin: 10px auto 20px;
-    }
-    #filter select {
-      padding: 8px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      padding: 20px;
-      max-width: 1000px;
+    .container {
+      max-width: 900px;
       margin: auto;
+      padding: 20px 15px;
     }
-    .part-card {
-      background: #ffffffd9;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: 0.3s;
+    .chat-bubble {
+      background: #fff;
+      padding: 14px;
+      border-radius: 12px 12px 0 12px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
-    .part-card:hover {
-      transform: scale(1.02);
-    }
-    .part-card img {
+    .chat-bubble img {
       width: 100%;
-      max-height: 160px;
+      height: 120px;
       object-fit: contain;
       border-radius: 10px;
-      background: #f3f9ff;
+      margin-bottom: 10px;
     }
-    .part-card h3 {
-      color: #0277bd;
-      margin: 10px 0 4px;
-      font-size: 18px;
-      text-align: center;
-    }
-    .part-card p {
-      font-size: 14px;
-      text-align: center;
-      margin-bottom: 8px;
+    .chat-bubble h4 {
+      margin: 0;
+      font-size: 16px;
+      color: #075e54;
     }
     .info-row {
       display: flex;
       justify-content: space-between;
-      width: 100%;
-      padding: 6px 0;
+      margin-top: 6px;
+      font-size: 14px;
+      color: #555;
     }
     .info-pill {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      padding: 6px 12px;
-      background: #e0f7fa;
+      background: #e0f2f1;
+      padding: 4px 10px;
       border-radius: 20px;
-      font-size: 14px;
-      color: #00796b;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
-    .info-pill .material-icons {
-      font-size: 16px;
+    .material-icons {
+      font-size: 18px;
+      vertical-align: middle;
     }
-    button.buy-btn {
-      margin-top: 10px;
-      background: #0288d1;
+    .buy-btn {
+      margin-top: 12px;
+      background: #25D366;
       color: white;
       border: none;
-      border-radius: 8px;
       padding: 8px 16px;
+      border-radius: 25px;
       cursor: pointer;
-      transition: background 0.3s;
+      font-size: 14px;
+      transition: 0.3s;
     }
-    button.buy-btn:hover {
-      background: #01579b;
+    .buy-btn:hover {
+      background: #1eb14c;
     }
-    button.buy-btn:disabled {
-      background: gray;
-      cursor: default;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>NeuroBot Academy</h1>
+  <h1>NeuroBot</h1>
   <nav>
-    <a href="index.html" title="Home"><span class="material-icons">home</span></a>
-    <a href="robot.html" title="Robot"><span class="material-icons">smart_toy</span></a>
-    <a href="profile.html" title="Profile"><span class="material-icons">person</span></a>
+    <a href="index.html"><span class="material-icons">home</span></a>
+    <a href="profile.html"><span class="material-icons">account_circle</span></a>
+    <a href="robot.html"><span class="material-icons">smart_toy</span></a>
   </nav>
 </header>
 
-<h2>Bot Parts Shop</h2>
-
-<div id="filter">
-  <label for="sort">Sort By:</label>
-  <select id="sort" onchange="loadParts()">
-    <option value="az">Name (A-Z)</option>
-    <option value="power">Power (High to Low)</option>
-    <option value="cost">Cost (Low to High)</option>
-  </select>
+<div class="container">
+  <h2 style="color:#075e54;">Bot Parts Shop</h2>
+  <div class="grid" id="shopGrid">Loading parts...</div>
 </div>
-
-<div class="grid" id="partsList">Loading parts...</div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
@@ -168,11 +120,10 @@
     getFirestore,
     collection,
     getDocs,
-    doc,
-    updateDoc,
     query,
     where,
-    getDoc
+    updateDoc,
+    doc
   } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -187,91 +138,63 @@
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  let currentUserDoc = null;
-  let currentUsername = localStorage.getItem("username");
+  const username = localStorage.getItem("username");
+  if (!username) window.location.href = "login.html";
 
-  if (!currentUsername) {
-    location.href = "login.html";
-  }
+  const shopGrid = document.getElementById("shopGrid");
 
   async function loadUser() {
-    const q = query(collection(db, "users"), where("username", "==", currentUsername));
+    const q = query(collection(db, "users"), where("username", "==", username));
     const snap = await getDocs(q);
-    if (snap.empty) {
-      alert("User not found. Logging out.");
-      localStorage.removeItem("username");
-      location.href = "login.html";
-    }
-    currentUserDoc = snap.docs[0];
+    return snap.docs[0];
   }
 
-  async function loadParts() {
-    await loadUser();
-    const user = currentUserDoc.data();
-    const unlocked = user.unlockedParts || [];
+  async function loadShop() {
     const partsSnap = await getDocs(collection(db, "robot_parts"));
-    let parts = [];
-    partsSnap.forEach(doc => parts.push(doc.data()));
+    const userDoc = await loadUser();
+    const userData = userDoc.data();
+    const userRef = userDoc.ref;
+    const unlocked = userData.unlockedParts || [];
 
-    const sortBy = document.getElementById("sort").value;
-    if (sortBy === "power") {
-      parts.sort((a, b) => b.power - a.power);
-    } else if (sortBy === "cost") {
-      parts.sort((a, b) => a.requiredPoints - b.requiredPoints);
-    } else {
-      parts.sort((a, b) => a.name.localeCompare(b.name));
-    }
-
-    const container = document.getElementById("partsList");
-    container.innerHTML = "";
-    parts.forEach(part => {
-      const isUnlocked = unlocked.includes(part.name);
-      container.innerHTML += `
-        <div class="part-card">
-          <img src="${part.image}" alt="${part.name}" />
-          <h3>${part.name}</h3>
-          <p>${part.description}</p>
+    shopGrid.innerHTML = "";
+    partsSnap.forEach(doc => {
+      const part = doc.data();
+      const html = `
+        <div class="chat-bubble">
+          <img src="${part.image}" alt="${part.name}">
+          <h4>${part.name}</h4>
           <div class="info-row">
+            <div class="info-pill"><span class="material-icons">psychology</span> ${part.cost}</div>
             <div class="info-pill"><span class="material-icons">bolt</span> ${part.power}</div>
-            <div class="info-pill"><span class="material-icons">psychology</span> ${part.requiredPoints}</div>
           </div>
-          <button class="buy-btn" ${isUnlocked ? "disabled" : ""} onclick="buyPart('${part.name}', ${part.requiredPoints}, ${part.power})">
-            ${isUnlocked ? "Owned" : "Buy"}
-          </button>
-        </div>
-      `;
+          ${unlocked.includes(part.name) ? `<p style="color:green;">Already Owned</p>` :
+          `<button class="buy-btn" onclick="buyPart('${part.name}', ${part.cost})">Buy</button>`}
+        </div>`;
+      shopGrid.innerHTML += html;
     });
   }
 
-  window.buyPart = async (partName, cost, power) => {
-    const userRef = doc(db, "users", currentUserDoc.id);
-    const userData = (await getDoc(userRef)).data();
-
-    if (userData.unlockedParts.includes(partName)) {
-      alert("You already own this part.");
-      return;
-    }
-
-    if (userData.brainPoints < cost) {
+  window.buyPart = async function(partName, cost) {
+    const userDoc = await loadUser();
+    const data = userDoc.data();
+    if ((data.brainPoints || 0) < cost) {
       alert("Not enough Brain Points!");
       return;
     }
 
-    const newPoints = userData.brainPoints - cost;
-    const newPower = (userData.botPower || 0) + power;
-    const newParts = [...(userData.unlockedParts || []), partName];
+    const updatedUnlocked = data.unlockedParts || [];
+    if (!updatedUnlocked.includes(partName)) updatedUnlocked.push(partName);
 
-    await updateDoc(userRef, {
-      brainPoints: newPoints,
-      botPower: newPower,
-      unlockedParts: newParts
+    await updateDoc(userDoc.ref, {
+      brainPoints: (data.brainPoints || 0) - cost,
+      unlockedParts: updatedUnlocked
     });
 
-    alert(`You bought ${partName}!`);
-    loadParts();
+    alert(`Successfully bought ${partName}!`);
+    loadShop();
   };
 
-  loadParts();
+  loadShop();
 </script>
 
 </body>
